@@ -88,9 +88,43 @@ class ClusteringParser:
         # charge is stored as float just in case
         charge = float(fields[5])
         taxids = fields[6].split(",")
-        ptms = ClusteringParser._parse_ptms(fields[7])
+        ptm_strings = fields[7].split(";")
 
-        return objects.PSM(title, sequences, prec_mz, charge, taxids, ptms)
+        # make sure sequences and ptms have the same length
+        if len(sequences) != len(ptm_strings):
+            raise Exception("Invalid SPEC line encountered: different number of sequences and PTMs defined: " +
+                            line)
+
+        psms = ClusteringParser._create_psms(sequences, ptm_strings)
+
+        return objects.Spectrum(title, prec_mz, charge, taxids, psms)
+
+    @staticmethod
+    def _create_psms(sequences, ptm_strings):
+        """
+        Creates a list of PSM objects based on the information in the
+        clustering's file SPEC line.
+        :param sequences: List of peptide sequences observed
+        :param ptm_strings: List of PTM string definitions
+        :return: List of PSM objects
+        """
+        if len(sequences) != len(ptm_strings):
+            raise Exception("Different number of peptide sequences and PTM specifications "
+                            "observed in SPEC line.")
+
+        # test if it's an empty line
+        if len(sequences) == 1 and len(sequences[0].strip()) == 0:
+            return list()
+
+        psms = list()
+
+        for i in range(0, len(sequences)):
+            cur_ptms = ClusteringParser._parse_ptms(ptm_strings[i])
+            psms.append(objects.PSM(sequences[i], cur_ptms))
+
+        # TODO: make sure the PSMs are unique
+
+        return psms
 
     @staticmethod
     def _parse_ptms(ptm_string):
@@ -113,3 +147,5 @@ class ClusteringParser:
             ptms.append(objects.PTM(int(fields[0]), fields[1]))
 
         return ptms
+
+

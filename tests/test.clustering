@@ -13,7 +13,7 @@ sequence=[RPHFFFPK:2]
 consensus_mz=70.061,84.076,110.064,120.074,129.095,147.101,195.100,226.137,244.148,254.143,255.143,267.134,356.155,373.182,374.185,391.198,392.191,411.831,414.167,415.177,432.159,493.230,510.256,538.252,539.269,551.250,579.235,657.315,658.304,685.295,686.322,687.314,787.318,804.363,805.384,832.338,833.388
 consensus_intens=38.55,118.40,163.68,927.23,138.91,120.96,131.09,75.39,268.44,434.56,64.78,79.50,42.42,146.31,63.39,334.55,62.75,237.70,58.62,18.07,29.43,14.93,61.16,191.24,52.74,18.10,44.86,42.52,15.63,661.13,84.51,15.61,11.44,26.00,10.48,39.51,25.69
 SPEC	#file=/home/jg/Projects/ebi-pride/pride-cluster-2/chimeric-spectra-generator/src/test/resources/PRD000001.st.id.mgf#id=index=1422#title=id=PRD000001;PRIDE_Exp_Complete_Ac_1644.xml;spectrum=4783,splib_sequence=RPHFFFPK,score=0.413,peptideR2=,scoreR2=	true	RPHFFFPK	359.1554	3			0.0
-SPEC	#file=/home/jg/Projects/ebi-pride/pride-cluster-2/chimeric-spectra-generator/src/test/resources/PRD000001.st.id.mgf#id=index=2837#title=id=PRD000001;PRIDE_Exp_Complete_Ac_1.xml;spectrum=1771,splib_sequence=RPHFFFPK,score=0.413,peptideR2=,scoreR2=	true	RPHFFFPK	359.1554	3			0.0
+SPEC	#file=/home/jg/Projects/ebi-pride/pride-cluster-2/chimeric-spectra-generator/src/test/resources/PRD000001.st.id.mgf#id=index=2837#title=id=PRD000001;PRIDE_Exp_Complete_Ac_1.xml;spectrum=1771,splib_sequence=RPHFFFPK,score=0.413,peptideR2=,scoreR2=	true	RPHFFFPK	359.1554	3		1-MOD:1234	0.0
 =Cluster=
 id=9a582e74-e8b1-451d-a007-cadc362aa2ce
 av_precursor_mz=382.149
@@ -22,7 +22,8 @@ sequence=[MEGIGLK:2]
 consensus_mz=74.053,84.067,86.090,129.095,130.076,143.105,147.101,185.069,249.070,259.056,260.179,277.064,282.129,310.118,317.193,350.170,350.763,382.669,430.259,440.187,452.220,487.283,488.289,525.257,553.253,554.248,598.306,599.265,616.311,617.283,626.312,627.293
 consensus_intens=54.50,134.71,131.14,218.89,212.26,58.05,289.33,83.53,92.24,64.21,63.79,87.78,86.27,160.85,281.40,351.42,940.78,176.31,57.29,39.42,44.21,352.55,91.04,20.37,39.96,16.17,50.75,24.73,84.28,44.79,864.56,41.82
 SPEC	#file=/home/jg/Projects/ebi-pride/pride-cluster-2/chimeric-spectra-generator/src/test/resources/PRD000001.st.id.mgf#id=index=2879#title=id=PRD000001;PRIDE_Exp_Complete_Ac_1.xml;spectrum=1869,splib_sequence=MEGIGLK,score=0.362,peptideR2=,scoreR2=	true	MEGIGLK	382.149	2			0.0
-SPEC	#file=/home/jg/Projects/ebi-pride/pride-cluster-2/chimeric-spectra-generator/src/test/resources/PRD000001.st.id.mgf#id=index=1464#title=id=PRD000001;PRIDE_Exp_Complete_Ac_1644.xml;spectrum=5071,splib_sequence=MEGIGLK,score=0.362,peptideR2=,scoreR2=	true	MEGIGLK	382.149	2			0.0
+SPEC	#file=/home/jg/Projects/ebi-pride/pride-cluster-2/chimeric-spectra-generator/src/test/resources/PRD000001.st.id.mgf#id=index=1464#title=id=PRD000001;PRIDE_Exp_Complete_Ac_1644.xml;spectrum=5071,splib_sequence=MEGIGLK,score=0.362,peptideR2=,scoreR2=	true	MEGIG*LK	382.149	2			0.0
+SPEC	#file=/home/jg/Projects/ebi-pride/pride-cluster-2/chimeric-spectra-generator/src/test/resources/PRD000001.st.id.mgf#id=index=1464#title=id=PRD000001;PRIDE_Exp_Complete_Ac_1644.xml;spectrum=5071,splib_sequence=MEGIGLK,score=0.362,peptideR2=,scoreR2=	false	ASDA	381.149	2			0.0
 =Cluster=
 id=c3c29b99-cb57-46da-a44f-eb3bb4451802
 av_precursor_mz=382.186
