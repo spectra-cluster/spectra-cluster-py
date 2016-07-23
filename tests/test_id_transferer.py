@@ -27,3 +27,21 @@ class IdTransfererTest(unittest.TestCase):
         ref4 = analyser.identification_references[4]
         self.assertEqual(1, len(ref4.psms))
         self.assertEqual("MEGIGLK", ref4.psms[0].sequence)
+
+    def test_identify_unidentified(self):
+        parser = clustering_parser.ClusteringParser(self.testfile)
+        analyser = id_transferer.IdTransferer(add_to_identified=False, add_to_unidentified=True)
+
+        for cluster in parser:
+            analyser.process_cluster(cluster)
+
+        self.assertEqual(0, len(analyser.identification_references))
+
+    def test_identify_identified(self):
+        parser = clustering_parser.ClusteringParser(self.testfile)
+        analyser = id_transferer.IdTransferer(add_to_identified=True, add_to_unidentified=False)
+
+        for cluster in parser:
+            analyser.process_cluster(cluster)
+
+        self.assertEqual(3151, len(analyser.identification_references))

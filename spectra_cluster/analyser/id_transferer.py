@@ -1,5 +1,7 @@
-"""The IdTransferer analyser transfers identifications to spectra
-part of a cluster.
+"""The IdTransferer analyser transfers identifications to spectra part of a cluster.
+
+The analysis is run by calling 'process_cluster' repeatedly. The transferred identifications
+are stored in the 'identification_references' member variable.
 
 @author Johannes Griss
 """
@@ -9,7 +11,7 @@ from .. import objects
 
 
 class IdTransferer(common.AbstractAnalyser):
-    def __init__(self, add_to_identified=False,add_to_unidentified=True):
+    def __init__(self, add_to_identified=False, add_to_unidentified=True):
         """
         Creates a default IdTransferer object.
         :param add_to_identified: If set identifications are added to identified spectra.
@@ -21,10 +23,9 @@ class IdTransferer(common.AbstractAnalyser):
         self.add_to_identified = add_to_identified
         self.add_to_unidentified = add_to_unidentified
 
-    """Transfers ids to spectra based on the cluster's properties"""
     def process_cluster(self, cluster):
         """
-        Extracts all ids if necessary
+        Transfers ids to spectra based on the cluster's properties
         :param cluster: The cluster to process
         :return:
         """
