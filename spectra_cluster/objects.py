@@ -44,26 +44,33 @@ class Cluster:
             else:
                 self.unidentified_spectra += 1
 
-        # calculate ratios
-        sequence_counts = Cluster.calculate_sequence_counts(self._spectra, False)
+        if self.identified_spectra > 0:
+            # calculate ratios
+            sequence_counts = Cluster.calculate_sequence_counts(self._spectra, False)
 
-        self.sequence_ratios = dict()
-        for sequence in sequence_counts.keys():
-            self.sequence_ratios[sequence] = sequence_counts[sequence] / self.identified_spectra
+            self.sequence_ratios = dict()
+            for sequence in sequence_counts.keys():
+                self.sequence_ratios[sequence] = sequence_counts[sequence] / self.identified_spectra
 
-        self.max_ratio = max(self.sequence_ratios.values())
+            self.max_ratio = max(self.sequence_ratios.values())
 
-        self.max_sequences = tuple([sequence for sequence in self.sequence_ratios.keys()
-                                    if self.sequence_ratios[sequence] == self.max_ratio])
+            self.max_sequences = tuple([sequence for sequence in self.sequence_ratios.keys()
+                                        if self.sequence_ratios[sequence] == self.max_ratio])
 
-        # calculate max I/L ratio
-        sequence_counts_il = Cluster.calculate_sequence_counts(self._spectra, True)
+            # calculate max I/L ratio
+            sequence_counts_il = Cluster.calculate_sequence_counts(self._spectra, True)
 
-        sequence_ratios_il = dict()
-        for sequence in sequence_counts_il.keys():
-            sequence_ratios_il[sequence] = sequence_counts_il[sequence] / self.identified_spectra
+            sequence_ratios_il = dict()
+            for sequence in sequence_counts_il.keys():
+                sequence_ratios_il[sequence] = sequence_counts_il[sequence] / self.identified_spectra
 
-        self.max_il_ratio = max(sequence_ratios_il.values())
+            self.max_il_ratio = max(sequence_ratios_il.values())
+        else:
+            # set to default values for unidentified clusters
+            self.sequence_ratios = dict()
+            self.max_ratio = None
+            self.max_sequences = tuple()
+            self.max_il_ratio = None
 
     def get_spectra(self):
         """

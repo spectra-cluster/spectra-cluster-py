@@ -36,7 +36,8 @@ class ClusteringParser:
 
         with open(self.clustering_file, "r") as clustering_input:
             for line in clustering_input:
-                if line.strip() == "=Cluster=":
+                line = line.strip()
+                if line == "=Cluster=":
                     # create and return the cluster
                     if cur_id is not None:
                         cluster = objects.Cluster(cur_id, precursor_mz, consensus_mz, consensus_intens, spectra)
@@ -52,19 +53,26 @@ class ClusteringParser:
                     continue
 
                 # process the spectrum
-                if line.lstrip()[0:4] == "SPEC":
+                if line[0:4] == "SPEC":
                     spectra.append(ClusteringParser._parse_spec_line(line))
                     continue
 
                 # process standard fields
-                if line.lstrip()[0:3] == "id=":
-                    cur_id = line[3:].rstrip()
-                if line.lstrip()[0:16] == "av_precursor_mz=":
-                    precursor_mz = float(line[16:].rstrip())
+                if line[0:3] == "id=":
+                    cur_id = line[3:]
+                if line[0:16] == "av_precursor_mz=":
+                    precursor_mz = float(line[16:])
                 if line.lstrip()[0:13] == "consensus_mz=":
-                    consensus_mz = [float(s) for s in line[13:].rstrip().split(",")]
-                if line.lstrip()[0:17] == "consensus_intens=":
-                    consensus_intens = [float(s) for s in line[17:].rstrip().split(",")]
+                    # this is only a work around for empty consensus spectrum entries
+                    if len(line) < 14:
+                        consensus_mz = list()
+                    else:
+                        consensus_mz = [float(s) for s in line[13:].split(",")]
+                if line[0:17] == "consensus_intens=":
+                    if len(line) < 18:
+                        consensus_intens = list()
+                    else:
+                        consensus_intens = [float(s) for s in line[17:].split(",")]
 
         # process the last cluster
         if cur_id is not None:

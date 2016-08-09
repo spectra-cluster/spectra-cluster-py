@@ -26,8 +26,8 @@ Options:
   --min_identified=<spectra>           May specify the minimum number of identified spectra a cluster must have.
   --only_identified                    If set, only identified spectra will be reported.
   --only_unidentified                  If set, only unidentified spectra will be reported.
-  -h, --help                            Print this help message.
-  -v, --version                            Print the current version.
+  -h, --help                           Print this help message.
+  -v, --version                        Print the current version.
 """
 
 import sys
@@ -55,11 +55,11 @@ def create_analyser(arguments):
     if arguments["--only_unidentified"]:
         analyser.add_to_identified = False
 
-    analyser.min_size = arguments["--min_size"]
-    analyser.min_ratio = arguments["--min_ratio"]
+    analyser.min_size = int(arguments["--min_size"])
+    analyser.min_ratio = float(arguments["--min_ratio"])
 
     if arguments["--min_identified"] is not None:
-        analyser.min_identified_spectra = arguments["--min_identified"]
+        analyser.min_identified_spectra = int(arguments["--min_identified"])
 
     return analyser
 
@@ -87,9 +87,6 @@ def main():
     :return:
     """
     arguments = docopt(__doc__, version='id_transferer_cli 1.0 BETA')
-
-    print(arguments)
-    sys.exit(1)
 
     # make sure the input file exists
     if not os.path.isfile(arguments['--input']):
