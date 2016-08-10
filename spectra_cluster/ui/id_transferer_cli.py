@@ -76,7 +76,7 @@ def write_results(identification_references, output_filename):
         writer.write("filename\tspec_id\tsequence\n")
 
         for id_ref in identification_references:
-            psm_string = ";".join([str(p) for p in identification_references.psms])
+            psm_string = ";".join([str(p) for p in id_ref.psms])
 
             writer.write(id_ref.filename + "\t" + id_ref.spec_id + "\t" + psm_string + "\n")
 
