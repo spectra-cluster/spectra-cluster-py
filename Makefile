@@ -1,0 +1,18 @@
+all: clean dist
+
+init:
+	pip3 install -r requirements.txt
+
+clean:
+	rm -rf build dist
+
+test:
+	cd tests && \
+		python3 -m unittest
+
+dist:
+	pyinstaller --clean --onefile spectra_cluster/ui/protein_annotator.py
+	pyinstaller --clean --onefile spectra_cluster/ui/id_transferer_cli.py
+
+.PHONY:
+	clean dist

@@ -9,6 +9,8 @@ Usage:
   protein_annotator.py --input=<input.tsv> --output=<extended_file.tsv> --fasta=<fasta_file.fasta>
                        [--peptide_column=<column_name>] [--protein_column=<column_name>]
                        [--protein_separator=<separator>] [--column_separator=<separator>]
+                       [--ignore_il]
+                       [--protein_inference]
   protein_annotator.py (--help | --version)
 
 Options:
@@ -19,6 +21,11 @@ Options:
   --protein_column=<column_name>        Column name of the newly added protein column [default: protein]
   --protein_separator=<separator>       Separator to separate multiple protein entries [default: ;]
   --column_separator=<separator>        Separator to separate columns in the file [default: TAB]
+  --ignore_il                           If set I/L are treated as synonymous.
+  --protein_inference                   If set protein inference is automatically done and protein groups formed. The
+                                        approach follows Occam's razor and only the smallest set of protein (groups)
+                                        required to explain all peptides is reported. Ambiguous peptides (that can
+                                        be mapped to two protein groups) are not assigned to any proteins (empty fields).
   -h, --help                            Print this help message.
   -v, --version                         Print the current version.
 """
@@ -72,19 +79,33 @@ def load_peptides(input_file, peptide_column, column_separator):
         return peptides
 
 
-def map_peptides_to_proteins(peptides, fasta_filename):
+def map_peptides_to_proteins(peptides, fasta_filename, ignore_il=False):
     """
     Maps the peptides to the proteins in the passed FASTA file.
     :param peptides: A iterable containing the pepitde strings.
     :param fasta_filename: Filename of the FASTA file to parse.
+    :param ignore_il: If set to True I/L are treated as the same AA.
     :return: A dict with the peptide as key and the protein accessions as list.
     """
     parser = fasta_paraser.FastaParser(fasta_filename)
     peptide_protein_map = dict()
 
     for fasta_entry in parser:
+        if ignore_il:
+            fasta_sequence = fasta_entry.sequence.replace("I", "L")
+        else:
+            fasta_sequence = fasta_entry.sequence
+
+        # check whether any of the known sequences is present in this protein
         for sequence in peptides:
-            if fasta_entry.containsSubsequence(sequence):
+            # replace all I with L if defined
+            if ignore_il:
+                comparison_sequence = sequence.replace("I", "L")
+            else:
+                comparison_sequence = sequence
+
+            if comparison_sequence in fasta_sequence:
+                # use the original peptide sequence as a key
                 if sequence not in peptide_protein_map:
                     peptide_protein_map[sequence] = list()
 
@@ -137,10 +158,106 @@ def write_extended_file(input_filename, output_filename, peptides_to_protein, co
                     # write the original line
                     output_file.write(line + column_separator)
 
-                    if clean_sequence in peptides_to_protein:
+                    if clean_sequence in peptides_to_protein and peptides_to_protein[clean_sequence] is not None:
                         output_file.write(protein_separator.join(peptides_to_protein[clean_sequence]))
 
                     output_file.write("\n")
+
+
+class ProteinMappings:
+    """
+    Simple class to represent all proteins a peptide maps to
+    """
+    def __init__(self, proteins):
+        """
+        Creates a new PeptideToproteinMapping object
+        :param proteins: A list of proteins the pepitde maps to.
+        :return:
+        """
+        self.proteins = proteins
+        self.n_proteins = len(self.proteins)
+
+
+class ProteinGroup:
+    """
+    Simple representation of a ProteinGroup
+    """
+    def __init__(self, label, accessions):
+        """
+        Creates a new protein group object
+        :param label: The label of the protein group.
+        :param accessions: The accessions of all member proteins
+        :return:
+        """
+        self.label = label
+        self.accessions = tuple(accessions)
+
+    def __hash__(self):
+        return hash(self.label)
+
+
+def do_protein_inference(peptides_to_proteins, protein_separator=";"):
+    """
+    Creates the smalles set of protein (groups) required to explain all peptides. Ambiguous peptides
+    are not mapped to any group.
+    :param peptides_to_proteins: A dict with the peptide sequence as key and all mapping proteins as a list (value).
+    :param protein_separator: The separator to use when creating the label for protein groups.
+    :return: A dict with the peptide sequence as key and the protein / protein group accession as value (single entry
+             in a list for compatibility reasons).
+    """
+    # create list of PeptideToProteinMappings
+    mappings = [ProteinMappings(proteins) for proteins in peptides_to_proteins.values()]
+
+    # extract the smallest set of protein groups necessary to explain all peptides
+
+    # start with the peptides mapping to the smallest number of proteins (ie. partially unique ones)
+    mappings.sort(key=lambda x: x.n_proteins, reverse=False)
+
+    retained_proteins = set()
+    retained_protein_groups = list()
+
+    for mapping in mappings:
+        # if one of the accessions is already retained, simply ignore the rest
+        if any(True for accession in mapping.proteins if accession in retained_proteins):
+            continue
+
+        # create a new protein group
+        retained_proteins |= set(mapping.proteins)
+        retained_protein_groups.append(ProteinGroup(protein_separator.join(mapping.proteins), mapping.proteins))
+
+    # create a map of proteins to protein groups
+    protein_to_protein_group = dict()
+
+    for protein_group in retained_protein_groups:
+        for protein in protein_group.accessions:
+            protein_to_protein_group[protein] = protein_group
+
+    # remap the peptides
+    new_peptide_mappings = dict()
+
+    for sequence in peptides_to_proteins:
+        all_proteins = peptides_to_proteins[sequence]
+
+        # get all matching protein groups
+        matching_protein_groups = set()
+
+        for protein in all_proteins:
+            # if the protein is a subset protein, it was ignored
+            if protein not in protein_to_protein_group:
+                continue
+
+            matching_protein_groups.add(protein_to_protein_group[protein])
+
+        # if the peptide matches multiple protein groups, ignore it
+        if len(matching_protein_groups) > 1:
+            new_peptide_mappings[sequence] = None
+        elif len(matching_protein_groups) == 1:
+            new_peptide_mappings[sequence] = [list(matching_protein_groups)[0].label]
+        else:
+            # missing mappings are also represented by None
+            new_peptide_mappings[sequence] = None
+
+    return new_peptide_mappings
 
 
 def main():
@@ -177,8 +294,11 @@ def main():
 
     # map the proteins
     print("Mapping peptides to proteins...", end="")
-    peptides_to_protein = map_peptides_to_proteins(peptides, arguments["--fasta"])
+    peptides_to_protein = map_peptides_to_proteins(peptides, arguments["--fasta"], arguments["--ignore_il"])
     print("Done.")
+
+    if arguments["--protein_inference"]:
+        peptides_to_protein = do_protein_inference(peptides_to_protein, protein_separator)
 
     # write the new file
     write_extended_file(arguments["--input"], arguments["--output"], peptides_to_protein, column_separator,

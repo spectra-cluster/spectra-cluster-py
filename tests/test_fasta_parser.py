@@ -1,6 +1,8 @@
 import unittest
 import os
-from .context import fasta_parser
+import sys
+sys.path.insert(0, os.path.abspath('..'))
+import spectra_cluster.tools.fasta_paraser as fasta_parser
 
 
 class FastaParserTest(unittest.TestCase):
