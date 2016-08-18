@@ -200,6 +200,20 @@ class Spectrum:
         start = self.title.find("#title=")
         return self.title[start + 7:]
 
+    def get_clean_sequence_psms(self):
+        """
+        Returns all PSMs with all special characters
+        removed from the sequences.
+        :return: A tuple of PSMs
+        """
+        clean_psms = list()
+
+        for psm in self.psms:
+            clean_sequence = re.sub(r"[^A-Z]", "", psm.sequence.upper())
+            clean_psms.append(PSM(sequence=clean_sequence, ptms=psm.ptms))
+
+        return tuple(clean_psms)
+
     def get_clean_sequences(self):
         """
         Returns the identified sequences without any additional

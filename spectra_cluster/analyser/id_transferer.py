@@ -11,17 +11,21 @@ from .. import objects
 
 
 class IdTransferer(common.AbstractAnalyser):
-    def __init__(self, add_to_identified=False, add_to_unidentified=True):
+    def __init__(self, add_to_identified=False, add_to_unidentified=True, include_all_identified=False):
         """
         Creates a default IdTransferer object.
         :param add_to_identified: If set identifications are added to identified spectra.
         :param add_to_unidentified: If set identifications are added to unidentified spectra.
+        :param include_all_identified: If set identified spectra that are not part of reliable clusters
+         are returned as well. Additionally, if add_to_identified is set to false and
+         include_all_identified is set to true, the original identifications are returned unchanged.
         :return:
         """
         super().__init__()
         self.identification_references = list()
         self.add_to_identified = add_to_identified
         self.add_to_unidentified = add_to_unidentified
+        self.include_all_identified = include_all_identified
 
     def process_cluster(self, cluster):
         """
@@ -29,12 +33,23 @@ class IdTransferer(common.AbstractAnalyser):
         :param cluster: The cluster to process
         :return:
         """
-        # test whether the cluster should be processed at all
-        if self._ignore_cluster(cluster):
-            return
-
         # this only works on identified clusters
         if cluster.identified_spectra < 1:
+            return
+
+        # test whether the cluster should be processed at all
+        if self._ignore_cluster(cluster):
+            if self.include_all_identified:
+                # keep all identified spectra
+                for spectrum in cluster.get_spectra():
+                    if spectrum.is_identified():
+                        # just use the existing ids
+                        self.identification_references.append(
+                            IdentificationReference(
+                                spectrum.get_filename(),
+                                spectrum.get_id(),
+                                spectrum.get_clean_sequence_psms()))
+            # do not process this cluster any further
             return
 
         # get the primary identification object
@@ -42,6 +57,15 @@ class IdTransferer(common.AbstractAnalyser):
 
         # add it to all spectra
         for spectrum in cluster.get_spectra():
+            # save the original identification if keep all identified is set
+            if spectrum.is_identified() and self.include_all_identified and not self.add_to_identified:
+                self.identification_references.append(
+                    IdentificationReference(
+                        spectrum.get_filename(),
+                        spectrum.get_id(),
+                        spectrum.get_clean_sequence_psms()))
+                continue
+
             # make sure the identification should be added to the spectrum
             if not self.add_to_identified and spectrum.is_identified():
                 continue

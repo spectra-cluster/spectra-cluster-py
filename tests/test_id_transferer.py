@@ -47,3 +47,30 @@ class IdTransfererTest(unittest.TestCase):
             analyser.process_cluster(cluster)
 
         self.assertEqual(3151, len(analyser.identification_references))
+
+    def test_keep_identified(self):
+        parser = clustering_parser.ClusteringParser(self.testfile)
+        analyser = id_transferer.IdTransferer(False, True, True)
+
+        for cluster in parser:
+            analyser.process_cluster(cluster)
+
+        self.assertEqual(3151, len(analyser.identification_references))
+        self.assertEqual(1, len(analyser.identification_references[11].psms))
+        self.assertEqual("HQGVMVGMGQK", analyser.identification_references[11].psms[0].sequence)
+        self.assertEqual("/home/jg/Projects/ebi-pride/pride-cluster-2/chimeric-spectra-generator/src/test/resources/PRD000001.st.id.mgf",
+                         analyser.identification_references[11].filename)
+
+        ref4 = analyser.identification_references[4]
+        self.assertEqual(1, len(ref4.psms))
+        sequence_counts = dict()
+
+        for id_ref in analyser.identification_references[2:5]:
+            for psm in id_ref.psms:
+                if psm.sequence not in sequence_counts:
+                    sequence_counts[psm.sequence] = 1
+                else:
+                    sequence_counts[psm.sequence] += 1
+
+        self.assertEqual(2, sequence_counts["MEGIGLK"])
+        self.assertEqual(1, sequence_counts["ASDA"])

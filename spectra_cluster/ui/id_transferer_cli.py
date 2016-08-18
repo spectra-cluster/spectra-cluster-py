@@ -15,6 +15,7 @@ Usage:
                        [--min_size=<size>] [--min_ratio=<ratio>]
                        [--min_identified=<spectra>]
                        [(--only_identified | --only_unidentified)]
+                       [--return_all_identified]
   id_transferer_cli.py (--help | --version)
 
 Options:
@@ -26,6 +27,10 @@ Options:
   --min_identified=<spectra>           May specify the minimum number of identified spectra a cluster must have.
   --only_identified                    If set, only identified spectra will be reported.
   --only_unidentified                  If set, only unidentified spectra will be reported.
+  --return_all_identified              If set, originally identified spectra are returned irrespective of in which
+                                       cluster they are present. Additionally, if this option is set together with
+                                       the --only_unidentified option, all originally identified spectra are returned
+                                       unchanged.
   -h, --help                           Print this help message.
   -v, --version                        Print the current version.
 """
@@ -48,12 +53,14 @@ def create_analyser(arguments):
     :param arguments: The command line parameters
     :return: An IdTransferer object
     """
-    analyser = id_transferer.IdTransferer()
+    analyser = id_transferer.IdTransferer(True, True, False)
 
     if arguments["--only_identified"]:
         analyser.add_to_unidentified = False
     if arguments["--only_unidentified"]:
         analyser.add_to_identified = False
+    if arguments["--return_all_identified"]:
+        analyser.include_all_identified = True
 
     analyser.min_size = int(arguments["--min_size"])
     analyser.min_ratio = float(arguments["--min_ratio"])
