@@ -15,6 +15,7 @@ class ClusteringParser:
     def __init__(self, clustering_file):
         """
         Processes the passed .clustering file
+
         :param clustering_file: Path to the file to process
         :return:
         """
@@ -26,6 +27,7 @@ class ClusteringParser:
     def _get_iterator(self):
         """
         Iterates over all clusters in a file
+
         :return: The next Cluster
         """
         spectra = list()
@@ -82,6 +84,7 @@ class ClusteringParser:
     def _parse_spec_line(line):
         """
         Parses a .clustering SPEC line and creates the corresponding PSM object
+
         :param line: A String representing the SPEC line.
         :return: A PSM object.
         """
@@ -112,6 +115,7 @@ class ClusteringParser:
         """
         Creates a list of PSM objects based on the information in the
         clustering's file SPEC line.
+
         :param sequences: List of peptide sequences observed
         :param ptm_strings: List of PTM string definitions
         :return: List of PSM objects
@@ -138,6 +142,7 @@ class ClusteringParser:
     def _parse_ptms(ptm_string):
         """
         Creates a list of PTMs based on a PTM specification string.
+
         :param ptm_string: String defining the PTMs in a .clustering SPEC line.
         :return: List of PTMs
         """

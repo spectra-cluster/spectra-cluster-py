@@ -14,12 +14,13 @@ class IdTransferer(common.AbstractAnalyser):
     def __init__(self, add_to_identified=False, add_to_unidentified=True, include_all_identified=False):
         """
         Creates a default IdTransferer object.
+
         :param add_to_identified: If set identifications are added to identified spectra.
         :param add_to_unidentified: If set identifications are added to unidentified spectra.
         :param include_all_identified: If set identified spectra that are not part of reliable clusters
          are returned as well. Additionally, if add_to_identified is set to false and
          include_all_identified is set to true, the original identifications are returned unchanged.
-        :return:
+
         """
         super().__init__()
         self.identification_references = list()
@@ -30,6 +31,7 @@ class IdTransferer(common.AbstractAnalyser):
     def process_cluster(self, cluster):
         """
         Transfers ids to spectra based on the cluster's properties
+
         :param cluster: The cluster to process
         :return:
         """
@@ -81,6 +83,7 @@ class IdTransferer(common.AbstractAnalyser):
         """
         Extracts the most common identification(s) from a cluster
         and returns it as a PSM object.
+
         :param cluster: Cluster to extract the most common PSM from.
         :return: Most common PSMs as a list
         """
@@ -106,6 +109,7 @@ class IdentificationReference:
     def __init__(self, filename, spec_id, psms):
         """
         Creates a new instance of the identification reference.
+
         :param filename: Original peak list filename.
         :param spec_id: The spectrum's id within this file.
         :param psms: A list of PSM objects

@@ -12,6 +12,7 @@ class Cluster:
     """
     def __init__(self, cluster_id, precursor_mz, consensus_mz, consensus_intens, spectra):
         """ Creates a new cluster object
+
         :param cluster_id: The cluster's id
         :param precursor_mz: The cluster's average precursor m/z
         :param consensus_mz: A list of doubles holding the consensus spectrum's m/z values
@@ -32,6 +33,7 @@ class Cluster:
         This function calculates additional properties such as most common
         sequence, max I/L ignorant ratio, number of identified spectra etc.
         It should always be called if the spectra object is changed.
+
         :return:
         """
         self.n_spectra = len(self._spectra)
@@ -77,6 +79,7 @@ class Cluster:
         Returns the stored spectra in a tuple. These object should
         not be changed. Otherwise, the cluster's statistics may no
         longer be accurate.
+
         :return: A tuple containing the cluster's spectra
         """
         return tuple(self._spectra)
@@ -84,8 +87,8 @@ class Cluster:
     def set_spectra(self, new_spectra):
         """
         Updates the cluster's stored spectra
+
         :param new_spectra: A list of PSM objects.
-        :return:
         """
         self._spectra = list(new_spectra)
         self._update_properties()
@@ -96,10 +99,11 @@ class Cluster:
         Calculates the sequence counts based on
         the passed spectra. PTMs are ignored for this
         assessment
+
         :param spectra: The spectra to derive the sequence counts from.
         :param ignore_i_l: If set I and L are treated as equivalent. If set all I are
-        replace by L and the sequences in the returned map may not correspond to the
-        originally identified sequences.
+          replace by L and the sequences in the returned map may not correspond to the
+          originally identified sequences.
         :return: A dict with a sequence as key and the number of occurrences as value.
         """
         sequence_counts = dict()
@@ -130,6 +134,7 @@ class Spectrum:
     def __init__(self, title, precursor_mz, charge, taxids, psms):
         """
         Creates a new Spectrum reference.
+
         :param title: The spectrum's title.
         :param precursor_mz: Measured precursor m/z
         :param charge: Charge state
@@ -153,6 +158,7 @@ class Spectrum:
         The originally filename can optionally be encoded
         in the title string. If present this filename is returned
         otherwise None
+
         :return: Original filename or None if not present
         """
         if "#file=" not in self.title:
@@ -171,6 +177,7 @@ class Spectrum:
         The spectrum's id can optionally be encoded
         in the title string. If present this id is
         returned, otherwise None.
+
         :return: Original spectrum id or None if not present
         """
         if "#id=" not in self.title:
@@ -192,6 +199,7 @@ class Spectrum:
         encoded, the whole title string is returned. Therefore, this
         function should always be used if the reader expects
         to access the original spectrum's title.
+
         :return: The original spectrum's title
         """
         if "#title=" not in self.title:
@@ -204,6 +212,7 @@ class Spectrum:
         """
         Returns all PSMs with all special characters
         removed from the sequences.
+
         :return: A tuple of PSMs
         """
         clean_psms = list()
@@ -218,6 +227,7 @@ class Spectrum:
         """
         Returns the identified sequences without any additional
         characters and only using high-caps.
+
         :return: Identified sequences
         """
         clean_sequences = set()
@@ -231,6 +241,7 @@ class Spectrum:
     def is_identified(self):
         """
         Checks whether the spectrum was identified.
+
         :return: boolean
         """
         if self.psms is None:
@@ -242,6 +253,7 @@ class Spectrum:
         """
         Tests whether this Spectrum class is describing the same spectrum as the
         passed other instance.
+
         :param other: Object to compare to
         :return: Boolean indicating whether both object are equal.
         """
@@ -283,6 +295,7 @@ class PSM:
     def __init__(self, sequence, ptms):
         """
         Creates a new PSM object.
+
         :param sequence: The sequence associated with the PSM.
         :param ptms: A set of PTMs
         :return:
@@ -294,6 +307,7 @@ class PSM:
         """
         PSMs are defined based on the sequence and the
         PTMs.
+
         :param other: The class to compare to
         :return: Boolean indicating whether both objects represent the same PSM.
         """
@@ -339,6 +353,7 @@ class PTM:
     def __init__(self, position, accession):
         """
         Creates a new PTM object
+
         :param position: 1-based position within the peptide (0 for terminus)
         :param accession: MOD accession of the modification.
         :return:
@@ -350,6 +365,7 @@ class PTM:
         """
         PTMs are defined based on the position and the
         accession.
+
         :param other: The class to compare to
         :return: Boolean indicating whether both objects represent the same PTM.
         """

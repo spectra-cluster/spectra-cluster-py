@@ -1,16 +1,19 @@
-.. spectra-cluster-py documentation master file, created by
-   sphinx-quickstart on Tue Oct 25 12:59:40 2016.
-   You can adapt this file completely to your liking, but it should at least
-   contain the root `toctree` directive.
+spectra-cluster-py - Analysing clustering results
+=================================================
 
-Welcome to spectra-cluster-py's documentation!
-==============================================
+The spectra-cluster-py project is a collection of tools
+and APIs that help analysing and working with MS/MS spectrum
+clustering results in the .clustering format. This format
+is currently used by the spectra-cluster algorithm and the
+output format of the spectra-cluster-cli tool.
 
 Contents:
 
 .. toctree::
    :maxdepth: 2
 
+   clustering_parser
+   objects
 
 
 Indices and tables

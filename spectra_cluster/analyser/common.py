@@ -12,7 +12,7 @@ class AbstractAnalyser:
     """
     def __init__(self):
         """Initialises the default parameters to filter clusters.
-        :return:
+
         """
         self.min_size = 0
         self.max_size = sys.maxsize
@@ -25,6 +25,7 @@ class AbstractAnalyser:
 
     def _ignore_cluster(self, cluster):
         """Tests whether the passed cluster should be ignored
+
         :param: cluster Cluster to test.
         :return: Boolean indicating whether the cluster should be ignored.
         """
@@ -52,6 +53,7 @@ class AbstractAnalyser:
     def process_cluster(self, cluster):
         """
         Processes the defined cluster.
+
         :param cluster: Cluster to process.
         :return:
         """

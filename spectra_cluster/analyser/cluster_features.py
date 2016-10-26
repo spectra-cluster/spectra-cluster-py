@@ -42,9 +42,10 @@ class ClusterAsFeatures(common.AbstractAnalyser):
     @staticmethod
     def extractBasicSampleName(spec_ref):
         """
-        Exctracts the sample name by returning everything before
+        Extracts the sample name by returning everything before
         the first "." from the title (often used by ProteoWized
-        converterd files)
+        converted files)
+
         :param spec_ref: The spectrum object.
         :return: The sample name
         """
@@ -58,8 +59,9 @@ class ClusterAsFeatures(common.AbstractAnalyser):
 
     def process_cluster(self, cluster):
         """
-        Exctracts how many spectrum per sample were
+        Extracts how many spectrum per sample were
         observed.
+
         :param cluster: The cluster to process
         :return:
         """

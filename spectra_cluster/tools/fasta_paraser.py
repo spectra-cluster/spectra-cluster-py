@@ -16,6 +16,7 @@ class FastaParser:
         """
         Creates an iterator over all entries within the FASTA field
         using yield
+
         :yield: FastaEntry objects
         """
         with open(self.fasta_filename, "r") as in_file:
@@ -46,6 +47,7 @@ class FastaParser:
     def __iter__(self):
         """
         Returns an iterator over all fasta entries.
+
         :return:
         """
         return self._get_iterator()
@@ -61,6 +63,7 @@ class FastaEntry:
     def containsSubsequence(self, sequence):
         """
         Tests whether the passed sequence is part of the FASTA sequence
+
         :param sequence: The sub-sequence (ie peptide) to test.
         :return: boolean whether the sequence in a subsequence of the entry.
         """
@@ -69,6 +72,7 @@ class FastaEntry:
     def getAccession(self, format="detect"):
         """
         Retrieves the accession for the current FASTA entry.
+
         :param format: The header line format to expect. If set to "detect" the function tries to guess the format.
                        The following formats are supported "detect", "uniprot", "first_word"
         :return:
@@ -99,6 +103,7 @@ class FastaEntry:
     def detect_header_format(header_line):
         """
         Detects the header format and returns the possible format name.
+
         :param header_line: The header line to analyse
         :return: The format name ("uniprot", "first_word")
         """

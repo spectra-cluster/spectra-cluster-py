@@ -50,6 +50,7 @@ def create_analyser(arguments):
     """
     Creates an IdTransferer analyser based on the command line
     parameters.
+
     :param arguments: The command line parameters
     :return: An IdTransferer object
     """
@@ -75,6 +76,7 @@ def write_results(identification_references, output_filename):
     """
     Writes the identification references as a tab delimited text file
     to the specified path.
+
     :param identification_references: List of identification references.
     :param output_filename: Path to the output filename
     :return:
@@ -91,7 +93,7 @@ def write_results(identification_references, output_filename):
 def main():
     """
     Primary entry function for the CLI.
-    :return:
+
     """
     arguments = docopt(__doc__, version='id_transferer_cli 1.0 BETA')
 
