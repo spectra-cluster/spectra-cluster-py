@@ -10,7 +10,7 @@ and APIs that help analysing and working with MS/MS spectrum
 clustering results in the **.clustering format**.
 
 For more information have a look at our
-`documentation <http://
+`documentation <http://spectra-cluster-py.readthedocs.io/en/latest/>`_
 
 The .clustering format
 ======================
