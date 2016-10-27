@@ -2,6 +2,10 @@
 spectra-cluster-py - Analysing clustering results
 #################################################
 
+.. image:: https://readthedocs.org/projects/spectra-cluster-py/badge/?version=latest
+   :target: http://spectra-cluster-py.readthedocs.io/en/latest/?badge=latest
+   :alt: Documentation Status
+
 Welcome
 =======
 
