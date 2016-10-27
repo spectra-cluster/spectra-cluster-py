@@ -1,16 +1,16 @@
-"""The IdTransferer analyser transfers identifications to spectra part of a cluster.
-
-The analysis is run by calling 'process_cluster' repeatedly. The transferred identifications
-are stored in the 'identification_references' member variable.
-
-@author Johannes Griss
-"""
-
 from . import common
 from .. import objects
 
 
 class IdTransferer(common.AbstractAnalyser):
+    """
+    The IdTransferer analyser transfers identifications to spectra part of a cluster.
+
+    The analysis is run by calling 'process_cluster' repeatedly. The transferred identifications
+    are stored in the 'identification_references' member variable.
+
+    :ivar identification_references: A list of IdentificationReferences
+    """
     def __init__(self, add_to_identified=False, add_to_unidentified=True, include_all_identified=False):
         """
         Creates a default IdTransferer object.
@@ -33,7 +33,6 @@ class IdTransferer(common.AbstractAnalyser):
         Transfers ids to spectra based on the cluster's properties
 
         :param cluster: The cluster to process
-        :return:
         """
         # this only works on identified clusters
         if cluster.identified_spectra < 1:
@@ -104,7 +103,13 @@ class IdTransferer(common.AbstractAnalyser):
 
 
 class IdentificationReference:
-    """Contains the main identification data."""
+    """
+    Contains the main identification data.
+
+    :ivar filename: The original peak list filename
+    :ivar spec_id: The spectrum's id within the source file
+    :ivar psms: A list of PSM objects
+    """
 
     def __init__(self, filename, spec_id, psms):
         """
@@ -113,7 +118,6 @@ class IdentificationReference:
         :param filename: Original peak list filename.
         :param spec_id: The spectrum's id within this file.
         :param psms: A list of PSM objects
-        :return:
         """
         self.filename = filename
         self.spec_id = spec_id
