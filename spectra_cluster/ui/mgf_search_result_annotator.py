@@ -18,7 +18,7 @@ Archive database.
 
 Usage:
     mgf_search_result_annotator.py --input=<spectra.mgf> --search=<search_result.mzid> --output=<annotated_spectra.mgf>
-                                   [--format <FORMAT>] [--fdr <FDR>] [--decoy_string=<REVERSED>]
+                                   [--format=<MSGF+>] [--fdr=<0.01>] [--decoy_string=<REVERSED>]
     mgf_search_result_annotator.py (--help | --version)
 
 Options:
@@ -28,10 +28,10 @@ Options:
                                           Otherwise, the matching between identification data and
                                           spectra may go wrong.
     -o, --output=<annotated_spectra.mgf>  Path to where the annotated MGF file should be written to.
-    -f, --format <FORMAT>                 The format of the search results. Possible options
+    -f, --format <MSGF+>                  The format of the search results. Possible options
                                           are "MSGF+", "MSAmanda", "Scaffold", "XTandem".
                                           [default: "MSGF+"]
-    -d, --fdr                             Define the FDR by which the input search results are
+    -d, --fdr=<0.01>                      Define the FDR by which the input search results are
                                           filtered. If the FDR is set to '2' for Scaffold output,
                                           the original cut-off is used. [default: 0.01]
     --decoy_string=<REVERSED>             The string to use to identify decoy proteins.
@@ -44,6 +44,7 @@ from docopt import docopt
 import sys
 import csv
 import operator
+import os
 from pyteomics import mzid
 
 
@@ -197,7 +198,7 @@ def parser_mzident(filename, score_field, title_field=None,
                     if spec_ref["spectrumID"][:6] == "index=":
                         mzid_psm["index"] = int(spec_ref["spectrumID"][6:])
                     else:
-                        mzid_psm["index"] = None
+                        mzid_psm["index"] = Psm.MISSING_INDEX
 
                     # spectrum title is optional in mzIdentML
                     if title_field is not None:
@@ -263,9 +264,17 @@ def parse_xtandem_mzident(filename, fdr, decoy_string="REVERSED"):
     :return: A list of PSM objects.
     """
 
-    return parser_mzident(filename, score_field="X\\!Tandem:expect",
+    psms = parser_mzident(filename, score_field="X\\!Tandem:expect",
                           title_field="spectrumID", decoy_string=decoy_string,
                           fdr=fdr)
+
+    # fix the incorrect titles
+    for psm in psms:
+        if "RTINSECONDS=" in psm.get_title():
+            offset = psm.title.find("RTINSECONDS=")
+            psm.title = psm.title[:offset].strip()
+
+    return psms
 
 
 def parse_scaffold(filename, fdr, decoy_string="REVERSED"):
@@ -347,7 +356,7 @@ def fix_missing_index(search_results, title_to_index, echo=False):
     :param search_results: A list of PSM objects.
     :param title_to_index: A dict with the spectra's titles as key and their index as value.
     :param echo: Boolean indicating whether a summary should be printed to stdout (Default false)
-
+    :return: A float representing the fraction of matched missing indexes
     """
     fixed_indexes = 0
     has_missing_index = 0
@@ -364,6 +373,13 @@ def fix_missing_index(search_results, title_to_index, echo=False):
 
     if echo:
         print("Matched " + str(fixed_indexes) + "/" + str(has_missing_index) + " missing indices")
+
+    if has_missing_index > 0:
+        return fixed_indexes / has_missing_index
+    else:
+        # if no missing indexes are present, simply return 1 to
+        # indicate that everything is matched
+        return 1
 
 
 def write_annotated_mgf(input_mgf, sequence_dictionary, output_mgf):
@@ -395,31 +411,54 @@ def write_annotated_mgf(input_mgf, sequence_dictionary, output_mgf):
 def main():
     arguments = docopt(__doc__, version='mgf_search_result_annotator.py 1.0 BETA')
 
+    input_file = arguments["--input"]
+    search_file = arguments["--search"]
+    output_file = arguments["--output"]
+
+    # make sure input and search file exist
+    if not os.path.isfile(input_file):
+        print("Error: Cannot find peak list file '" + input_file + "'")
+        sys.exit(1)
+    if not os.path.isfile(search_file):
+        print("Error: Cannot find search result file '" + search_file)
+        sys.exit(1)
+
+    # make sure the output file does not exist
+    if os.path.isfile(output_file):
+        print("Error: Output file '" + output_file + "' already exists")
+        sys.exit(1)
+
     # Create the title => index map
-    title_to_index = create_title_to_index_dict(arguments["INPUT_FILE"])
+    title_to_index = create_title_to_index_dict(input_file)
 
     # Process the search result file
     search_results = list()
     search_format = arguments["--format"]
 
+    fdr = float(arguments["--fdr"])
+
     if search_format.lower() == "msgf++":
-        search_results = parse_msgfplus(arguments["--search"], arguments["--fdr"])
+        search_results = parse_msgfplus(search_file, fdr)
     elif search_format.lower() == "msamanda":
-        search_results = parse_msamanda(arguments["--search"], arguments["--fdr"], arguments["--input"])
+        search_results = parse_msamanda(search_file, fdr, input_file)
     elif search_format.lower() == "scaffold":
-        search_results = parse_scaffold(filename=arguments["--search"], fdr=arguments["--fdr"],
+        search_results = parse_scaffold(filename=search_file, fdr=fdr,
                                         decoy_string=arguments["--decoy_string"])
     elif search_format.lower() == "xtandem":
-        search_results = parse_xtandem_mzident(filename=arguments["--search"], fdr=arguments["--fdr"],
+        search_results = parse_xtandem_mzident(filename=search_file, fdr=fdr,
                                                decoy_string=arguments["--decoy_string"])
     else:
         print("Error: Unknown search engine result format set. "
-              "Allowed values are: [MSGF+, MSAmanda, Scaffold]")
+              "Allowed values are: [MSGF+, MSAmanda, Scaffold, XTandem]")
 
-    print("Extracted " + str(len(search_results)) + " PSMs @ FDR = " + arguments["--fdr"])
+    print("Extracted " + str(len(search_results)) + " PSMs @ FDR = " + str(fdr))
 
     # fix missing indices
-    fix_missing_index(search_results, title_to_index, True)
+    rel_matched = fix_missing_index(search_results, title_to_index, True)
+
+    if rel_matched != 1:
+        print("Error: Failed to match missing indexes.")
+        sys.exit(1)
 
     # convert the search results into a dictionary
     sequence_dictionary = dict()
@@ -434,9 +473,9 @@ def main():
         sequence_dictionary[psm.get_index()] = psm.get_sequence()
 
     # Create the annotated MGF file
-    write_annotated_mgf(arguments["--input"], sequence_dictionary, arguments["--output"])
+    write_annotated_mgf(input_file, sequence_dictionary, output_file)
 
-    print("Annotated MGF file successfully written to " + arguments["--output"])
+    print("Annotated MGF file successfully written to " + output_file)
 
 if __name__ == "__main__":
     main()
