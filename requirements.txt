@@ -1,3 +1,4 @@
 docopt
 pyinstaller
 pyteomics
+numpy
