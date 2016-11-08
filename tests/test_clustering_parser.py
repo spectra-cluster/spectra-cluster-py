@@ -52,9 +52,15 @@ class ClusteringParserTest(unittest.TestCase):
         parser = clustering_parser.ClusteringParser(self.testfile)
 
         n_clusters = 0
+        seen_clusters = set()
 
         for cluster in parser:
             n_clusters += 1
+
+            if cluster.id in seen_clusters:
+                self.fail(cluster.id + " was encountered twice.")
+
+            seen_clusters.add(cluster.id)
 
             if n_clusters == 1:
                 self.assertEqual("1cc813a1-4e75-4c1d-99aa-752312fbe554", cluster.id)
@@ -78,5 +84,13 @@ class ClusteringParserTest(unittest.TestCase):
                 self.assertEqual(2/3, cluster.max_il_ratio)
                 self.assertEqual(1, len(cluster.max_sequences))
                 self.assertEqual("MEGIGLK", cluster.max_sequences[0])
+
+            # make sure the last cluster is read correctly
+            if n_clusters == 838:
+                self.assertEqual("25ed3015-f2d8-4df1-ac96-c23076c96bfe", cluster.id)
+                self.assertEqual(1, cluster.max_ratio)
+                self.assertEqual(1, cluster.max_il_ratio)
+                self.assertEqual(1, len(cluster.max_sequences))
+                self.assertEqual("MQEAMTQEVSDVFSDTTTPIK", cluster.max_sequences[0])
 
         self.assertEqual(838, n_clusters)

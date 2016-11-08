@@ -78,6 +78,7 @@ class ClusteringParser:
 
         # process the last cluster
         if cur_id is not None:
+            cluster = objects.Cluster(cur_id, precursor_mz, consensus_mz, consensus_intens, spectra)
             yield cluster
 
     @staticmethod
