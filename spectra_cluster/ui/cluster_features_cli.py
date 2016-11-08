@@ -80,9 +80,6 @@ def main():
     """
     arguments = docopt(__doc__, version='id_transferer_cli 1.0 BETA')
 
-    print(arguments)
-    sys.exit(1)
-
     # make sure the input file exists
     if not os.path.isfile(arguments['--input']):
         print("Error: Cannot find input file '" + arguments["--input"] + "'")
