@@ -79,12 +79,20 @@ own scripts to analyse MS/MS clustering results in the
 You can find the complete API documentation
 :doc:`here <api/index>`.
 
-Documentation
-=============
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+
+   self
+
+.. toctree::
+   :maxdepth: 2
+   :hidden:
+
+   tools/index
+   api/index
 
 * :doc:`contents` for a complete overview
 * :ref:`Search page <search>` search the documentation
 * :ref:`genindex`
 * :ref:`modindex`
-
-
