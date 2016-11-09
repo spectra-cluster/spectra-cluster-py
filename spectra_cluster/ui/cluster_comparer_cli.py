@@ -61,21 +61,27 @@ def create_analyser(arguments):
     return analyser
 
 
-def write_results(identification_references, output_filename):
+def write_results(tables, output_filename):
     """
     Writes the statistics as a tab delimited text file
     to the specified path.
-    :param identification_references: List of identification references.
+    :param analyser: List of tables.
     :param output_filename: Path to the output filename
     :return:
     """
     with open(output_filename, "w") as writer:
-        writer.write("filename\tspec_id\tsequence\n")
+        writer.write("statistics\n\n\n")
+        for table in tables:
+            (table_name, table_rows) = table
+            writer.write("-"*60 + "\n")
+            writer.write(table_name + "\n")
+            writer.write("-"*60 + "\n")
+            writer.write(table_rows)
+            writer.write("-"*60 + "\n\n\n\n")
+#        for id_ref in identification_references:
+#            psm_string = ";".join([str(p) for p in identification_references.psms])
 
-        for id_ref in identification_references:
-            psm_string = ";".join([str(p) for p in identification_references.psms])
-
-            writer.write(id_ref.filename + "\t" + id_ref.spec_id + "\t" + psm_string + "\n")
+ #           writer.write(id_ref.filename + "\t" + id_ref.spec_id + "\t" + psm_string + "\n")
 
 
 def main():
@@ -109,7 +115,6 @@ def main():
     print("Parsing input .clustering file...")
     analyser.dealing_list = 0 #store the cluster in list0 
     for cluster in parser0:
-        print("checking" + cluster.id)
         analyser.process_cluster(cluster)
     analyser.dealing_list = 1 #store the cluster in list1 
     for cluster in parser1:
@@ -117,12 +122,16 @@ def main():
 
     #do the compare
     analyser.compare() 
+    analyser.caculate_network_statistics()
+
+    #do the statistics preparing 
+    analyser.prepare_statistics()
 
     #for debuging
-    analyser.output_debug_info()
+#    analyser.output_debug_info()
 
     # create the output file
-#    write_results(analyser.identification_references, arguments["--output"])
+    write_results(analyser.tables, arguments["--output"])
 
     print("Results written to " + arguments["--output"])
 
