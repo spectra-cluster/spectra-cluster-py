@@ -10,7 +10,6 @@ Usage:
                        [--peptide_column=<column_name>] [--protein_column=<column_name>]
                        [--protein_separator=<separator>] [--column_separator=<separator>]
                        [--ignore_il]
-                       [--protein_inference]
   protein_annotator.py (--help | --version)
 
 Options:
@@ -22,10 +21,6 @@ Options:
   --protein_separator=<separator>       Separator to separate multiple protein entries [default: ;]
   --column_separator=<separator>        Separator to separate columns in the file [default: TAB]
   --ignore_il                           If set I/L are treated as synonymous.
-  --protein_inference                   If set protein inference is automatically done and protein groups formed. The
-                                        approach follows Occam's razor and only the smallest set of protein (groups)
-                                        required to explain all peptides is reported. Ambiguous peptides (that can
-                                        be mapped to two protein groups) are not assigned to any proteins (empty fields).
   -h, --help                            Print this help message.
   -v, --version                         Print the current version.
 """
@@ -45,6 +40,7 @@ from spectra_cluster.tools import fasta_paraser
 def extract_separator(user_separator):
     """
     Parses the user defined separator and returns the matching character.
+
     :param user_separator: The user defined separator.
     :return: The parsed character
     """
@@ -58,6 +54,7 @@ def load_peptides(input_file, peptide_column, column_separator):
     """
     Parses the input file and extracts all peptides occuring within the file. Peptide strings
     are cleaned (only valid characters retained) and returned as a set.
+
     :param input_file: The file to parse
     :param peptide_column: The column header to extract the peptides from.
     :param column_separator: The separator used for the columns
@@ -82,6 +79,7 @@ def load_peptides(input_file, peptide_column, column_separator):
 def map_peptides_to_proteins(peptides, fasta_filename, ignore_il=False):
     """
     Maps the peptides to the proteins in the passed FASTA file.
+
     :param peptides: A iterable containing the pepitde strings.
     :param fasta_filename: Filename of the FASTA file to parse.
     :param ignore_il: If set to True I/L are treated as the same AA.
@@ -118,6 +116,7 @@ def write_extended_file(input_filename, output_filename, peptides_to_protein, co
                         peptide_column, protein_column):
     """
     Creates the new file which only is a copy of the current file with the protein column added to the end
+
     :param input_filename: The input filename path.
     :param output_filename: The output filename path.
     :param peptides_to_protein: A dict containing the peptide string as key and a list of protein acccessions as values.
@@ -185,6 +184,7 @@ class ProteinGroup:
     def __init__(self, label, accessions):
         """
         Creates a new protein group object
+
         :param label: The label of the protein group.
         :param accessions: The accessions of all member proteins
         :return:
@@ -198,13 +198,18 @@ class ProteinGroup:
 
 def do_protein_inference(peptides_to_proteins, protein_separator=";"):
     """
-    Creates the smalles set of protein (groups) required to explain all peptides. Ambiguous peptides
+    Warning: This function currently does **NOT** work correctly!
+
+    Creates the smallest set of protein (groups) required to explain all peptides. Ambiguous peptides
     are not mapped to any group.
+
     :param peptides_to_proteins: A dict with the peptide sequence as key and all mapping proteins as a list (value).
     :param protein_separator: The separator to use when creating the label for protein groups.
     :return: A dict with the peptide sequence as key and the protein / protein group accession as value (single entry
              in a list for compatibility reasons).
     """
+    raise ArithmeticError()
+
     # create list of PeptideToProteinMappings
     mappings = [ProteinMappings(proteins) for proteins in peptides_to_proteins.values()]
 
@@ -263,7 +268,6 @@ def do_protein_inference(peptides_to_proteins, protein_separator=";"):
 def main():
     """
     Primary entry function for the CLI.
-    :return:
     """
     arguments = docopt(__doc__, version='protein_annotator 1.0 BETA')
 
@@ -297,8 +301,8 @@ def main():
     peptides_to_protein = map_peptides_to_proteins(peptides, arguments["--fasta"], arguments["--ignore_il"])
     print("Done.")
 
-    if arguments["--protein_inference"]:
-        peptides_to_protein = do_protein_inference(peptides_to_protein, protein_separator)
+    # if arguments["--protein_inference"]:
+    #    peptides_to_protein = do_protein_inference(peptides_to_protein, protein_separator)
 
     # write the new file
     write_extended_file(arguments["--input"], arguments["--output"], peptides_to_protein, column_separator,
