@@ -1,7 +1,7 @@
 """cluster_comparer_cli
 
 Command line interface to the spectra-cluster cluster as comparer tool. This tool compare two
-cluster lists and give the statistics between them.
+cluster lists and give the statistics of the difference.
 
 Usage:
   cluster_comparer_cli.py --input <results1.clustering,results2.clustering>
@@ -57,7 +57,6 @@ def create_analyser(arguments):
     if arguments["--min_identified"] is not None:
         analyser.min_identified_spectra = int(arguments["--min_identified"])
 
-
     return analyser
 
 
@@ -70,7 +69,7 @@ def write_results(tables, output_filename):
     :return:
     """
     with open(output_filename, "w") as writer:
-        writer.write("statistics\n\n\n")
+        writer.write("statistics of the differences\n\n\n")
         for table in tables:
             (table_name, table_rows) = table
             writer.write("-"*60 + "\n")
@@ -78,10 +77,6 @@ def write_results(tables, output_filename):
             writer.write("-"*60 + "\n")
             writer.write(table_rows)
             writer.write("-"*60 + "\n\n\n\n")
-#        for id_ref in identification_references:
-#            psm_string = ";".join([str(p) for p in identification_references.psms])
-
- #           writer.write(id_ref.filename + "\t" + id_ref.spec_id + "\t" + psm_string + "\n")
 
 
 def main():
@@ -90,7 +85,7 @@ def main():
     :return:
     """
     arguments = docopt(__doc__, version='cluster_comparer_cli 1.0 BETA')
-#    print(arguments)
+    print(arguments)
 #    sys.exit(1)
 
     # make sure the input file exists
@@ -99,35 +94,35 @@ def main():
         if not os.path.isfile(input_file):      
             print("Error: Cannot find input file '" + input_file + "'")
             sys.exit(1)
+
     # make sure the output file does not exist
     if os.path.isfile(arguments["--output"]):
         print("Error: Output file exists '" + arguments["--output"] + "'")
         sys.exit(1)
 
-    # create the id transferer based on the settings
+    # create the cluster comparer based on the settings
     analyser = create_analyser(arguments)
 
     # process all clusters
     parser0 = clustering_parser.ClusteringParser(input_files[0])
     parser1 = clustering_parser.ClusteringParser(input_files[1])
 
-
     print("Parsing input .clustering file...")
-    analyser.dealing_list = 0 #store the cluster in list0 
+    analyser.file_index = 0 #store the clusters in list0 
     for cluster in parser0:
         analyser.process_cluster(cluster)
-    analyser.dealing_list = 1 #store the cluster in list1 
+    analyser.file_index = 1 #store the clusters in list1 
     for cluster in parser1:
         analyser.process_cluster(cluster)
 
-    #do the compare
+    # do the compare
     analyser.compare() 
     analyser.caculate_network_statistics()
 
-    #do the statistics preparing 
+    # prepare the statistics 
     analyser.prepare_statistics()
 
-    #for debuging
+    # for debuging
 #    analyser.output_debug_info()
 
     # create the output file
