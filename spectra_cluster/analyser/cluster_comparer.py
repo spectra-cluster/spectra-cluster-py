@@ -42,8 +42,10 @@ class ClusterListsComparer(common.AbstractAnalyser):
         self.stars_length = 0
         self.starlets_length = 0
         self.standalone_star_num = 0
+        self.standalone_starlet_num = 0
         self.similarity_dist = dict()
         self.star_divide_factor_dist = dict()
+        self.starlet_divide_factor_dist = dict()
         self.cluster_size_dist = [{},{}]
         
         # output tables
@@ -203,68 +205,100 @@ class ClusterListsComparer(common.AbstractAnalyser):
             divide_factor = star.nb_num + star.spec_num - star.shared_spec_num
             self.star_divide_factor_dist[divide_factor] = self.star_divide_factor_dist.get(divide_factor,0) + 1
             if star.spec_num < star.shared_spec_num:
-                print("!!!!!!!!!!!!Wrong here, total spectra No is less than Shared Spectra with starlets")
+                print("!!!!!!!!!!!!Becareful, total spectra No is less than Shared Spectra with starlets")
                 print("with star " + star.id + "  " + str(star.spec_num) + "is less than" + str(star.shared_spec_num))
             if star.spec_num > star.shared_spec_num:
                 star_lost_spec_numt += star.spec_num - star.shared_spec_num
+
+        self.standalone_starlet_num += 1 
+        for key in self.starlets.keys():
+            starlet = self.starlets[key]
+            if starlet.nb_num == 0 :
+                self.standalone_starlet_num += 1 
+                continue
+            divide_factor = starlet.nb_num + starlet.spec_num - starlet.shared_spec_num
+            self.starlet_divide_factor_dist[divide_factor] = self.starlet_divide_factor_dist.get(divide_factor,0) + 1
+            if starlet.spec_num < starlet.shared_spec_num:
+                print("!!!!!!!!!!!!Becareful, total spectra No is less than Shared Spectra with starlets")
+                print("with star " + starlet.id + "  " + str(starlet.spec_num) + "is less than" + str(starlet.shared_spec_num))
+            if starlet.spec_num > starlet.shared_spec_num:
+                starlet_lost_spec_numt += starlet.spec_num - starlet.shared_spec_num
 
 
     def prepare_statistics(self):
         """
         Prepare the statistics output in row strings.
         """
-        tabs = "\t\t" 
 
         # statistics of clustering files
-        percentage0 = 100.0 * float(self.shared_spec_num)/float(self.cluster_spectra_num[0])
-        percentage1 = 100.0 * float(self.shared_spec_num)/float(self.cluster_spectra_num[1])
-        rows = "name %s number %s description\n" %(tabs, tabs)
-        rows += "cluster No %s%s %d %s in file0\n" % (tabs, tabs, len(self.cluster_lists[0]), tabs)
-        rows += "cluster No %s%s %d %s in file1\n" % (tabs, tabs, len(self.cluster_lists[1]), tabs)
-        rows += "identical cluster No %s%s %s %s between them\n" % (tabs, tabs, self.similarity_dist['10'], tabs)
-        rows += "spectrum No %s %d %s in file0\n" % (tabs, self.cluster_spectra_num[0], tabs)
-        rows += "spectrum No %s %d %s in file1\n" % (tabs,self.cluster_spectra_num[1], tabs)
-        rows += "shared spectrum No %s %d %s between them\n" % (tabs, self.shared_spec_num, tabs)
-        rows += "shared spectrum percent %s %.2f %s in file0\n" % (tabs, percentage0, tabs)
-        rows += "shared spectrum percent %s %.2f %s in file1\n" % (tabs, percentage1, tabs)
-        self.tables.append(('statistics of files', rows))
+        percentage0 = "%.2f" % (100.0 * float(self.shared_spec_num)/float(self.cluster_spectra_num[0]))
+        percentage1 = "%.2f" % (100.0 * float(self.shared_spec_num)/float(self.cluster_spectra_num[1]))
+        head = "{0:<25}{1:<20}{2:<20}\n".format("name", "number", "description")
+        rows = ""
+        rows += "{0:<25}{1:<20}{2:<20}\n".format("cluster No.", len(self.cluster_lists[0]), "in file0")
+        rows += "{0:<25}{1:<20}{2:<20}\n".format("cluster No.", len(self.cluster_lists[1]), "in file1")
+        rows += "{0:<25}{1:<20}{2:<20}\n".format("identical cluster No.", self.similarity_dist['10'], "between them")
+        rows += "{0:<25}{1:<20}{2:<20}\n".format("spectrum No", self.cluster_spectra_num[0], "in file0")
+        rows += "{0:<25}{1:<20}{2:<20}\n".format("spectrum No", self.cluster_spectra_num[1], "in file1")
+        rows += "{0:<25}{1:<20}{2:<20}\n".format("shared spectrum No", self.shared_spec_num, "between them")
+        rows += "{0:<25}{1:<20}{2:<20}\n".format("shared spectrum percent", percentage0, "in file0")
+        rows += "{0:<25}{1:<20}{2:<20}\n".format("shared spectrum percent", percentage1, "in file1")
+        self.tables.append(('statistics of files', head, rows))
 
         # distribution of cluster size in file0
-        rows = "cluster size %s No. %s percentage %s accumulate pecent\n" % (tabs, tabs, tabs)
+        head = '{0:<20}{1:<20}{2:<20}{3:<20}\n'.format("cluster size","No.", "percentage", "accumulate pecentage")
+        rows = ""
         len0 = len(self.cluster_lists[0])
         accumulate_num = 0
         for key in self.cluster_size_dist[0].keys():
             value = self.cluster_size_dist[0][key]
             accumulate_num += value
-            percent = 100 * value/len0
-            accum_percent = 100 * accumulate_num/len0
-            rows += "%d %s %d %s %.2f %s %.2f\n" % (key, tabs, value, tabs, percent, tabs,accum_percent)
-        self.tables.append(('distribution of cluster size in file0', rows))
+            percent = "%.2f" % (100 * value/len0)
+            accum_percent = "%.2f" % (100 * accumulate_num/len0)
+            rows += '{0:<20}{1:<20}{2:<20}{3:<20}\n'.format(key, value, percent, accum_percent)
+        self.tables.append(('distribution of cluster size in file0', head, rows))
         
-        rows = "cluster size %s No. %s percentage %s accumulate pecent\n" % (tabs, tabs, tabs)
+        head = '{0:<20}{1:<20}{2:<20}{3:<20}\n'.format("cluster size","No.", "percentage", "accumulate pecentage")
+        rows = ""
         len1 = len(self.cluster_lists[1])
         accumulate_num = 0
         for key in self.cluster_size_dist[1].keys():
             value = self.cluster_size_dist[1][key]
             accumulate_num += value
-            percent = 100 * value/len1
-            accum_percent = 100 * accumulate_num/len0
-            rows += "%d %s %d %s %.2f %s %.2f\n" % (key, tabs, value, tabs, percent, tabs,accum_percent)
-        self.tables.append(('distribution of cluster size in file1', rows) )
+            percent = "%.2f" % (100 * value/len1)
+            accum_percent = "%.2f" % (100 * accumulate_num/len1)
+            rows += '{0:<20}{1:<20}{2:<20}{3:<20}\n'.format(key, value, percent, accum_percent)
+        self.tables.append(('distribution of cluster size in file1', head, rows))
 
         # distribution of similarity
-        rows = "similarity score %s pairs of clusters %s percentage(stars) %s percentage(starlets)\n" % (tabs, tabs, tabs)
+        head = "{0:<20}{1:<20}{2:<20}{3:<20}\n".format("similarity score", "pairs of clusters", "percentage(stars)", "percentage(starlets)")
+        rows = ""
         for key in self.similarity_dist.keys():
             value = self.similarity_dist[key]
-            rows += "%d %s %d %s %.2f %s %.2f\n" % (int(key), tabs, int(value), tabs, 100.0*value/self.stars_length, tabs, 100.0*value/self.starlets_length)
-        self.tables.append(('distribution of similarity (identical = 10)', rows))
+#            rows += "%d %s %d %s %.2f %s %.2f\n" % (int(key),  int(value),  100.0*value/self.stars_length,  100.0*value/self.starlets_length)
+            percent_star = "%.2f" % (100.0*value/self.stars_length)
+            percent_starlet  = "%.2f" % (100.0*value/self.starlets_length)
+            rows += '{0:<20}{1:<20}{2:<20}{3:<20}\n'.format(key, value, percent_star, percent_starlet)
+        self.tables.append(('distribution of similarity (identical = 10)', head, rows))
 
         # distribution of star divide factors
-        rows = "divide factor %s No\n" % (tabs) 
+        head = '{0:<20}{1:<20}\n'.format("divide factor","No.")
+        rows = ""
         for key in self.star_divide_factor_dist.keys():
+            percent_star = "%.2f" % (100.0*value/self.stars_length)
             value = self.star_divide_factor_dist[key]
-            rows += "%d %s %d \n" %(int(key), tabs, int(value) )
-        self.tables.append(('distribution of star divide factors', rows))
+            rows += '{0:<20}{1:<20}{1:<20}\n'.format(key, value, percent_star)
+        self.tables.append(('distribution of star divide factors', head, rows))
+
+        # distribution of starlet divide factors
+        head = '{0:<20}{1:<20}\n'.format("divide factor","No.")
+        rows = ""
+        for key in self.starlet_divide_factor_dist.keys():
+            value = self.starlet_divide_factor_dist[key]
+            percent_starlet  = "%.2f" % (100.0*value/self.starlets_length)
+            rows += '{0:<20}{1:<20}{1:<20}\n'.format(key, value, percent_starlet)
+        self.tables.append(('distribution of starlet divide factors', head, rows))
+
 
     
     def output_debug_info(self):

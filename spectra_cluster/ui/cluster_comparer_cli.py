@@ -69,14 +69,15 @@ def write_results(tables, output_filename):
     :return:
     """
     with open(output_filename, "w") as writer:
-        writer.write("statistics of the differences\n\n\n")
+        writer.write("statistics of the differences two clustering files\n\n\n")
         for table in tables:
-            (table_name, table_rows) = table
-            writer.write("-"*60 + "\n")
+            (table_name, table_head, table_rows) = table
             writer.write(table_name + "\n")
-            writer.write("-"*60 + "\n")
+            writer.write("-"*80 + "\n")
+            writer.write(table_head)
+            writer.write("-"*80 + "\n")
             writer.write(table_rows)
-            writer.write("-"*60 + "\n\n\n\n")
+            writer.write("-"*80 + "\n\n\n\n")
 
 
 def main():
