@@ -1,4 +1,5 @@
-"""cluster_comparer_cli
+"""
+cluster_comparer_cli
 
 Command line interface to the spectra-cluster cluster as comparer tool. This tool compare two
 cluster lists and give the statistics of the difference.
@@ -6,7 +7,8 @@ cluster lists and give the statistics of the difference.
 Usage:
   cluster_comparer_cli.py --input <results1.clustering,results2.clustering>
 			  --output <comparer.txt>
-                       [--min_size <size>] [--min_ratio <ratio>]
+                       [--min_size <size>] 
+                       [--min_ratio <ratio>]
                        [--min_identified <spectra>]
                        [(--only_identified | --only_unidentified)]
   cluster_comparer_cli.py (--help | --version)
@@ -29,7 +31,8 @@ import os
 from docopt import docopt
     
 # make the spectra_cluster packages available
-sys.path.insert(0, os.path.abspath('..') + os.path.sep + "..")
+package_path = os.path.abspath(os.path.split(sys.argv[0])[0]) + os.path.sep + ".." + os.path.sep + ".."
+sys.path.insert(0, package_path)
 
 import spectra_cluster.analyser.cluster_comparer as cluster_comparer 
 import spectra_cluster.clustering_parser as clustering_parser
@@ -51,6 +54,7 @@ def create_analyser(arguments):
 
     if arguments["--min_size"]:
         analyser.min_size = int(arguments["--min_size"])
+
     if arguments["--min_ratio"]:
         analyser.min_ratio = float(arguments["--min_ratio"])
 
@@ -60,7 +64,7 @@ def create_analyser(arguments):
     return analyser
 
 
-def write_results(tables, output_filename):
+def write_results(tables, arguments):
     """
     Writes the statistics as a tab delimited text file
     to the specified path.
@@ -68,8 +72,14 @@ def write_results(tables, output_filename):
     :param output_filename: Path to the output filename
     :return:
     """
+    output_filename = arguments["--output"]
+    input_files = arguments['--input'].split(',', 1)
+
     with open(output_filename, "w") as writer:
         writer.write("statistics of the differences two clustering files\n\n\n")
+        writer.write("file0 " + input_files[0] + "\n")
+        writer.write("file1 " + input_files[1] + "\n\n\n")
+
         for table in tables:
             (table_name, table_head, table_rows) = table
             writer.write(table_name + "\n")
@@ -127,7 +137,7 @@ def main():
 #    analyser.output_debug_info()
 
     # create the output file
-    write_results(analyser.tables, arguments["--output"])
+    write_results(analyser.tables, arguments)
 
     print("Results written to " + arguments["--output"])
 

@@ -55,9 +55,9 @@ class AbstractAnalyser:
             return True
         if cluster.max_il_ratio is None and (self.min_ratio > 0 or self.max_ratio < 1):
             return True
-        if cluster.max_il_ratio < self.min_ratio:
+        if cluster.max_il_ratio is not None and cluster.max_il_ratio < self.min_ratio:
             return True
-        if cluster.max_il_ratio > self.max_ratio:
+        if cluster.max_il_ratio is not None and cluster.max_il_ratio > self.max_ratio:
             return True
         if cluster.identified_spectra < self.min_identified_spectra:
             return True
