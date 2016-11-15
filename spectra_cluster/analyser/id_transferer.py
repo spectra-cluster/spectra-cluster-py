@@ -49,7 +49,8 @@ class IdTransferer(common.AbstractAnalyser):
                             IdentificationReference(
                                 spectrum.get_filename(),
                                 spectrum.get_id(),
-                                spectrum.get_clean_sequence_psms()))
+                                spectrum.get_clean_sequence_psms(),
+                                False))
             # do not process this cluster any further
             return
 
@@ -64,7 +65,8 @@ class IdTransferer(common.AbstractAnalyser):
                     IdentificationReference(
                         spectrum.get_filename(),
                         spectrum.get_id(),
-                        spectrum.get_clean_sequence_psms()))
+                        spectrum.get_clean_sequence_psms(),
+                        False))
                 continue
 
             # make sure the identification should be added to the spectrum
@@ -73,9 +75,20 @@ class IdTransferer(common.AbstractAnalyser):
             if not self.add_to_unidentified and not spectrum.is_identified():
                 continue
 
+            # check whether the identification details are changed
+            changed_identification = False
+            if not spectrum.is_identified():
+                changed_identification = True
+            else:
+                sequences = spectrum.get_clean_sequences()
+                if sequences[0] != main_psms[0].sequence:
+                    changed_identification = True
+
             # create and add the new identification reference
             self.identification_references.append(
-                IdentificationReference(spectrum.get_filename(), spectrum.get_id(), main_psms))
+                IdentificationReference(spectrum.get_filename(),
+                                        spectrum.get_id(), main_psms,
+                                        changed_identification))
 
     @staticmethod
     def extract_main_cluster_psms(cluster):
@@ -109,16 +122,22 @@ class IdentificationReference:
     :ivar filename: The original peak list filename
     :ivar spec_id: The spectrum's id within the source file
     :ivar psms: A list of PSM objects
+    :ivar changed_through_clustering: Logical indicating whether
+          the identification details were changed through the
+          clustering.
     """
 
-    def __init__(self, filename, spec_id, psms):
+    def __init__(self, filename, spec_id, psms, changed_through_clustering):
         """
         Creates a new instance of the identification reference.
 
         :param filename: Original peak list filename.
         :param spec_id: The spectrum's id within this file.
         :param psms: A list of PSM objects
+        :param changed_through_clustering: Logical indicating whether
+          the identification details were changed through the
         """
         self.filename = filename
         self.spec_id = spec_id
         self.psms = psms
+        self.changed_through_clustering = changed_through_clustering

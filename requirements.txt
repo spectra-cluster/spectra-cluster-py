@@ -1,2 +1,5 @@
 docopt
 pyinstaller
+pyteomics
+numpy
+lxml

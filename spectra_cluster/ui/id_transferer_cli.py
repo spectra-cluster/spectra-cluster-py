@@ -82,12 +82,17 @@ def write_results(identification_references, output_filename):
     :return:
     """
     with open(output_filename, "w") as writer:
-        writer.write("filename\tspec_id\tsequence\n")
+        writer.write("filename\tspec_id\tsequence\tchanged_by_clustering\n")
 
         for id_ref in identification_references:
             psm_string = ";".join([str(p) for p in id_ref.psms])
 
-            writer.write(id_ref.filename + "\t" + id_ref.spec_id + "\t" + psm_string + "\n")
+            changed_by_clustering = "false"
+            if id_ref.changed_through_clustering:
+                changed_by_clustering = "true"
+
+            writer.write("".join([id_ref.filename, "\t", id_ref.spec_id, "\t",
+                         psm_string, "\t", changed_by_clustering, "\n"]))
 
 
 def main():
