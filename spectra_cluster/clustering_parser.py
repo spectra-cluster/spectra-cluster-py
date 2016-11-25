@@ -151,14 +151,39 @@ class ClusteringParser:
             return list()
 
         ptm_strings = ptm_string.split(",")
+
+        # merge possible PTM tags within "[" and "]"
+        merged_ptm_strings = list()
+        current_ptm_string = ""
+        in_tags = False
+        for ptm_string in ptm_strings:
+            if "[" in ptm_string:
+                in_tags = True
+                current_ptm_string = ptm_string.strip() + ","
+                continue
+            # this is a standard mod
+            elif not in_tags:
+                merged_ptm_strings.append(ptm_string)
+                continue
+            # process fields that are within tags
+            if in_tags:
+                current_ptm_string += ptm_string.strip() + ","
+            # if at the end of the tag, save it and reset it
+            if in_tags and "]" in ptm_string:
+                in_tags = False
+                # save the PTM string without the trailing ","
+                merged_ptm_strings.append(current_ptm_string[:-1])
+                current_ptm_string = ""
+
         ptms = list()
 
-        for cur_ptm_string in ptm_strings:
-            fields = cur_ptm_string.split("-")
-            if len(fields) != 2:
+        for cur_ptm_string in merged_ptm_strings:
+            first_index = cur_ptm_string.find("-")
+
+            if first_index < 0:
                 raise Exception("Invalid PTM definition encountered: " + cur_ptm_string)
 
-            ptms.append(objects.PTM(int(fields[0]), fields[1]))
+            ptms.append(objects.PTM(int(cur_ptm_string[0:first_index]), cur_ptm_string[first_index + 1:]))
 
         return ptms
 

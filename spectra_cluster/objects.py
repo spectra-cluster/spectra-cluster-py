@@ -348,6 +348,11 @@ class PSM:
 class PTM:
     """
     Defines a post-translational modification within a peptide
+
+    :ivar position: The PTM's position within the peptide string
+    :ivar accession: The PTM's accession in UNIMOD (if starting with
+                     "MOD:"). This may also represent a PSI entry in
+                     the format [PSI-MS, MS:1001524, fragment neutral loss, 63.998283]
     """
 
     def __init__(self, position, accession):
