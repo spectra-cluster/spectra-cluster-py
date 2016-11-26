@@ -194,7 +194,7 @@ class ClusteringParser:
 
             # ignore chemmod
             if "CHEMMOD" in position:
-                print("Warning: Ignoring PTM (" + current_ptm_string + ")")
+                print("Warning: Ignoring PTM (" + cur_ptm_string + ")")
                 continue
 
             ptms.append(objects.PTM(int(position), accession))
