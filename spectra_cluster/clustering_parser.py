@@ -175,16 +175,19 @@ class ClusteringParser:
                 merged_ptm_strings.append(current_ptm_string[:-1])
                 current_ptm_string = ""
 
+        # remove unused variable
+        del ptm_string, current_ptm_string, in_tags
+
         ptms = list()
 
         for cur_ptm_string in merged_ptm_strings:
             first_index = cur_ptm_string.find("-")
 
-            if first_index < 0 and "CHEMMOD" in current_ptm_string:
-                print("Warning: Ignoring PTM (" + current_ptm_string + ")")
+            if first_index < 0 and "CHEMMOD" in cur_ptm_string:
+                print("Warning: Ignoring PTM (" + cur_ptm_string + ")")
                 continue
             elif first_index < 0:
-                raise Exception("Invalid PTM definition encountered: " + cur_ptm_string)
+                print("Warning: Ignoring invalid PTM definition: " + cur_ptm_string)
 
             position = cur_ptm_string[0:first_index]
             accession = cur_ptm_string[first_index + 1:]
