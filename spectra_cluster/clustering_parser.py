@@ -102,6 +102,9 @@ class ClusteringParser:
         taxids = fields[6].split(",")
         ptm_strings = fields[7].split(";")
 
+        if title == "PXD000443;PRIDE_Exp_Complete_Ac_31019.xml;spectrum=377050":
+            pass
+
         # make sure sequences and ptms have the same length
         if len(sequences) != len(ptm_strings):
             raise Exception("Invalid SPEC line encountered: different number of sequences and PTMs defined: " +
@@ -183,11 +186,9 @@ class ClusteringParser:
         for cur_ptm_string in merged_ptm_strings:
             first_index = cur_ptm_string.find("-")
 
-            if first_index < 0 and "CHEMMOD" in cur_ptm_string:
-                print("Warning: Ignoring PTM (" + cur_ptm_string + ")")
-                continue
-            elif first_index < 0:
+            if first_index < 0:
                 print("Warning: Ignoring invalid PTM definition: " + cur_ptm_string)
+                continue
 
             position = cur_ptm_string[0:first_index]
             accession = cur_ptm_string[first_index + 1:]
