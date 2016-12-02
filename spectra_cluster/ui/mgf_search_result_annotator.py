@@ -437,7 +437,7 @@ def main():
 
     fdr = float(arguments["--fdr"])
 
-    if search_format.lower() == "msgf++":
+    if search_format.lower() == "msgf+":
         search_results = parse_msgfplus(search_file, fdr)
     elif search_format.lower() == "msamanda":
         search_results = parse_msamanda(search_file, fdr, input_file)

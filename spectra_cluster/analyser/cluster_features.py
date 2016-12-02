@@ -5,6 +5,7 @@ the samples as columns and the clusters as rows.
 """
 
 from . import common
+import pandas
 
 
 class ClusterAsFeatures(common.AbstractAnalyser):
@@ -13,11 +14,9 @@ class ClusterAsFeatures(common.AbstractAnalyser):
     sample and cluster to output a table containing
     the samples as columns and the clusters as rows.
 
-    Result
-    ------
-    The results are stored in ::features:: as a list of
-    maps. Each map represents on cluster. The map contains
-    the sample name as key and the number of spectra as value.
+    :ivar features: A list of dicts. Each dict represents
+                    one cluster. The dict contains the sample
+                    name as key and the number of spectra as value.
 
     TODO: add description about samples
     """
@@ -37,6 +36,7 @@ class ClusterAsFeatures(common.AbstractAnalyser):
 
         self.sample_name_extractor = sample_name_extractor
         self.features = list()
+        self.cluster_ids = list()
         self.samples = set()
 
     @staticmethod
@@ -82,3 +82,24 @@ class ClusterAsFeatures(common.AbstractAnalyser):
                 spec_per_sample[sample_id] = 1
 
         self.features.append(spec_per_sample)
+        self.cluster_ids.append(cluster.id)
+
+    def get_result(self):
+        """
+        Return the result as a pandas DataFrame.
+
+        :return: A numpy array representing the merged result.
+        """
+        sample_list = list(self.samples)
+        result = pandas.DataFrame(columns=sample_list, index=self.cluster_ids)
+
+        for i in range(0, len(self.cluster_ids)):
+            cluster_id = self.cluster_ids[i]
+            spectra_per_sample = self.features[i]
+            for sample_id in sample_list:
+                result.loc[cluster_id, sample_id] = spectra_per_sample.get(sample_id, 0)
+
+        return result
+
+
+

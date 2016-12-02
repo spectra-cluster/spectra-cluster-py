@@ -29,6 +29,19 @@ class ClusterAsFeaturesTest(unittest.TestCase):
         self.assertEqual(1, len(analyser.samples))
         self.assertTrue("PRD000001" in analyser.samples)
 
+    def testNumpyResult(self):
+        parser = clustering_parser.ClusteringParser(self.testfile)
+
+        analyser = cluster_features.ClusterAsFeatures(
+            sample_name_extractor=ClusterAsFeaturesTest.pride_project_extractor)
+
+        for cluster in parser:
+            analyser.process_cluster(cluster)
+
+        result = analyser.get_result()
+
+        self.assertEqual(4, result.loc["dcc104e8-3da7-4b27-bc3e-b497d88f2efc", "PRD000001"])
+
     @staticmethod
     def pride_project_extractor(spectrum):
         filename = spectrum.get_filename()

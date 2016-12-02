@@ -15,7 +15,7 @@ Options:
   -i, --input=<clustering file>        Path to the .clustering result file to process.
   -o, --output=<features.txt>          Path to the output file that should be created. The output will
                                        be formatted as a tab-delimited text file.
-  --min_size=<size>                    The minimum size of a cluster to be reported. [default: 5]
+  --min_size=<size>                    The minimum size of a cluster to be reported.
   --min_ratio=<ratio>                  The minimum ratio a cluster must have to be reported.
   --min_identified=<spectra>           May specify the minimum number of identified spectra a cluster must have.
   -h, --help                           Print this help message.
@@ -29,48 +29,24 @@ from docopt import docopt
 # make the spectra_cluster packages available
 sys.path.insert(0, os.path.abspath('..') + os.path.sep + "..")
 
-import spectra_cluster.analyser.id_transferer as id_transferer
+from spectra_cluster.analyser.cluster_features import ClusterAsFeatures
 import spectra_cluster.clustering_parser as clustering_parser
 
 
 def create_analyser(arguments):
     """
-    Creates an IdTransferer analyser based on the command line
+    Creates an ClusterAsFeatures analyser based on the command line
     parameters.
     :param arguments: The command line parameters
-    :return: An IdTransferer object
+    :return: A ClusterAsFeatures object
     """
-    analyser = id_transferer.IdTransferer()
+    analyser = ClusterAsFeatures()
 
-    if arguments["--only_identified"]:
-        analyser.add_to_unidentified = False
-    if arguments["--only_unidentified"]:
-        analyser.add_to_identified = False
-
-    analyser.min_size = arguments["--min_size"]
-    analyser.min_ratio = arguments["--min_ratio"]
-
-    if arguments["--min_identified"] is not None:
-        analyser.min_identified_spectra = arguments["--min_identified"]
+    analyser.min_size = arguments.get("--min_size", 0)
+    analyser.min_ratio = arguments.get("--min_ratio", 0)
+    analyser.min_identified_spectra = arguments.get("--min_identified", 0)
 
     return analyser
-
-
-def write_results(identification_references, output_filename):
-    """
-    Writes the identification references as a tab delimited text file
-    to the specified path.
-    :param identification_references: List of identification references.
-    :param output_filename: Path to the output filename
-    :return:
-    """
-    with open(output_filename, "w") as writer:
-        writer.write("filename\tspec_id\tsequence\n")
-
-        for id_ref in identification_references:
-            psm_string = ";".join([str(p) for p in identification_references.psms])
-
-            writer.write(id_ref.filename + "\t" + id_ref.spec_id + "\t" + psm_string + "\n")
 
 
 def main():
@@ -101,7 +77,9 @@ def main():
         analyser.process_cluster(cluster)
 
     # create the output file
-    write_results(analyser.identification_references, arguments["--output"])
+    result = analyser.get_result()
+
+    result.to_csv(arguments["--output"], sep="\t")
 
     print("Results written to " + arguments["--output"])
 

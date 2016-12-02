@@ -3,3 +3,4 @@ pyinstaller
 pyteomics
 numpy
 lxml
+pandas
