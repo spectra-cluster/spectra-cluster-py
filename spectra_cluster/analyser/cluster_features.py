@@ -5,7 +5,7 @@ the samples as columns and the clusters as rows.
 """
 
 from . import common
-import pandas
+from pandas import DataFrame
 
 
 class ClusterAsFeatures(common.AbstractAnalyser):
@@ -91,7 +91,7 @@ class ClusterAsFeatures(common.AbstractAnalyser):
         :return: A numpy array representing the merged result.
         """
         sample_list = list(self.samples)
-        result = pandas.DataFrame(columns=sample_list, index=self.cluster_ids)
+        result = DataFrame(columns=sample_list, index=self.cluster_ids)
 
         for i in range(0, len(self.cluster_ids)):
             cluster_id = self.cluster_ids[i]
