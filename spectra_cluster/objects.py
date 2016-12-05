@@ -39,6 +39,7 @@ class Cluster:
         self.n_spectra = len(self._spectra)
         self.identified_spectra = 0
         self.unidentified_spectra = 0
+        self.charge = Cluster._calculate_charge(self._spectra)
 
         for spectrum in self._spectra:
             if spectrum.is_identified():
@@ -73,6 +74,32 @@ class Cluster:
             self.max_ratio = None
             self.max_sequences = tuple()
             self.max_il_ratio = None
+
+    @staticmethod
+    def _calculate_charge(spectra):
+        """
+        Calculates the average charge from the passed
+        spectra object, ignoring all spectra without
+        a charge state.
+
+        :param spectra: A list of Spectra
+        :return: The charge rounded as an int
+        """
+        n_spectra = 0
+        sum_charge = 0
+
+        for spectrum in spectra:
+            if spectrum.charge is not None:
+                charge = int(spectrum.charge)
+
+                if charge != 0:
+                    n_spectra += 1
+                    sum_charge += charge
+
+        if n_spectra < 1:
+            return 0
+
+        return round(sum_charge / n_spectra, ndigits=0)
 
     def get_spectra(self):
         """
