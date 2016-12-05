@@ -1,6 +1,4 @@
-"""
-consensus_spectrum_exporter.py
-------------------------------
+""" consensus_spectrum_exporter.py
 
 This tool exports the consensus spectra of a clustering result file into the specified
 format.

@@ -22,6 +22,12 @@ The functionality of all :doc:`end-user tools <../tools/index>`
 is represented through the analysers. Each analyser implements
 the :doc:`AbstractAnalyser <abstract_analyser>` class.
 
+Exporter
+========
+
+The exporter classes implement the :doc:`AbstractAnalyser <abstract_analyser>`
+class but convert the clusters' consensus spectra into different file formats.
+
 ##############
 API Class List
 ##############
@@ -35,3 +41,5 @@ API Class List
    abstract_analyser
    id_transferer
    cluster_features
+   exporter
+

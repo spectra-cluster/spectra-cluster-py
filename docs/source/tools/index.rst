@@ -8,6 +8,7 @@ tools to process .clustering files.
 .. toctree::
    :maxdepth: 2
 
+   consensus_spectrum_exporter
    mgf_search_result_annotator
    id_transferer_cli
    cluster_features_cli
