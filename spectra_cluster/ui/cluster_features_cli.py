@@ -33,18 +33,23 @@ from spectra_cluster.analyser.cluster_features import ClusterAsFeatures
 import spectra_cluster.clustering_parser as clustering_parser
 
 
-def create_analyser(arguments):
+def create_analyser(arguments, output_file):
     """
     Creates an ClusterAsFeatures analyser based on the command line
     parameters.
     :param arguments: The command line parameters
+    :param output_file: File object opened to write to the output file
+                        location
     :return: A ClusterAsFeatures object
     """
-    analyser = ClusterAsFeatures()
+    analyser = ClusterAsFeatures(output_file)
 
-    analyser.min_size = arguments.get("--min_size", 0)
-    analyser.min_ratio = arguments.get("--min_ratio", 0)
-    analyser.min_identified_spectra = arguments.get("--min_identified", 0)
+    if arguments["--min_size"] is not None:
+        analyser.min_size = arguments.get("--min_size")
+    if arguments["--min_ratio"] is not None:
+        analyser.min_ratio = arguments.get("--min_ratio")
+    if arguments["--min_identified"] is not None:
+        analyser.min_identified_spectra = arguments.get("--min_identified")
 
     return analyser
 
@@ -66,20 +71,19 @@ def main():
         print("Error: Output file exists '" + arguments["--output"] + "'")
         sys.exit(1)
 
-    # create the id transferer based on the settings
-    analyser = create_analyser(arguments)
+    with open(arguments["--output"], "w") as OUT:
+        # create the id transferer based on the settings
+        analyser = create_analyser(arguments, OUT)
 
-    # process all clusters
-    parser = clustering_parser.ClusteringParser(arguments["--input"])
+        # process all clusters
+        parser = clustering_parser.ClusteringParser(arguments["--input"])
 
-    print("Parsing input .clustering file...")
-    for cluster in parser:
-        analyser.process_cluster(cluster)
+        print("Parsing input .clustering file...")
+        for cluster in parser:
+            analyser.process_cluster(cluster)
 
-    # create the output file
-    result = analyser.get_result()
-
-    result.to_csv(arguments["--output"], sep="\t")
+    # add the header to the output file
+    analyser.add_resultfile_header(arguments["--output"])
 
     print("Results written to " + arguments["--output"])
 
