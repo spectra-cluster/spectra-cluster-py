@@ -46,7 +46,7 @@ class MgfExporter(common.AbstractAnalyser):
         lines = list(["BEGIN IONS", title_string])
 
         lines.append("PEPMASS=" + str(round(cluster.precursor_mz, 4)))
-        lines.append("CHARGE=" + str(cluster.charge))
+        lines.append("CHARGE=" + str(int(cluster.charge)))
 
         if cluster.identified_spectra > 0:
             lines.append("SEQUENCE=" + ",".join(cluster.max_sequences))
