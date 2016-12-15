@@ -107,7 +107,7 @@ class FastaEntry:
         :param header_line: The header line to analyse
         :return: The format name ("uniprot", "first_word")
         """
-        if header_line[0:4] == ">sp|" or header_line[0:4] == ">tr|":
+        if header_line[0:4] == ">sp|" or header_line[0:4] == ">tr|" or header_line[0:4] == ">up|":
             return "uniprot"
 
         return "first_word"
