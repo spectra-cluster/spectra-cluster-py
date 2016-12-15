@@ -104,7 +104,7 @@ def parse_msamanda(filename, fdr, mgf_filename=None):
                 continue
 
             # ignore all PSMs that are coming from a different file
-            if msamanda_psm['Filename'] != short_mgf_filename:
+            if short_mgf_filename is not None and msamanda_psm['Filename'] != short_mgf_filename:
                 continue
 
             # label decoy hits
