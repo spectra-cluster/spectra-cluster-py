@@ -57,7 +57,7 @@ def main():
 
             # write out the entry
             OUT.write(fasta_entry.header_line + "\n")
-            OUT.write(fasta_entry.sequence + "\n\n")
+            OUT.write(fasta_entry.sequence + "\n")
 
             # remember the hash
             known_sequences.add(sequence_hash)
