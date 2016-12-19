@@ -1,10 +1,10 @@
-"""unique_fasta_extracter
+"""unique_fasta_extractor
 
 This tool simply removes all duplicate protein entries (based on the sequence)
 from a given FASTA file.
 
 Usage:
-  unique_fasta_extracter.py --input=<original.fasta> --output=<unique.fasta>
+  unique_fasta_extractor.py --input=<original.fasta> --output=<unique.fasta>
 
 Options:
   -i, --input=<original.fasta>         Path to the FASTA file to process.

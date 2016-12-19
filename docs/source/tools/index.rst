@@ -13,3 +13,4 @@ tools to process .clustering files.
    id_transferer_cli
    cluster_features_cli
    protein_annotator
+   unique_fasta_extractor
