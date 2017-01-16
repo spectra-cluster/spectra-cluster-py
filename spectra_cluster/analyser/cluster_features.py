@@ -7,6 +7,7 @@ the samples as columns and the clusters as rows.
 from . import common
 import tempfile
 import shutil
+import os
 
 
 class ClusterAsFeatures(common.AbstractAnalyser):
@@ -48,18 +49,26 @@ class ClusterAsFeatures(common.AbstractAnalyser):
         """
         Extracts the sample name by returning everything before
         the first "." from the title (often used by ProteoWized
-        converted files)
+        converted files) or, if available, by returning the original
+        filename (without path information).
 
         :param spec_ref: The spectrum object.
         :return: The sample name
         """
+        # use the filename if available
+        spectrum_filename = spec_ref.get_filename()
+
+        if spectrum_filename is not None:
+            return os.path.basename(spectrum_filename)
+
+        # otherwise use the spectrum title
         spectrum_title = spec_ref.get_title()
         index = spectrum_title.find(".")
 
         if index < 0:
             return spectrum_title
 
-        return spectrum_title[index + 1:]
+        return spectrum_title[:index]
 
     def process_cluster(self, cluster):
         """
@@ -105,15 +114,17 @@ class ClusterAsFeatures(common.AbstractAnalyser):
         :param file_path: Path ot the file where the results
                           are stored.
         """
-        tmp = tempfile.TemporaryFile()
+        tmp = tempfile.TemporaryFile(mode="w+")
 
         # write the header to the temporary file
         fields = ["cluster_id"]
         fields += self.sample_ids
 
-        tmp.write("\t".join(fields) + "\n")
+        field_string = "\t".join(fields) + "\n"
 
-        # copy the resut
+        tmp.write(field_string)
+
+        # copy the result
         with open(file_path, "r") as IN:
             for line in IN:
                 tmp.write(line)

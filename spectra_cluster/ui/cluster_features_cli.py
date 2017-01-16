@@ -45,11 +45,11 @@ def create_analyser(arguments, output_file):
     analyser = ClusterAsFeatures(output_file)
 
     if arguments["--min_size"] is not None:
-        analyser.min_size = arguments.get("--min_size")
+        analyser.min_size = int(arguments.get("--min_size"))
     if arguments["--min_ratio"] is not None:
-        analyser.min_ratio = arguments.get("--min_ratio")
+        analyser.min_ratio = float(arguments.get("--min_ratio"))
     if arguments["--min_identified"] is not None:
-        analyser.min_identified_spectra = arguments.get("--min_identified")
+        analyser.min_identified_spectra = int(arguments.get("--min_identified"))
 
     return analyser
 
@@ -78,11 +78,18 @@ def main():
         # process all clusters
         parser = clustering_parser.ClusteringParser(arguments["--input"])
 
-        print("Parsing input .clustering file...")
+        print("Parsing input .clustering file...", end="", flush=True)
+        processed_clusters = 0
         for cluster in parser:
             analyser.process_cluster(cluster)
 
+            processed_clusters += 1
+            if processed_clusters == 1000:
+                print(".", end="", flush=True)
+                processed_clusters = 0
+
     # add the header to the output file
+    print("Adding header line...")
     analyser.add_resultfile_header(arguments["--output"])
 
     print("Results written to " + arguments["--output"])

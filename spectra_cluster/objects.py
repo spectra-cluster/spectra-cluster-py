@@ -49,11 +49,11 @@ class Cluster:
 
         if self.identified_spectra > 0:
             # calculate ratios
-            sequence_counts = Cluster.calculate_sequence_counts(self._spectra, False)
+            self.sequence_counts = Cluster.calculate_sequence_counts(self._spectra, False)
 
             self.sequence_ratios = dict()
-            for sequence in sequence_counts.keys():
-                self.sequence_ratios[sequence] = sequence_counts[sequence] / self.identified_spectra
+            for sequence in self.sequence_counts.keys():
+                self.sequence_ratios[sequence] = self.sequence_counts[sequence] / self.identified_spectra
 
             self.max_ratio = max(self.sequence_ratios.values())
 
