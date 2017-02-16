@@ -202,9 +202,9 @@ def parser_mzident(filename, score_field, title_field=None,
 
                     # spectrum title is optional in mzIdentML
                     if title_field is not None:
-                        mzid_psm["title"] = spec_ref[title_field]
+                        mzid_psm["title"] = spec_ref[title_field].strip()
                     elif "spectrum title" in spec_ref:
-                        mzid_psm["title"] = spec_ref["spectrum title"]
+                        mzid_psm["title"] = spec_ref["spectrum title"].strip()
 
                     # get the sequence in an mzIdentML "secure" way
                     peptide_evidence_id = spec_ident["PeptideEvidenceRef"][0]["peptideEvidence_ref"]
