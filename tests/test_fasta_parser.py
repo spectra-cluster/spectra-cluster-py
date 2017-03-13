@@ -32,5 +32,9 @@ class FastaParserTest(unittest.TestCase):
                 self.assertEqual("KKA1_ECOLX", fasta_entry.getAccession())
             if n_entries == 200:
                 self.assertEqual("AT1G44020.1", fasta_entry.getAccession())
+            if n_entries == 201:
+                self.assertEqual("AT1G44020.2", fasta_entry.getAccession())
+            if n_entries == 202:
+                self.assertEqual("AT1G44020.3", fasta_entry.getAccession())
 
-        self.assertEqual(200, n_entries)
+        self.assertEqual(202, n_entries)
