@@ -86,16 +86,10 @@ class FastaEntry:
 
         if format == "first_word":
             start = 1
-            end_blank = self.header_line.find(" ")
-            end_pipe = self.header_line.find("|")
-
-            if end_blank < end_pipe:
-                end = end_blank
-            else:
-                end = end_pipe
-
-            if end < start:
-                end = len(self.header_line)
+            header_len = len(self.header_line)
+            break_pos = [self.header_line.find(symbol) for symbol in (" ", "|")]
+            break_pos = [i if i > 1 else header_len for i in break_pos]
+            end = min(break_pos)
 
         return self.header_line[start:end]
 
