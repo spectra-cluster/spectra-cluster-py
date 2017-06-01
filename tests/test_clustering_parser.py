@@ -101,3 +101,29 @@ class ClusteringParserTest(unittest.TestCase):
 
         for cluster in parser:
             self.assertEqual(2, len(cluster.get_spectra()))
+
+    def test_retention_time(self):
+        """
+        Test parsing .clustering files that contain the retention time as
+        additional parameter
+        """
+        test_file = os.path.join(os.path.dirname(__file__), "testfiles", "retention_time_test.clustering")
+
+        parser = clustering_parser.ClusteringParser(test_file)
+
+        for cluster in parser:
+            self.assertIsNotNone(cluster)
+
+            # make sure every spectrum has the retention time property
+            for spec in cluster.get_spectra():
+                self.assertIsNotNone(spec.get_property("RT"))
+
+    def test_no_properties(self):
+        parser = clustering_parser.ClusteringParser(self.testfile)
+
+        for cluster in parser:
+            self.assertIsNotNone(cluster)
+
+            for spec in cluster.get_spectra():
+                self.assertIsNone(spec.get_property("RT"))
+

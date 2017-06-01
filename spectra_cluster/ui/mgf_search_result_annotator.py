@@ -148,7 +148,8 @@ def parse_msamanda(filename, fdr, mgf_filename=None):
 
 
 def parser_mzident(filename, score_field, title_field=None,
-                   fdr=0.01, larger_score_is_better=False, decoy_string="DECOY"):
+                   fdr=0.01, larger_score_is_better=False, decoy_string="DECOY",
+                   include_decoy=False):
     """
     A general parsing function for mzIdentML files.
 
@@ -166,6 +167,7 @@ def parser_mzident(filename, score_field, title_field=None,
                                    result. Default is False as most search engines report
                                    probabilities
     :param decoy_string: String used to identify decoy proteins.
+    :param include_decoy: If set to True decoy hits are also returned.
     :return: A list of PSM objects
     """
     mzid_psms = list()
@@ -197,6 +199,9 @@ def parser_mzident(filename, score_field, title_field=None,
                     # the index should be used as id
                     if spec_ref["spectrumID"][:6] == "index=":
                         mzid_psm["index"] = int(spec_ref["spectrumID"][6:])
+                    elif "scan number(s)" in spec_ref:
+                        # TODO: This has only been tested for X!Tandem
+                        mzid_psm["index"] = int(spec_ref["scan number(s)"]) - 1
                     else:
                         mzid_psm["index"] = Psm.MISSING_INDEX
 
@@ -207,22 +212,17 @@ def parser_mzident(filename, score_field, title_field=None,
                         mzid_psm["title"] = spec_ref["spectrum title"].strip()
 
                     # get the sequence in an mzIdentML "secure" way
-                    peptide_evidence_id = spec_ident["PeptideEvidenceRef"][0]["peptideEvidence_ref"]
-                    peptide_evidence = object_reader.get_by_id(peptide_evidence_id)
-                    peptide_id = peptide_evidence["peptide_ref"]
-                    mzid_psm["sequence"] = object_reader.get_by_id(peptide_id)["PeptideSequence"]
+                    mzid_psm["sequence"] = spec_ident["PeptideSequence"]
                     # TODO: PTMs are stored in peptide["Modification"]
 
-                    # get the protein details to detect decoy hits
-                    protein = object_reader.get_by_id(peptide_evidence["dBSequence_ref"])
-                    protein_accession = protein["accession"]
-                    # add the name if present just to be sure to catch any mention of the decoy status
-                    if "name" in protein:
-                        protein_accession += protein["name"]
-                    if "protein description" in protein:
-                        protein_accession += protein["protein description"]
+                    peptide_evidence = spec_ident["PeptideEvidenceRef"][0]
 
-                    mzid_psm["is_decoy"] = decoy_string in protein_accession
+                    is_decoy = False
+                    if "accession" in peptide_evidence:
+                        is_decoy = decoy_string in peptide_evidence["accession"]
+                    if "protein description" in peptide_evidence:
+                        is_decoy = is_decoy or decoy_string in peptide_evidence["protein description"]
+                    mzid_psm["is_decoy"] = is_decoy
 
                     mzid_psms.append(mzid_psm)
 
@@ -248,8 +248,9 @@ def parser_mzident(filename, score_field, title_field=None,
                 break
 
         # convert the psm
-        if not mzid_psm["is_decoy"]:
-            filtered_psms.append(Psm(mzid_psm["index"], mzid_psm["sequence"], mzid_psm["title"]))
+        if not mzid_psm["is_decoy"] or include_decoy:
+            filtered_psms.append(Psm(mzid_psm["index"], mzid_psm["sequence"], mzid_psm["title"],
+                                     is_decoy=mzid_psm["is_decoy"]))
 
     return filtered_psms
 
@@ -300,14 +301,16 @@ class Psm:
     :ivar index: The 0-based index of the spectrum
     :ivar sequence: The peptide sequence
     :ivar title: The spectrum's "title"
+    :ivar is_decoy: Indicates whether this is a decoy hit
     """
     MISSING_INDEX = -1
 
-    def __init__(self, index, sequence, title=None):
+    def __init__(self, index, sequence, title=None, is_decoy=False):
         # 0-based index of the spectrum
         self.index = index
         self.sequence = sequence
         self.title = title
+        self.is_decoy = is_decoy
 
     def get_index(self):
         return self.index

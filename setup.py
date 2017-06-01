@@ -86,7 +86,7 @@ setup(
     # your project is installed. For an analysis of "install_requires" vs pip's
     # requirements files see:
     # https://packaging.python.org/en/latest/requirements.html
-    install_requires=['docopt', 'pyteomics', 'numpy'],
+    install_requires=['docopt', 'pyteomics >= 3.4', 'numpy', 'maspy'],
 
     # List additional groups of dependencies here (e.g. development
     # dependencies). You can install these using the following syntax,
@@ -121,6 +121,8 @@ setup(
             'mgf_search_result_annotator=spectra_cluster.ui.mgf_search_result_annotator:main',
             'protein_annotator=spectra_cluster.ui.protein_annotator:main',
             'unique_fasta_extractor=spectra_cluster.ui.unique_fasta_extractor:main',
+            'spectra_in_cluster=spectra_cluster.tools.spectra_in_cluster:main',
+            'fasta_species_filter=spectra_cluster.ui.fasta_species_filter:main',
         ],
     },
 )

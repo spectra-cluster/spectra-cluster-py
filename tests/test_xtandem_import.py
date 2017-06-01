@@ -18,5 +18,5 @@ class XTandemImportTest(unittest.TestCase):
         self.assertEqual(len(results), 3579)
 
         for psm in results:
-            self.assertEqual(psm.index, mgf_search_result_annotator.Psm.MISSING_INDEX)
+            self.assertNotEqual(psm.index, mgf_search_result_annotator.Psm.MISSING_INDEX)
 
