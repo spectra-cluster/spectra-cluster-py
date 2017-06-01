@@ -1,0 +1,276 @@
+name=GreedyClustering_0.99
+similarity_method=CombinedFisherIntensityTest
+version=1.0.1-SNAPSHOT
+threshold=0.99
+fdr=0
+description=GreedyClustering_0.99
+
+=Cluster=
+id=7584753b-675d-482c-ae3d-804d6022fff8
+av_precursor_mz=545.646
+av_precursor_intens=1.0
+sequence=[AAHSAELEAVLLALAR:46]
+consensus_mz=120.081,157.133,175.119,185.140,199.179,201.098,227.155,229.130,246.156,280.140,340.672,342.213,359.240,360.243,367.173,405.193,430.277,431.280,440.711,490.246,543.361,544.364,567.252,568.254,569.341,654.357,656.445,657.448,680.336,681.339,738.344,755.514,756.510,767.413,791.368,809.379,810.381,826.551,880.413,881.417,951.489,961.475,979.484,980.487,981.489,1009.567,1010.571,1012.651,1092.568,1093.571,1138.610,1372.086
+consensus_intens=416.34,826.99,2633.70,25924.53,1637.69,1249.03,1263.96,536.53,1551.30,641.43,178.48,308.05,3609.48,218.43,674.83,1643.38,12331.92,2129.33,3291.74,1031.36,14293.50,3287.59,3523.12,562.34,241.19,213.73,12810.04,3230.90,3152.17,778.83,445.96,2255.01,757.02,410.68,248.23,5360.17,1624.46,1650.14,9736.95,3682.09,70.16,87.10,4768.24,1971.66,21.53,104.71,3.03,5.49,632.73,239.25,68.36,4.52
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=60#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.50125.3	true	AAHSAELEAVLLALAR	545.6459	3			0.0	{"RT": "3259.471968"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=25#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.49217.3	true	AAHSAELEAVLLALAR	545.6458	3			0.0	{"RT": "3209.269603"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=49#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.49600.3	true	AAHSAELEAVLLALAR	545.6464	3			0.0	{"RT": "3229.982715"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=48#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.49549.3	true	AAHSAELEAVLLALAR	545.64594	3			0.0	{"RT": "3227.372716"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=41#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.49455.3	true	AAHSAELEAVLLALAR	545.64594	3			0.0	{"RT": "3222.086905"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=23#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.49215.3	true	AAHSAELEAVLLALAR	545.6458	3			0.0	{"RT": "3209.179867"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=66#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.50555.3	true	AAHSAELEAVLLALAR	545.64594	3			0.0	{"RT": "3283.127079"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=65#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.50554.3	true	AAHSAELEAVLLALAR	545.64594	3			0.0	{"RT": "3283.082203"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=57#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.50072.3	true	AAHSAELEAVLLALAR	545.6458	3			0.0	{"RT": "3256.248606"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=26#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.49252.3	true	AAHSAELEAVLLALAR	545.6458	3			0.0	{"RT": "3211.170108"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=64#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.50525.3	true	AAHSAELEAVLLALAR	545.6459	3			0.0	{"RT": "3281.458548"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=35#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.49378.3	true	AAHSAELEAVLLALAR	545.64606	3			0.0	{"RT": "3217.773843"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=46#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.49503.3	true	AAHSAELEAVLLALAR	545.6461	3			0.0	{"RT": "3224.592957"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=43#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.49457.3	true	AAHSAELEAVLLALAR	545.64594	3			0.0	{"RT": "3222.176888"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=45#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.49502.3	true	AAHSAELEAVLLALAR	545.6461	3			0.0	{"RT": "3224.547597"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=30#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.49302.3	true	AAHSAELEAVLLALAR	545.6457	3			0.0	{"RT": "3213.709198"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=31#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.49303.3	true	AAHSAELEAVLLALAR	545.6457	3			0.0	{"RT": "3213.777226"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=63#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.50524.3	true	AAHSAELEAVLLALAR	545.6459	3			0.0	{"RT": "3281.41366"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=44#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.49501.3	true	AAHSAELEAVLLALAR	545.6461	3			0.0	{"RT": "3224.502658"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=29#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.49301.3	true	AAHSAELEAVLLALAR	545.6457	3			0.0	{"RT": "3213.664246"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=54#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.49710.3	true	AAHSAELEAVLLALAR	545.6457	3			0.0	{"RT": "3236.247603"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=42#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.49456.3	true	AAHSAELEAVLLALAR	545.64594	3			0.0	{"RT": "3222.132006"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=33#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.49354.3	true	AAHSAELEAVLLALAR	545.6459	3			0.0	{"RT": "3216.377131"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=34#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.49355.3	true	AAHSAELEAVLLALAR	545.6459	3			0.0	{"RT": "3216.422015"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=55#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.50044.3	true	AAHSAELEAVLLALAR	545.6461	3			0.0	{"RT": "3254.69194"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=62#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.50157.3	true	AAHSAELEAVLLALAR	545.6462	3			0.0	{"RT": "3261.230397"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=50#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.49601.3	true	AAHSAELEAVLLALAR	545.6464	3			0.0	{"RT": "3230.0276"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=32#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.49353.3	true	AAHSAELEAVLLALAR	545.6459	3			0.0	{"RT": "3216.332025"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=37#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.49380.3	true	AAHSAELEAVLLALAR	545.64606	3			0.0	{"RT": "3217.86357"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=58#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.50073.3	true	AAHSAELEAVLLALAR	545.6458	3			0.0	{"RT": "3256.293492"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=47#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.49548.3	true	AAHSAELEAVLLALAR	545.64594	3			0.0	{"RT": "3227.327869"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=38#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.49412.3	true	AAHSAELEAVLLALAR	545.64594	3			0.0	{"RT": "3219.625018"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=61#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.50126.3	true	AAHSAELEAVLLALAR	545.6459	3			0.0	{"RT": "3259.516845"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=52#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.49662.3	true	AAHSAELEAVLLALAR	545.646	3			0.0	{"RT": "3233.442965"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=68#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.50580.3	true	AAHSAELEAVLLALAR	545.646	3			0.0	{"RT": "3284.554426"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=72#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.50639.3	true	AAHSAELEAVLLALAR	545.64594	3			0.0	{"RT": "3287.908126"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=28#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.49254.3	true	AAHSAELEAVLLALAR	545.6458	3			0.0	{"RT": "3211.259777"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=40#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.49414.3	true	AAHSAELEAVLLALAR	545.64594	3			0.0	{"RT": "3219.715"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=51#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.49632.3	true	AAHSAELEAVLLALAR	545.646	3			0.0	{"RT": "3231.750274"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=39#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.49413.3	true	AAHSAELEAVLLALAR	545.64594	3			0.0	{"RT": "3219.670194"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=36#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.49379.3	true	AAHSAELEAVLLALAR	545.64606	3			0.0	{"RT": "3217.818772"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=70#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.50605.3	true	AAHSAELEAVLLALAR	545.646	3			0.0	{"RT": "3286.039748"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=27#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.49253.3	true	AAHSAELEAVLLALAR	545.6458	3			0.0	{"RT": "3211.21491"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=56#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.50045.3	true	AAHSAELEAVLLALAR	545.6461	3			0.0	{"RT": "3254.73681"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=24#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.49216.3	true	AAHSAELEAVLLALAR	545.6458	3			0.0	{"RT": "3209.224736"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=59#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.50104.3	true	AAHSAELEAVLLALAR	545.6461	3			0.0	{"RT": "3258.200037"}
+=Cluster=
+id=ac3cfe21-75c5-444f-a49a-f4657ab529eb
+av_precursor_mz=545.646
+av_precursor_intens=1.0
+sequence=[AAHSAELEAVLLALAR:6]
+consensus_mz=110.071,157.134,175.119,185.134,199.180,201.088,243.134,246.156,280.141,298.212,314.171,355.208,359.240,367.171,372.176,405.193,430.277,431.280,438.209,440.711,525.314,543.361,544.363,567.252,568.253,654.357,656.445,657.448,680.336,681.339,738.342,755.513,756.516,767.448,791.368,809.379,810.381,826.551,880.407,881.414,979.483,980.484,1009.565,1092.565,1138.607
+consensus_intens=133.17,563.23,400.43,4479.76,155.21,265.02,188.14,140.82,142.96,136.41,120.69,199.13,332.55,120.18,102.00,153.20,1148.52,198.82,133.96,156.09,115.14,1344.66,299.99,490.07,109.92,207.71,1024.61,309.62,396.41,111.65,87.14,214.23,70.81,203.35,28.83,648.76,220.89,149.04,846.63,336.21,304.60,142.71,94.20,3.12,78.43
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=71#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.50606.3	true	AAHSAELEAVLLALAR	545.646	3			0.0	{"RT": "3286.08454"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=73#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.50640.3	true	AAHSAELEAVLLALAR	545.64594	3			0.0	{"RT": "3287.952992"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=67#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.50556.3	true	AAHSAELEAVLLALAR	545.64594	3			0.0	{"RT": "3283.17196"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=74#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.50665.3	true	AAHSAELEAVLLALAR	545.64606	3			0.0	{"RT": "3289.361274"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=53#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.49663.3	true	AAHSAELEAVLLALAR	545.646	3			0.0	{"RT": "3233.487844"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=69#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.50581.3	true	AAHSAELEAVLLALAR	545.646	3			0.0	{"RT": "3284.636707"}
+=Cluster=
+id=891369f0-32e6-4b47-bab6-21c6ca3d7774
+av_precursor_mz=583.665
+av_precursor_intens=1.0
+sequence=[LALAELEELLEAVHAK:1]
+consensus_mz=147.113,157.134,158.137,185.128,186.132,201.087,218.151,243.137,253.191,298.212,314.170,355.208,369.249,372.177,385.208,427.252,443.212,454.278,498.293,522.467,525.314,526.315,569.809,584.344,626.351,626.851,654.356,690.870,691.373,726.390,726.891,767.441,782.932,783.434,818.451,818.952,819.453,869.460,880.523,911.508,982.546,1009.567,1010.567,1138.607,1139.609,1251.685,1252.694
+consensus_intens=9.12,103.20,7.50,136.55,8.55,7.46,16.45,10.94,7.42,25.02,27.40,31.32,8.89,8.52,6.94,8.30,7.25,21.59,12.65,194.22,37.99,8.93,11.25,11.49,32.26,21.97,77.53,54.13,45.78,135.66,105.72,69.14,215.73,188.21,86.41,78.32,23.81,26.17,30.69,7.65,13.02,31.53,15.01,26.52,14.83,11.85,7.83
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=169#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55860.3	true	LALAELEELLEAVHAK	583.6651	3			0.0	{"RT": "3600.870143"}
+=Cluster=
+id=5edf87e4-bc56-409f-9fda-536243e2e90d
+av_precursor_mz=583.665
+av_precursor_intens=1.0
+sequence=[LALAELEELLEAVHAK:2]
+consensus_mz=102.055,110.071,120.081,157.133,185.128,201.087,209.103,215.139,218.149,243.135,308.171,314.171,355.208,356.214,372.176,427.256,437.212,443.212,454.277,498.292,508.250,525.314,526.318,550.299,556.295,621.336,636.348,654.356,655.361,685.339,740.420,756.379,767.441,768.445,798.423,818.447,818.954,869.459,880.526,881.529,991.557,1009.566,1010.568,1120.606,1138.611,1139.617,1251.693,1252.695,1380.734
+consensus_intens=46.56,25.87,36.15,286.03,351.64,98.65,45.98,74.07,50.71,94.19,39.41,159.66,209.60,44.87,78.16,40.07,18.81,32.62,72.34,37.27,16.47,137.61,28.74,19.14,31.25,24.43,41.46,230.66,68.60,58.42,21.45,26.69,220.07,79.61,27.02,6.83,4.52,37.00,108.72,40.87,13.57,107.95,49.91,8.95,100.14,56.64,43.85,29.13,3.78
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=170#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55861.3	true	LALAELEELLEAVHAK	583.6651	3			0.0	{"RT": "3600.915019"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=171#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55862.3	true	LALAELEELLEAVHAK	583.6651	3			0.0	{"RT": "3600.959897"}
+=Cluster=
+id=c7058884-00f0-4a59-a479-5f6ca26092f5
+av_precursor_mz=665.644
+av_precursor_intens=1.0
+sequence=[AAEEFVNIYYETMDKR:3]
+consensus_mz=115.087,120.081,136.076,143.082,175.119,200.139,201.087,214.119,259.092,272.124,303.214,327.202,330.130,361.187,388.150,401.167,406.160,459.228,479.718,487.220,529.250,561.250,561.751,585.302,617.792,642.815,666.319,674.813,675.315,724.348,724.849,795.366,797.882,798.383,862.402,862.907,894.431,895.432,958.429,959.433,960.428,1057.496,1058.497,1121.494,1122.496,1123.494,1234.577,1235.584,1284.623,1285.619,1348.621,1349.622
+consensus_intens=253.68,128.98,91.64,285.03,55.99,106.11,81.45,97.53,121.66,76.25,218.70,37.21,41.29,106.80,67.53,32.12,60.88,26.87,35.49,30.20,11.03,96.72,52.51,3.86,46.29,41.01,98.11,114.88,85.98,79.82,61.23,93.48,58.79,53.62,33.75,33.04,103.31,56.30,166.75,80.19,4.05,133.41,75.97,211.78,127.97,42.23,41.11,27.36,40.58,11.91,56.41,41.10
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=2#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.31953.3	true	AAEEFVNIYYETMDKR	665.6441	3			0.0	{"RT": "2293.320977"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=5#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.32018.3	true	AAEEFVNIYYETMDKR	665.64417	3			0.0	{"RT": "2296.929205"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=7#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.32070.3	true	AAEEFVNIYYETMDKR	665.6439	3			0.0	{"RT": "2299.592497"}
+=Cluster=
+id=3ddcf702-fbee-4d81-a5de-5d64c6e510f2
+av_precursor_mz=665.644
+av_precursor_intens=1.0
+sequence=[AAEEFVNIYYETMDKR:5]
+consensus_mz=115.087,120.081,136.076,143.082,173.092,201.087,214.119,241.082,259.092,272.124,303.214,330.129,361.188,388.150,401.167,406.160,459.227,479.719,487.219,561.250,561.751,617.792,666.326,674.814,675.315,675.816,724.348,724.849,797.883,798.383,798.884,853.898,862.403,862.905,863.405,895.429,918.420,926.926,927.426,927.925,958.429,1057.497,1121.493,1122.496,1123.493,1234.581,1348.621,1349.623
+consensus_intens=335.01,90.64,52.25,457.11,56.89,99.69,50.35,56.98,126.85,142.52,192.63,48.28,71.21,77.46,75.68,62.58,15.31,4.10,25.54,166.66,94.44,94.28,172.43,430.47,318.15,133.72,337.48,261.63,418.18,376.48,190.96,66.06,349.39,350.91,192.97,88.04,105.03,331.66,347.65,199.66,161.79,52.84,218.10,128.66,25.15,8.51,56.06,16.97
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=8#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.32130.3	true	AAEEFVNIYYETMDKR	665.6442	3			0.0	{"RT": "2302.644644"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=1#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.31952.3	true	AAEEFVNIYYETMDKR	665.6441	3			0.0	{"RT": "2293.276122"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=3#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.31980.3	true	AAEEFVNIYYETMDKR	665.6439	3			0.0	{"RT": "2294.859499"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=4#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.32017.3	true	AAEEFVNIYYETMDKR	665.64417	3			0.0	{"RT": "2296.884389"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=6#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.32069.3	true	AAEEFVNIYYETMDKR	665.6439	3			0.0	{"RT": "2299.547419"}
+=Cluster=
+id=45bc234e-b7e3-46fb-9b92-800e0e59fc77
+av_precursor_mz=870.991
+av_precursor_intens=1.0
+sequence=[AELSEEALLSVLPTIR:17]
+consensus_mz=102.055,173.092,175.119,183.113,199.088,201.092,217.082,259.092,271.176,294.181,312.152,314.171,330.138,346.124,399.150,417.161,469.277,470.233,486.303,487.306,512.236,530.246,582.362,583.273,599.383,600.391,641.279,659.286,698.456,699.459,712.314,730.325,774.411,785.488,786.491,843.410,871.493,880.557,898.572,899.575,1011.656,1012.660,1029.540,1082.693,1083.697,1193.724,1211.736,1212.741,1340.780,1341.779,1427.810,1428.811
+consensus_intens=67.25,631.58,1075.78,35.11,3201.32,23755.27,555.20,211.96,150.05,239.96,47113.88,749.46,2282.36,591.64,590.90,643.34,1197.10,552.06,3055.61,389.29,497.32,449.44,224.23,133.35,2505.67,265.15,243.70,252.77,1070.41,181.13,252.37,393.45,10.24,3822.32,835.93,158.26,5.94,3.82,3102.81,861.53,1758.13,573.86,16.50,1537.50,528.38,17.00,1024.78,411.96,497.61,229.43,663.94,314.58
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=110#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52832.2	true	AELSEEALLSVLPTIR	870.9909	2			0.0	{"RT": "3416.45173"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=116#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52937.2	true	AELSEEALLSVLPTIR	870.9911	2			0.0	{"RT": "3422.089239"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=98#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52720.2	true	AELSEEALLSVLPTIR	870.9915	2			0.0	{"RT": "3410.153283"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=119#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52962.2	true	AELSEEALLSVLPTIR	870.991	2			0.0	{"RT": "3423.52855"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=83#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52592.2	true	AELSEEALLSVLPTIR	870.99133	2			0.0	{"RT": "3402.830099"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=92#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52676.2	true	AELSEEALLSVLPTIR	870.9913	2			0.0	{"RT": "3407.561271"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=104#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52773.2	true	AELSEEALLSVLPTIR	870.9909	2			0.0	{"RT": "3413.153742"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=113#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52878.2	true	AELSEEALLSVLPTIR	870.9907	2			0.0	{"RT": "3418.817505"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=89#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52648.2	true	AELSEEALLSVLPTIR	870.99146	2			0.0	{"RT": "3405.995211"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=125#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.53015.2	true	AELSEEALLSVLPTIR	870.99133	2			0.0	{"RT": "3426.550809"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=107#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52804.2	true	AELSEEALLSVLPTIR	870.99133	2			0.0	{"RT": "3414.886272"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=80#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52558.2	true	AELSEEALLSVLPTIR	870.9911	2			0.0	{"RT": "3400.981392"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=95#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52695.2	true	AELSEEALLSVLPTIR	870.9914	2			0.0	{"RT": "3408.718603"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=77#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52533.2	true	AELSEEALLSVLPTIR	870.9913	2			0.0	{"RT": "3399.536953"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=122#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52990.2	true	AELSEEALLSVLPTIR	870.9911	2			0.0	{"RT": "3425.105506"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=101#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52742.2	true	AELSEEALLSVLPTIR	870.9913	2			0.0	{"RT": "3411.443309"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=86#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52617.2	true	AELSEEALLSVLPTIR	870.99146	2			0.0	{"RT": "3404.255414"}
+=Cluster=
+id=d4631baf-c07a-4e2d-857b-2fc443ba394a
+av_precursor_mz=870.991
+av_precursor_intens=1.0
+sequence=[AELSEEALLSVLPTIR:37]
+consensus_mz=129.102,147.112,173.092,175.119,199.147,201.091,215.139,217.082,243.142,259.092,314.171,330.138,346.125,383.195,399.150,401.206,417.161,469.277,486.303,487.306,502.251,512.236,530.246,583.273,599.380,600.391,643.329,659.287,698.456,699.459,712.314,730.325,772.371,785.488,786.491,825.399,843.409,844.413,898.568,899.576,912.436,928.526,938.482,956.493,957.495,1011.661,1012.665,1025.515,1082.694,1083.696,1100.576,1124.583,1125.583,1142.593,1187.603,1211.736,1212.738,1215.510,1255.675,1266.708,1300.696,1340.778,1341.780,1344.728,1387.586,1414.725,1427.810,1428.812,1498.757,1499.765,1540.893,1558.774,1618.035,1636.060,1724.729
+consensus_intens=56.21,20.19,174.34,969.71,26.29,8523.00,15.11,120.07,353.56,34.33,1233.21,557.07,553.12,343.05,812.88,545.70,796.93,339.36,10064.93,1227.33,67.01,1096.52,1265.47,211.19,33085.22,835.82,781.19,942.34,3546.35,661.24,1049.77,2325.80,420.23,11397.71,2631.12,913.05,2667.79,500.17,24121.84,2314.00,48.21,14.06,156.36,1387.23,139.70,4795.60,1381.52,321.97,3432.30,1215.48,29.61,272.13,77.79,56.50,84.65,2412.82,982.97,11.66,80.77,16.54,9.18,1153.56,505.18,11.98,13.38,7.68,1373.85,684.61,3.12,2.29,15.34,12.77,12.58,15.24,12.76
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=128#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.53103.2	true	AELSEEALLSVLPTIR	870.9933	2			0.0	{"RT": "3431.464832"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=79#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52557.2	true	AELSEEALLSVLPTIR	870.9911	2			0.0	{"RT": "3400.93649"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=75#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52531.2	true	AELSEEALLSVLPTIR	870.9913	2			0.0	{"RT": "3399.447096"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=114#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52935.2	true	AELSEEALLSVLPTIR	870.9911	2			0.0	{"RT": "3421.999491"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=103#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52772.2	true	AELSEEALLSVLPTIR	870.9909	2			0.0	{"RT": "3413.108958"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=112#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52877.2	true	AELSEEALLSVLPTIR	870.9907	2			0.0	{"RT": "3418.772696"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=126#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.53075.2	true	AELSEEALLSVLPTIR	870.9925	2			0.0	{"RT": "3429.899898"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=84#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52615.2	true	AELSEEALLSVLPTIR	870.99146	2			0.0	{"RT": "3404.165648"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=123#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.53013.2	true	AELSEEALLSVLPTIR	870.99133	2			0.0	{"RT": "3426.4608"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=100#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52741.2	true	AELSEEALLSVLPTIR	870.9913	2			0.0	{"RT": "3411.398388"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=117#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52960.2	true	AELSEEALLSVLPTIR	870.991	2			0.0	{"RT": "3423.438678"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=105#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52802.2	true	AELSEEALLSVLPTIR	870.99133	2			0.0	{"RT": "3414.761925"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=99#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52740.2	true	AELSEEALLSVLPTIR	870.9913	2			0.0	{"RT": "3411.35334"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=82#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52591.2	true	AELSEEALLSVLPTIR	870.99133	2			0.0	{"RT": "3402.785224"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=94#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52694.2	true	AELSEEALLSVLPTIR	870.9914	2			0.0	{"RT": "3408.673731"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=124#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.53014.2	true	AELSEEALLSVLPTIR	870.99133	2			0.0	{"RT": "3426.50589"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=120#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52988.2	true	AELSEEALLSVLPTIR	870.9911	2			0.0	{"RT": "3425.015623"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=127#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.53076.2	true	AELSEEALLSVLPTIR	870.9925	2			0.0	{"RT": "3429.944946"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=76#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52532.2	true	AELSEEALLSVLPTIR	870.9913	2			0.0	{"RT": "3399.492164"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=106#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52803.2	true	AELSEEALLSVLPTIR	870.99133	2			0.0	{"RT": "3414.807016"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=87#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52646.2	true	AELSEEALLSVLPTIR	870.99146	2			0.0	{"RT": "3405.90542"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=118#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52961.2	true	AELSEEALLSVLPTIR	870.991	2			0.0	{"RT": "3423.48376"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=102#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52771.2	true	AELSEEALLSVLPTIR	870.9909	2			0.0	{"RT": "3413.063862"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=91#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52675.2	true	AELSEEALLSVLPTIR	870.9913	2			0.0	{"RT": "3407.516405"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=97#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52719.2	true	AELSEEALLSVLPTIR	870.9915	2			0.0	{"RT": "3410.108411"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=108#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52830.2	true	AELSEEALLSVLPTIR	870.9909	2			0.0	{"RT": "3416.361869"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=81#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52590.2	true	AELSEEALLSVLPTIR	870.99133	2			0.0	{"RT": "3402.740305"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=85#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52616.2	true	AELSEEALLSVLPTIR	870.99146	2			0.0	{"RT": "3404.210563"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=90#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52674.2	true	AELSEEALLSVLPTIR	870.9913	2			0.0	{"RT": "3407.47149"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=93#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52693.2	true	AELSEEALLSVLPTIR	870.9914	2			0.0	{"RT": "3408.628818"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=88#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52647.2	true	AELSEEALLSVLPTIR	870.99146	2			0.0	{"RT": "3405.95034"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=115#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52936.2	true	AELSEEALLSVLPTIR	870.9911	2			0.0	{"RT": "3422.044426"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=109#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52831.2	true	AELSEEALLSVLPTIR	870.9909	2			0.0	{"RT": "3416.406932"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=111#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52876.2	true	AELSEEALLSVLPTIR	870.9907	2			0.0	{"RT": "3418.727648"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=78#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52556.2	true	AELSEEALLSVLPTIR	870.9911	2			0.0	{"RT": "3400.891392"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=96#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52718.2	true	AELSEEALLSVLPTIR	870.9915	2			0.0	{"RT": "3410.063506"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=121#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.52989.2	true	AELSEEALLSVLPTIR	870.9911	2			0.0	{"RT": "3425.060693"}
+=Cluster=
+id=b1ae84e0-7eb3-4e8b-b418-37f6ecbb9544
+av_precursor_mz=896.961
+av_precursor_intens=1.0
+sequence=[AELTALESLIEMGFPR:9]
+consensus_mz=155.081,173.092,175.119,185.130,197.128,201.087,243.131,255.145,268.165,272.170,308.160,314.171,326.171,355.160,397.207,415.217,419.240,468.242,476.262,486.255,559.299,560.301,581.331,597.314,599.345,623.296,670.332,688.340,689.344,752.337,753.342,761.929,797.386,801.425,802.429,865.425,866.428,897.497,914.509,915.512,978.510,979.519,983.502,1001.541,1002.543,1044.546,1065.540,1066.545,1112.575,1130.583,1131.588,1194.580,1195.589,1243.667,1244.670,1245.668,1307.667,1308.666,1314.704,1315.705,1378.699,1415.755,1416.757
+consensus_intens=99.87,579.68,233.47,170.63,255.50,1241.34,330.95,330.33,355.04,1072.42,122.19,424.70,223.44,217.63,465.74,266.66,77.08,285.44,305.88,213.41,401.21,8.46,4.35,16.80,8.06,172.47,5.16,426.79,100.28,223.71,4.28,4.71,3.58,542.75,179.39,252.53,54.32,4.65,336.73,132.03,79.91,3.80,8.13,969.05,413.24,37.53,314.36,144.88,130.34,983.25,478.30,297.88,144.24,707.05,402.51,42.67,168.29,53.53,468.66,269.69,42.18,241.55,155.36
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=160#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55757.2	true	AELTALESLIEMGFPR	896.96185	2			0.0	{"RT": "3595.255474"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=135#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55411.2	true	AELTALESLIEMGFPR	896.9611	2			0.0	{"RT": "3573.649426"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=148#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55696.2	true	AELTALESLIEMGFPR	896.96136	2			0.0	{"RT": "3591.270308"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=166#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55819.2	true	AELTALESLIEMGFPR	896.9616	2			0.0	{"RT": "3598.684867"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=151#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55712.2	true	AELTALESLIEMGFPR	896.9602	2			0.0	{"RT": "3592.295005"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=154#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55725.2	true	AELTALESLIEMGFPR	896.9611	2			0.0	{"RT": "3593.194095"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=163#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55791.2	true	AELTALESLIEMGFPR	896.9609	2			0.0	{"RT": "3597.102516"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=157#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55741.2	true	AELTALESLIEMGFPR	896.96075	2			0.0	{"RT": "3594.233058"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=138#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55436.2	true	AELTALESLIEMGFPR	896.96216	2			0.0	{"RT": "3575.095738"}
+=Cluster=
+id=af0e09ca-2c08-47f5-8712-70b825dda01f
+av_precursor_mz=896.961
+av_precursor_intens=1.0
+sequence=[AELTALESLIEMGFPR:29]
+consensus_mz=129.102,147.113,173.092,175.119,197.128,201.087,215.139,268.165,272.171,286.176,314.171,326.171,355.161,373.172,397.207,415.218,419.240,468.244,476.261,486.255,559.298,571.347,581.330,597.307,599.340,615.303,623.296,650.350,668.365,688.341,710.376,728.386,752.332,753.343,797.407,801.425,815.414,865.424,866.427,897.477,910.487,914.509,928.497,978.508,979.510,1001.541,1002.543,1041.587,1065.539,1066.541,1130.584,1131.586,1176.573,1194.581,1195.583,1217.898,1243.667,1244.671,1266.660,1267.612,1307.665,1308.666,1314.706,1378.703,1379.706,1415.751,1416.763,1479.751,1480.752,1493.752,1549.700,1592.863,1669.630,1735.180,1785.036
+consensus_intens=45.14,35.61,715.09,487.59,114.36,2553.30,552.80,412.84,4933.22,757.16,1629.28,286.12,911.60,130.42,1581.30,1601.51,535.78,2111.68,1452.70,1869.71,324.35,116.20,746.93,170.58,1010.98,177.12,1269.55,303.26,96.38,903.99,185.87,579.65,3605.90,632.64,543.76,1225.79,314.49,3744.34,1172.12,2714.70,489.85,415.87,173.18,1701.33,511.32,1859.78,493.06,161.24,4640.18,1915.45,2174.28,735.18,317.32,4800.69,2219.57,15.44,1421.06,595.69,10.53,12.52,3288.64,1782.80,719.73,1836.84,620.15,313.76,93.75,908.30,435.70,13.69,5.17,4.28,13.93,6.32,4.11
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=153#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55724.2	true	AELTALESLIEMGFPR	896.9611	2			0.0	{"RT": "3593.149224"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=164#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55817.2	true	AELTALESLIEMGFPR	896.9616	2			0.0	{"RT": "3598.595066"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=161#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55789.2	true	AELTALESLIEMGFPR	896.9609	2			0.0	{"RT": "3597.012656"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=130#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55360.2	true	AELTALESLIEMGFPR	896.9631	2			0.0	{"RT": "3570.735921"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=139#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55468.2	true	AELTALESLIEMGFPR	896.962	2			0.0	{"RT": "3576.85832"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=156#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55740.2	true	AELTALESLIEMGFPR	896.96075	2			0.0	{"RT": "3594.188177"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=158#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55755.2	true	AELTALESLIEMGFPR	896.96185	2			0.0	{"RT": "3595.165599"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=152#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55723.2	true	AELTALESLIEMGFPR	896.9611	2			0.0	{"RT": "3593.104303"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=137#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55435.2	true	AELTALESLIEMGFPR	896.96216	2			0.0	{"RT": "3575.05087"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=133#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55409.2	true	AELTALESLIEMGFPR	896.9611	2			0.0	{"RT": "3573.559636"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=159#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55756.2	true	AELTALESLIEMGFPR	896.96185	2			0.0	{"RT": "3595.21068"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=132#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55391.2	true	AELTALESLIEMGFPR	896.96234	2			0.0	{"RT": "3572.441988"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=145#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55676.2	true	AELTALESLIEMGFPR	896.9599	2			0.0	{"RT": "3590.05398"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=141#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55493.2	true	AELTALESLIEMGFPR	896.96136	2			0.0	{"RT": "3578.297989"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=134#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55410.2	true	AELTALESLIEMGFPR	896.9611	2			0.0	{"RT": "3573.604564"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=140#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55469.2	true	AELTALESLIEMGFPR	896.962	2			0.0	{"RT": "3576.903294"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=147#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55695.2	true	AELTALESLIEMGFPR	896.96136	2			0.0	{"RT": "3591.225432"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=149#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55710.2	true	AELTALESLIEMGFPR	896.9602	2			0.0	{"RT": "3592.205216"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=155#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55739.2	true	AELTALESLIEMGFPR	896.96075	2			0.0	{"RT": "3594.143249"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=136#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55434.2	true	AELTALESLIEMGFPR	896.96216	2			0.0	{"RT": "3575.005981"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=142#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55494.2	true	AELTALESLIEMGFPR	896.96136	2			0.0	{"RT": "3578.343245"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=131#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55390.2	true	AELTALESLIEMGFPR	896.96234	2			0.0	{"RT": "3572.39711"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=129#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55359.2	true	AELTALESLIEMGFPR	896.9631	2			0.0	{"RT": "3570.691005"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=143#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55512.2	true	AELTALESLIEMGFPR	896.9625	2			0.0	{"RT": "3579.500561"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=150#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55711.2	true	AELTALESLIEMGFPR	896.9602	2			0.0	{"RT": "3592.250136"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=162#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55790.2	true	AELTALESLIEMGFPR	896.9609	2			0.0	{"RT": "3597.057708"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=146#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55694.2	true	AELTALESLIEMGFPR	896.96136	2			0.0	{"RT": "3591.180517"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=144#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55675.2	true	AELTALESLIEMGFPR	896.9599	2			0.0	{"RT": "3590.009061"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=165#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55818.2	true	AELTALESLIEMGFPR	896.9616	2			0.0	{"RT": "3598.640006"}
+=Cluster=
+id=1ec92bab-82ae-4979-996c-f967f3f31517
+av_precursor_mz=927.511
+av_precursor_intens=1.0
+sequence=[INLLGFLGLVHCLPCK:2]
+consensus_mz=120.080,129.102,130.086,147.112,175.119,200.140,211.108,228.134,243.116,258.089,307.144,334.141,341.218,342.219,398.239,404.196,409.281,411.185,443.262,488.284,517.284,528.281,545.307,567.266,613.373,641.363,658.392,677.311,680.354,700.862,724.415,757.405,783.930,793.441,813.948,814.370,815.377,871.472,884.445,913.428,926.999,942.514,944.548,997.538,1026.518,1029.510,1083.540,1084.547,1089.581,1110.604,1129.597,1177.719,1196.626,1197.630,1285.591,1337.732,1343.692,1344.704,1400.717,1401.721,1450.824,1451.828,1513.786,1514.804,1626.884,1782.271
+consensus_intens=50.13,43.05,12.01,33.06,16.41,19.35,17.57,356.55,71.40,35.88,24.19,38.01,306.24,6.06,31.99,253.41,16.79,14.62,16.99,14.76,46.14,42.21,40.67,15.21,14.78,44.06,47.57,74.85,70.66,43.79,13.39,72.34,27.09,23.81,69.86,148.86,32.98,12.29,24.28,89.68,96.46,55.35,36.72,68.79,50.68,5.36,284.48,88.71,10.72,14.21,14.42,8.20,156.04,59.44,4.53,49.05,65.25,5.88,281.10,139.47,81.40,50.58,77.83,52.72,29.02,5.07
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=167#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55835.2	true	INLLGFLGLVHCLPCK	927.5106	2			0.0	{"RT": "3599.403326"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=168#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.55836.2	true	INLLGFLGLVHCLPCK	927.5106	2			0.0	{"RT": "3599.448235"}
+=Cluster=
+id=be8731dc-ea88-4973-ae05-d53e2975f53b
+av_precursor_mz=998.034
+av_precursor_intens=1.0
+sequence=[AAEEFVNIYYETMDKR:7]
+consensus_mz=143.081,175.118,178.223,259.091,272.124,303.213,304.217,330.130,373.170,401.166,406.160,419.192,477.197,500.244,503.212,520.239,548.235,549.237,619.306,647.302,648.306,666.322,674.815,744.323,761.344,795.366,797.881,798.383,862.405,862.903,874.430,875.429,894.430,965.965,966.463,966.959,998.468,998.960,1020.464,1037.495,1038.483,1057.492,1058.494,1121.493,1122.496,1123.498,1126.495,1170.575,1234.576,1235.577,1284.620,1285.617,1331.589,1348.619,1349.624,1350.621,1383.688,1447.687,1448.684,1449.680,1594.755,1595.745,1733.438,1908.835
+consensus_intens=105.35,128.74,4.08,99.77,95.26,332.61,6.75,32.31,3.69,250.32,86.19,3.94,11.38,27.16,13.95,152.29,362.54,95.73,56.40,240.16,57.07,151.32,14.22,85.27,152.46,169.55,142.04,134.25,98.74,80.28,258.08,114.97,71.40,746.43,1052.59,387.40,536.42,1075.86,4.07,46.36,3.58,239.27,123.83,815.61,446.35,90.35,17.14,54.45,208.44,144.81,205.33,117.96,48.59,557.12,402.47,108.99,70.37,210.44,174.82,13.51,52.37,71.97,3.48,3.53
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=21#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.32837.2	true	AAEEFVNIYYETMDKR	997.9626	2			0.0	{"RT": "2339.415076"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=12#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.32579.2	true	AAEEFVNIYYETMDKR	998.46326	2			0.0	{"RT": "2325.537497"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=11#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.32203.2	true	AAEEFVNIYYETMDKR	997.9628	2			0.0	{"RT": "2306.262419"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=9#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.32139.2	true	AAEEFVNIYYETMDKR	997.9628	2			0.0	{"RT": "2303.048578"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=17#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.32751.2	true	AAEEFVNIYYETMDKR	997.96277	2			0.0	{"RT": "2334.854689"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=19#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.32794.2	true	AAEEFVNIYYETMDKR	997.9625	2			0.0	{"RT": "2337.131599"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=15#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.32705.2	true	AAEEFVNIYYETMDKR	997.96246	2			0.0	{"RT": "2332.442922"}
+=Cluster=
+id=1a24f859-e345-4c77-a4bb-cc0c24d1b85e
+av_precursor_mz=998.046
+av_precursor_intens=1.0
+sequence=[AAEEFVNIYYETMDKR:6]
+consensus_mz=102.055,115.087,120.081,143.081,175.119,201.087,241.082,259.091,272.124,277.119,303.214,330.130,361.187,373.172,388.150,401.167,406.161,419.191,455.217,477.197,503.214,520.240,548.234,549.236,559.282,602.316,619.305,647.302,648.308,666.321,716.325,731.368,744.319,761.345,795.366,857.404,874.431,875.434,894.431,895.434,958.428,959.431,965.960,966.462,998.508,1057.495,1058.496,1059.497,1121.493,1122.496,1123.491,1170.577,1171.578,1234.575,1235.579,1284.622,1285.624,1286.612,1348.621,1349.620,1350.619,1383.696,1384.692,1447.686,1448.691,1449.686,1530.766,1531.764,1595.765
+consensus_intens=16.66,80.79,71.81,254.29,224.78,93.35,23.94,243.07,257.24,89.11,534.49,145.05,83.60,80.08,93.49,367.64,164.75,16.14,39.28,81.69,119.07,179.38,304.56,81.08,75.15,85.97,24.94,140.92,15.05,143.90,9.59,91.20,44.11,92.51,128.82,9.47,113.82,8.49,224.54,104.01,305.16,121.29,41.27,94.48,241.25,584.05,303.22,3.66,602.05,351.30,28.09,187.92,112.13,152.41,115.12,501.20,330.95,70.72,402.78,313.10,70.45,204.45,143.17,153.49,124.54,5.24,48.55,46.65,8.07
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=16#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.32706.2	true	AAEEFVNIYYETMDKR	997.96246	2			0.0	{"RT": "2332.487798"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=20#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.32795.2	true	AAEEFVNIYYETMDKR	997.9625	2			0.0	{"RT": "2337.176499"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=22#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.32838.2	true	AAEEFVNIYYETMDKR	997.9626	2			0.0	{"RT": "2339.459996"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=13#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.32580.2	true	AAEEFVNIYYETMDKR	998.46326	2			0.0	{"RT": "2325.582453"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=10#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.32140.2	true	AAEEFVNIYYETMDKR	997.9628	2			0.0	{"RT": "2303.093436"}
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=18#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.32752.2	true	AAEEFVNIYYETMDKR	997.96277	2			0.0	{"RT": "2334.89957"}
+=Cluster=
+id=21a7da9b-70d7-4058-ab04-37a975c6d2d5
+av_precursor_mz=998.463
+av_precursor_intens=1.0
+sequence=[AAEEFVNIYYETMDKR:1]
+consensus_mz=115.087,120.081,136.076,143.082,175.119,201.087,241.082,259.091,272.124,277.118,303.214,304.216,330.129,374.171,388.150,401.166,406.161,418.241,475.267,477.193,503.214,520.241,548.236,559.284,602.331,603.326,647.301,666.330,731.367,795.369,894.431,895.432,958.431,959.433,1040.474,1057.494,1058.497,1059.503,1121.496,1122.499,1170.578,1171.584,1267.598,1268.604,1284.621,1285.624,1286.615,1348.632,1349.623,1383.690,1384.695,1530.773,1531.747
+consensus_intens=26.18,29.08,9.19,68.99,62.67,31.59,19.19,56.65,50.00,20.58,199.07,22.78,31.41,19.81,23.85,50.96,28.83,9.39,13.33,14.20,21.83,20.66,24.75,21.58,22.46,7.83,9.25,10.14,20.61,10.20,42.53,18.21,21.48,9.64,8.88,101.72,54.76,8.29,28.72,16.23,31.30,20.36,14.72,8.51,70.94,51.55,11.74,13.73,11.43,31.85,25.31,10.55,11.68
+SPEC	#file=../../spectra-cluster/src/test/resources/kuester_test.mgf#id=index=14#title=id=PXD004732TITLE=id=PXD004732;01650b_BF6-TUM_first_pool_88_01_01-3xHCD-1h-R2.32581.2	true	AAEEFVNIYYETMDKR	998.46326	2			0.0	{"RT": "2325.627314"}

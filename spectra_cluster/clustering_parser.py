@@ -91,7 +91,7 @@ class ClusteringParser:
         """
         fields = line.split("\t")
 
-        if len(fields) != 9:
+        if len(fields) < 9:
             raise Exception("Invalid SPEC line encountered: " + line)
 
         title = fields[1]
@@ -101,6 +101,9 @@ class ClusteringParser:
         charge = float(fields[5])
         taxids = fields[6].split(",")
         ptm_strings = fields[7].split(";")
+        similarity_score = float(fields[8])
+
+        json_properties = fields[9] if len(fields) >= 10 else "{}"
 
         if title == "PXD000443;PRIDE_Exp_Complete_Ac_31019.xml;spectrum=377050":
             pass
@@ -112,7 +115,7 @@ class ClusteringParser:
 
         psms = ClusteringParser._create_psms(sequences, ptm_strings)
 
-        return objects.Spectrum(title, prec_mz, charge, taxids, psms)
+        return objects.Spectrum(title, prec_mz, charge, taxids, psms, similarity_score, json_properties)
 
     @staticmethod
     def _create_psms(sequences, ptm_strings):

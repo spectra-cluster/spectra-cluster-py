@@ -4,6 +4,7 @@
 # ------------------------------
 
 import re
+import json
 
 
 class Cluster:
@@ -158,7 +159,7 @@ class Spectrum:
     A spectrum reference.
     """
 
-    def __init__(self, title, precursor_mz, charge, taxids, psms):
+    def __init__(self, title, precursor_mz, charge, taxids, psms, similarity_score=0, json_properties=None):
         """
         Creates a new Spectrum reference.
 
@@ -168,17 +169,22 @@ class Spectrum:
         :param taxids: Set of taxids of the experiments in which the spectrum was observed
         :param psms: A set of psms associated with the spectrum. If None is passed
         an empty set is created.
+        :param similarity_score: The similarity of this spectrum with the cluster's consensus spectrum.
+        :param json_properties: Additional properties of the spectrum encoded as a JSON string.
         :return:
         """
         self.title = title
         self.precursor_mz = precursor_mz
         self.charge = charge
         self.taxids = frozenset(taxids)
+        self.similarity_score = similarity_score
 
         if psms is None:
             self.psms = frozenset()
         else:
             self.psms = frozenset(psms)
+
+        self.properties = json.loads(json_properties) if json_properties is not None else dict()
 
     def get_filename(self):
         """
@@ -275,6 +281,21 @@ class Spectrum:
             return False
 
         return len(self.psms) > 0
+
+    def get_property(self, key):
+        """
+        Get the property with the defined key.
+
+        :param key: The property's name.
+        :return: The property's value or None if it is not defined
+        """
+        if self.properties is None:
+            return None
+
+        if key in self.properties:
+            return self.properties[key]
+
+        return None
 
     def __eq__(self, other):
         """
