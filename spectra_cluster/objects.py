@@ -205,6 +205,15 @@ class Spectrum:
 
         return self.title[start + 6:end]
 
+    def get_mass(self):
+        """
+        Calculates the molecular mass based on the precursor_mz and the charge.
+
+        :return: The molecular mass
+        """
+        mass = self.precursor_mz * self.charge - (self.charge * 1.008)
+        return mass
+
     def get_id(self):
         """
         The spectrum's id can optionally be encoded
