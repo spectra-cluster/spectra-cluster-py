@@ -5,12 +5,15 @@ writes these parameters to a tab-delimited file.
 
 Usage:
   cluster_parameter_extractor.py --input=<results.clustering> --output=<parameters.txt>
+                                 [--synthetic_peptides]
   cluster_parameter_extractor.py (--help | --version)
 
 Options:
   -i, --input=<clustering file>        Path to the .clustering result file to process.
   -o, --output=<parameters.txt>        Path to the output file that should be created.
-
+  --synthetic_peptides                 If this option is specified, all spectra from the
+                                       dataset on synthetic peptides (PXD004732) will be
+                                       analysed separately.
   -h, --help                           Print this help message.
   -v, --version                        Print the current version.
 """
@@ -36,7 +39,7 @@ def create_sequence_string(cluster):
     sequence_strings = list()
 
     for sequence in cluster.sequence_counts.keys():
-        sequence_strings.append(sequence + ":" + cluster.sequence_counts.get(sequence))
+        sequence_strings.append(sequence + ":" + str(cluster.sequence_counts.get(sequence)))
 
     final_string = "[" + ",".join(sequence_strings) + "]"
 
@@ -90,6 +93,7 @@ def process_cluster(cluster):
         # cluster only contains 1 sequence
         result_fields.append("NA")
         result_fields.append("NA")
+        result_fields.append("NA")
     elif len(cluster.max_sequences) > 1:
         # there is more than one max sequence
         result_fields.append(cluster.max_sequences[1])
@@ -114,7 +118,9 @@ def process_cluster(cluster):
         if not sequence_found:
             raise Exception("Failed to identify second most common sequence for cluster " + cluster.id)
 
-        result_fields.append(second_max_count)
+        result_fields.append(str(second_max_count))
+        # TODO: add modifications
+        result_fields.append("NA")
 
     # n_input_files
     input_files = set()
@@ -133,6 +139,54 @@ def process_cluster(cluster):
     return "\t".join(result_fields)
 
 
+def process_synthetic_peptides(cluster):
+    """
+    Extracts information on identification from the dataset
+    PXD004732 which contains reliable identifications of
+    synthetic peptides.
+
+    :param cluster: The cluster to process
+    :return: A tab-delimited string containing the number of
+             synthetic peptide spectra in the cluster, their
+             max ratio and the max sequence.
+    """
+    total_spectra = 0
+    sequence_counts = dict()
+
+    for spectrum in cluster.get_spectra():
+        # ignore all none synthetic spectra
+        if "PXD004732" not in spectrum.get_title():
+            continue
+
+        total_spectra += 1
+
+        # spectra from this dataset only contain one psm
+        if len(spectrum.psms) != 1:
+            raise Exception("Unidentified spectrum from project PXD004732 encountered: " + spectrum.get_title())
+
+        psm = [p for p in spectrum.psms][0]
+
+        if psm.sequence not in sequence_counts:
+            sequence_counts[psm.sequence] = 1
+        else:
+            sequence_counts[psm.sequence] += 1
+
+    # done if no synthetic peptides were found
+    if total_spectra == 0:
+        return "0\tNA\tNA"
+
+    # get the max count
+    max_count = max(sequence_counts.values())
+
+    # get the matching sequences
+    max_sequences = [s for s in sequence_counts if sequence_counts[s] == max_count]
+
+    # calculate the ratio
+    max_ratio = max_count / total_spectra
+
+    return str(total_spectra) + "\t" + str(max_ratio) + "\t" + ";".join(max_sequences)
+
+
 def main():
     """
     Primary entry function for the CLI.
@@ -142,6 +196,7 @@ def main():
 
     input_file = arguments['--input']
     output_file = arguments["--output"]
+    process_synthetic = arguments["--synthetic_peptides"]
 
     # make sure the input file exists
     if not os.path.isfile(input_file):
@@ -158,14 +213,26 @@ def main():
         OUT.write("id\tprecursor_mz\tsize\tidentified_spec_count\tunidentified_spec_count\t"
                   "max_ratio\tmax_il_ratio\tprecursor_mz_range\tsequences\t"
                   "max_sequence\tmax_sequence_count\tmax_sequence_mods\t"
-                  "second_max_sequence\tsecond_max_sequence_count\tn_input_files\n")
+                  "second_max_sequence\tsecond_max_sequence_count\tsecond_max_sequence_mods\tn_input_files")
+
+        if process_synthetic:
+            OUT.write("\tsynth_count\tsynth_ratio\tsynth_max_sequence")
+
+        OUT.write("\n")
 
         # process the file
         parser = clustering_parser.ClusteringParser(input_file)
 
         for cluster in parser:
             cluster_line = process_cluster(cluster)
-            OUT.write(cluster_line + "\n")
+            OUT.write(cluster_line)
+
+            # process synthetic peptides
+            if process_synthetic:
+                synth_line = process_synthetic_peptides(cluster)
+                OUT.write("\t" + synth_line)
+
+            OUT.write("\n")
 
     print("Results written to " + output_file)
 
