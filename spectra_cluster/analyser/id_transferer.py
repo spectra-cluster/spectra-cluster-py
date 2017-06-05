@@ -50,7 +50,8 @@ class IdTransferer(common.AbstractAnalyser):
                                 spectrum.get_filename(),
                                 spectrum.get_id(),
                                 spectrum.get_clean_sequence_psms(),
-                                False))
+                                False,
+                                spectrum=spectrum))
             # do not process this cluster any further
             return
 
@@ -66,7 +67,8 @@ class IdTransferer(common.AbstractAnalyser):
                         spectrum.get_filename(),
                         spectrum.get_id(),
                         spectrum.get_clean_sequence_psms(),
-                        False))
+                        False,
+                        spectrum=spectrum))
                 continue
 
             # make sure the identification should be added to the spectrum
@@ -80,7 +82,7 @@ class IdTransferer(common.AbstractAnalyser):
             if not spectrum.is_identified():
                 changed_identification = True
             else:
-                sequences = spectrum.get_clean_sequences()
+                sequences = [s for s in spectrum.get_clean_sequences()]
                 if sequences[0] != main_psms[0].sequence:
                     changed_identification = True
 
@@ -88,7 +90,8 @@ class IdTransferer(common.AbstractAnalyser):
             self.identification_references.append(
                 IdentificationReference(spectrum.get_filename(),
                                         spectrum.get_id(), main_psms,
-                                        changed_identification))
+                                        changed_identification,
+                                        spectrum=spectrum))
 
     @staticmethod
     def extract_main_cluster_psms(cluster):
@@ -125,9 +128,10 @@ class IdentificationReference:
     :ivar changed_through_clustering: Logical indicating whether
           the identification details were changed through the
           clustering.
+    :ivar spectrum: The complete spectrum object
     """
 
-    def __init__(self, filename, spec_id, psms, changed_through_clustering):
+    def __init__(self, filename, spec_id, psms, changed_through_clustering, spectrum):
         """
         Creates a new instance of the identification reference.
 
@@ -141,3 +145,4 @@ class IdentificationReference:
         self.spec_id = spec_id
         self.psms = psms
         self.changed_through_clustering = changed_through_clustering
+        self.spectrum = spectrum
