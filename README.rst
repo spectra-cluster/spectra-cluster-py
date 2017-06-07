@@ -2,6 +2,10 @@
 spectra-cluster-py - Analysing clustering results
 #################################################
 
+.. image:: https://travis-ci.org/spectra-cluster/spectra-cluster-py.svg?branch=master
+    :target: https://travis-ci.org/spectra-cluster/spectra-cluster-py
+    :alt: Build Status (Travis)
+
 .. image:: https://readthedocs.org/projects/spectra-cluster-py/badge/?version=latest
    :target: http://spectra-cluster-py.readthedocs.io/en/latest/?badge=latest
    :alt: Documentation Status
