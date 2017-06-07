@@ -4,3 +4,4 @@ pyteomics
 numpy
 lxml
 pandas
+maspy
