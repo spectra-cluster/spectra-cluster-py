@@ -8,7 +8,7 @@ import spectra_cluster.ui.mgf_search_result_annotator as mgf_search_result_annot
 
 class XTandemImportTest(unittest.TestCase):
     def setUp(self):
-        self.testfile = os.path.sep.join([os.path.abspath("."), "testfiles", "test_xtandem.mzid"])
+        self.testfile = os.path.join(os.path.dirname(__file__), "testfiles", "test_xtandem.mzid")
 
     def testXtandemImport(self):
         results = mgf_search_result_annotator.parser_mzident(filename=self.testfile,
@@ -20,3 +20,5 @@ class XTandemImportTest(unittest.TestCase):
         for psm in results:
             self.assertNotEqual(psm.index, mgf_search_result_annotator.Psm.MISSING_INDEX)
 
+if __name__ == "__main__":
+    unittest.main()

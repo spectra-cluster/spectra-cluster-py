@@ -12,7 +12,7 @@ class ScaffoldImportTest(unittest.TestCase):
     Test scaffold mzid import functions
     """
     def setUp(self):
-        self.testfile = os.path.sep.join([os.path.abspath("."), "testfiles", "test.mzid"])
+        self.testfile = os.path.join(os.path.dirname(__file__), "testfiles", "test.mzid")
 
     def testPyteomicsParsing(self):
         reader = mzid.read(self.testfile)
@@ -52,3 +52,6 @@ class ScaffoldImportTest(unittest.TestCase):
                                                              score_field="Scaffold:Peptide Probability",
                                                              fdr=2)
         self.assertEqual(6573, len(resutls))
+
+if __name__ == "__main__":
+    unittest.main()

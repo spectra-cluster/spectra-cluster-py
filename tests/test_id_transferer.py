@@ -11,7 +11,7 @@ class IdTransfererTest(unittest.TestCase):
     Test case for the IdTransfererTest class
     """
     def setUp(self):
-        self.testfile = os.path.abspath('.') + os.path.sep + "test.clustering"
+        self.testfile = os.path.join(os.path.dirname(__file__), "test.clustering")
 
     def test_identifiy_all(self):
         parser = clustering_parser.ClusteringParser(self.testfile)
@@ -74,3 +74,6 @@ class IdTransfererTest(unittest.TestCase):
 
         self.assertEqual(2, sequence_counts["MEGIGLK"])
         self.assertEqual(1, sequence_counts["ASDA"])
+
+if __name__ == "__main__":
+    unittest.main()

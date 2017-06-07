@@ -10,7 +10,7 @@ class FastaParserTest(unittest.TestCase):
     TestCase for the FastaParser class
     """
     def setUp(self):
-        self.testfile = os.path.abspath(".") + os.sep + "test.fasta"
+        self.testfile = os.path.join(os.path.dirname(__file__), "test.fasta")
 
     def testIterator(self):
         parser = fasta_parser.FastaParser(self.testfile)
@@ -38,3 +38,6 @@ class FastaParserTest(unittest.TestCase):
                 self.assertEqual("AT1G44020.3", fasta_entry.getAccession())
 
         self.assertEqual(202, n_entries)
+
+if __name__ == "__main__":
+    unittest.main()

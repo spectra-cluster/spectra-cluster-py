@@ -11,9 +11,8 @@ class MsAmandaImportTest(unittest.TestCase):
     Test the MSAmanda import function
     """
     def setUp(self):
-        self.msamanda_file = os.path.sep.join([os.path.abspath('.'),
-                                               "testfiles", "msamanda_test_output.csv"])
-        self.mgf_file = os.path.sep.join([os.path.abspath('.'), "testfiles", "msamanda_test_output.mgf"])
+        self.msamanda_file = os.path.join(os.path.dirname(__file__), "testfiles", "msamanda_test_output.csv")
+        self.mgf_file = os.path.join(os.path.dirname(__file__), "testfiles", "msamanda_test_output.mgf")
         self.org_mgf_file = "20151023_QexHF1_RSLC5_Elling_Elling_IMBA_shotgun_TMT_SCX_30per_fr105.mgf"
 
         # load the MGF titles
@@ -34,3 +33,6 @@ class MsAmandaImportTest(unittest.TestCase):
         for result in results:
             with self.subTest(result=result):
                 self.assertTrue(result.title is not None, msg="Missing title in extracted PSM")
+
+if __name__ == "__main__":
+    unittest.main()

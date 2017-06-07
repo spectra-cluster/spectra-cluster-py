@@ -10,13 +10,13 @@ class ClusteringParserTest(unittest.TestCase):
     Test case for the ClusteringParser class
     """
     def setUp(self):
-        self.testfile = os.path.abspath('.') + os.path.sep + "test.clustering"
+        self.testfile = os.path.join(os.path.dirname(__file__), "test.clustering")
         self.ptm_string = "1-MOD:1234,2-MOD:00043"
         self.spec_line = "SPEC\t#file=/home/jg/Projects/ebi-pride/pride-cluster-2/chimeric-spectra-generator/src/test/" \
                          "resources/PRD000001.st.id.mgf#id=index=1464#title=id=PRD000001;PRIDE_Exp_Complete_Ac_1644.xml;" \
                          "spectrum=5071,splib_sequence=MEGIGLK,score=0.362,peptideR2=,scoreR2=\ttrue\tMEGIGLK\t382.149\t2" \
                          "\t\t\t0.0"
-        self.testfile2 = os.path.join(os.path.abspath("."), "testfiles", "psi-mod.clustering")
+        self.testfile2 = os.path.join(os.path.dirname(__file__), "testfiles", "psi-mod.clustering")
 
     def test_parse_ptms(self):
         ptms = clustering_parser.ClusteringParser._parse_ptms(self.ptm_string)
@@ -127,3 +127,5 @@ class ClusteringParserTest(unittest.TestCase):
             for spec in cluster.get_spectra():
                 self.assertIsNone(spec.get_property("RT"))
 
+if __name__ == "__main__":
+    unittest.main()

@@ -10,8 +10,8 @@ class ProteinAnnotatorTest(unittest.TestCase):
     TestCase for the ProteinParser
     """
     def setUp(self):
-        self.testfile = os.path.abspath(".") + os.sep + "test.fasta"
-        self.test_mappings = os.path.abspath(".") + os.sep + "testfiles" + os.sep + "test_mappings_ELGTVMR.txt"
+        self.testfile = os.path.join(os.path.dirname(__file__), "test.fasta")
+        self.test_mappings = os.path.join(os.path.dirname(__file__), "testfiles", "test_mappings_ELGTVMR.txt")
 
     def testMapPeptides(self):
         peptides = set()
@@ -80,3 +80,5 @@ class ProteinAnnotatorTest(unittest.TestCase):
             self.assertTrue("ELGTVMR" in protein_groups)
             self.assertEqual("P62158;Q96HY3;G3V361;H0Y7A7;E7ETZ0;E7EMB3", protein_groups["ELGTVMR"][0].strip())
 
+if __name__ == "__main__":
+    unittest.main()
