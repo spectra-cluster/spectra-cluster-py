@@ -6,5 +6,5 @@ python:
 branches:
     only:
         - master
-script: php -m unittest
+script: python -m unittest
 
