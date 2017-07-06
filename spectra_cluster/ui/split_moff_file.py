@@ -9,7 +9,7 @@ Usage:
 
 Options:
   -i, --input=<moff_result.txt>        The path to the moff result file. New files will be generated
-                                       by appending ",off.txt" to the MGF filename.
+                                       by appending "moff.txt" to the MGF filename.
   -o, --out_dir=</my/dir>              Output directory to save the newly created files in.
   -h, --help                           Print this help message.
   -v, --version                        Print the current version.
