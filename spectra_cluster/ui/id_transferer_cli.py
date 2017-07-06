@@ -127,7 +127,7 @@ def write_moff_results(identification_references, peptide_mappings, output_filen
     :param output_filename: Path to the output filename
     """
     with open(output_filename, "w") as writer:
-        writer.write("peptide\tprot\tmod_peptide\trt\tmz\tmass\tcharge\n")
+        writer.write("peptide\tprot\tmod_peptide\trt\tmz\tmass\tcharge\tfilename\tchanged_by_clustering\n")
 
         for id_ref in identification_references:
             fields = list()
@@ -161,6 +161,14 @@ def write_moff_results(identification_references, peptide_mappings, output_filen
             fields.append(str(id_ref.spectrum.get_mass()))
 
             fields.append(str(id_ref.spectrum.charge))
+
+            fields.append(str(id_ref.spectrum.get_filename()))
+
+            changed_by_clustering = "false"
+            if id_ref.changed_through_clustering:
+                changed_by_clustering = "true"
+
+            fields.append(changed_by_clustering)
 
             writer.write("\t".join(fields) + "\n")
 
