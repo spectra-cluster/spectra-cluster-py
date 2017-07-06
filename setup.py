@@ -118,6 +118,7 @@ setup(
             'cluster_features_cli=spectra_cluster.ui.cluster_features_cli:main',
             'consensus_spectrum_exporter=spectra_cluster.ui.consensus_spectrum_exporter:main',
             'id_transferer_cli=spectra_cluster.ui.id_transferer_cli:main',
+            'split_moff_file=spectra_cluster.ui.split_moff_file:main',
             'mgf_search_result_annotator=spectra_cluster.ui.mgf_search_result_annotator:main',
             'protein_annotator=spectra_cluster.ui.protein_annotator:main',
             'unique_fasta_extractor=spectra_cluster.ui.unique_fasta_extractor:main',
