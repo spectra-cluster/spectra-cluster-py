@@ -20,6 +20,48 @@ clustering results in the **.clustering format**.
 For more information have a look at our
 `documentation <http://spectra-cluster-py.readthedocs.io/en/latest/>`_
 
+Installation
+============
+
+Requirements
+------------
+
+* `Python http://www.python.org`_ >= 3.4
+
+The spectra-cluster-py package uses several external libraries. If you follow the installation instructions below, the will be installed but be build from source. This can take quite a while. Therefore, it is often better to install the binary versions of these libraries beforehand if available for your operating system:
+
+* docopt
+* pyinstaller
+* pyteomics
+* numpy
+* lxml
+* pandas
+* maspy
+
+Installation using PIP
+----------------------
+
+The easiest way to install the spectra-cluster-py package is to use `pip`. `pip` is already installed if you downloaded python from python.org. In case it is not, follow these instructions to install it: https://pip.pypa.io/en/stable/installing/
+
+**Note**: On some unix systems the `pip` command for python3 may be called `pip3`. In this case you need to use `pip3` to install the spectra-cluster-py package.
+
+.. code:: bash
+
+  pip install https://github.com/spectra-cluster/spectra-cluster-py/zipball/master
+
+Manual installation
+-------------------
+
+Download the .zip file using the button above or through this `link https://github.com/spectra-cluster/spectra-cluster-py/zipball/master`_. Extract the zip file and enter the directory. There, simply launch `python3 ./setup.py install`.
+
+.. code:: bash
+  # Example for linux based systems with python3 installed
+  wget -O spectra_cluster_py.zip https://github.com/spectra-cluster/spectra-cluster-py/zipball/master
+  unzip spectra_cluster_py.zip
+  # enter the directory, the name will change based on the latest commit
+  cd spectra-cluster-spectra-cluster-py-ae3
+  python3 ./setup.py install
+
 The .clustering format
 ======================
 
