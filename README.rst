@@ -91,7 +91,7 @@ Getting Help
 ============
 
 You can find the spectra-cluster-py's documentation at
-*Read the Docs*.
+`Read the Docs <http://spectra-cluster-py.readthedocs.io/en/latest/>`_.
 
 If you find a bug or encounter any problem with one of
 the tools or the API please send us your problem using
