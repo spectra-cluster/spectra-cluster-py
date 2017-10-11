@@ -26,7 +26,7 @@ Installation
 Requirements
 ------------
 
-* `Python http://www.python.org`_ >= 3.4
+* `Python <http://www.python.org>`_ >= 3.4
 
 The spectra-cluster-py package uses several external libraries. If you follow the installation instructions below, the will be installed but be build from source. This can take quite a while. Therefore, it is often better to install the binary versions of these libraries beforehand if available for your operating system:
 
@@ -52,9 +52,10 @@ The easiest way to install the spectra-cluster-py package is to use `pip`. `pip`
 Manual installation
 -------------------
 
-Download the .zip file using the button above or through this `link https://github.com/spectra-cluster/spectra-cluster-py/zipball/master`_. Extract the zip file and enter the directory. There, simply launch `python3 ./setup.py install`.
+Download the .zip file using the button above or through this `link <https://github.com/spectra-cluster/spectra-cluster-py/zipball/master>`_. Extract the zip file and enter the directory. There, simply launch `python3 ./setup.py install`.
 
 .. code:: bash
+
   # Example for linux based systems with python3 installed
   wget -O spectra_cluster_py.zip https://github.com/spectra-cluster/spectra-cluster-py/zipball/master
   unzip spectra_cluster_py.zip
