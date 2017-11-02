@@ -38,6 +38,9 @@ def create_sequence_string(cluster):
     """
     sequence_strings = list()
 
+    if cluster.identified_spectra == 0:
+        return "[]"
+
     for sequence in cluster.sequence_counts.keys():
         sequence_strings.append(sequence + ":" + str(cluster.sequence_counts.get(sequence)))
 
@@ -89,7 +92,7 @@ def process_cluster(cluster):
         result_fields.append("NA")
 
     # second max sequence
-    if len(cluster.sequence_counts) == 1:
+    if cluster.identified_spectra == 0 or len(cluster.sequence_counts) == 1:
         # cluster only contains 1 sequence
         result_fields.append("NA")
         result_fields.append("NA")
