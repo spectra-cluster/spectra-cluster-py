@@ -48,6 +48,8 @@ class MgfFile:
         if self.is_indexed:
             with open(self.index_file, "rb") as reader:
                 self.index = pickle.load(reader)
+        else:
+            self.index = None
 
     def get_spectrum_string(self, spec_index):
         """
