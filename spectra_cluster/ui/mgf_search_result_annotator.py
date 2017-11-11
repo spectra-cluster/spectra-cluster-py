@@ -407,6 +407,10 @@ def write_annotated_mgf(input_mgf, sequence_dictionary, output_mgf):
                 if (line[0:6] == "TITLE=") & (current_spec_index in sequence_dictionary.keys()):
                     output_file.write("SEQ=" + sequence_dictionary[current_spec_index] + "\n")
 
+                # remove any existing annotation
+                if line[0:4] == "SEQ=":
+                    continue
+
                 if line[0:8] == "END IONS":
                     current_spec_index += 1
 
