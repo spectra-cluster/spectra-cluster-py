@@ -30,6 +30,17 @@ from docopt import docopt
 from spectra_cluster import clustering_parser
 
 
+# This list is used to make sure that additional parameters
+# are added in the same order to spectra (if they are available)
+possible_mgf_params = ["MIN_COMP", "ADDING_SCORE"]
+
+
+class SpectrumReference:
+    def __init__(self, index, params):
+        self.index = index
+        self.params = params
+
+
 class MgfFile:
     """
     Represents an MGF file that can be indexed. This class does not
@@ -55,7 +66,7 @@ class MgfFile:
         """
         Load the spectrum (as a string) defined by the 1-based index.
         :param spec_index: 1-based index of the spectrum to load
-        :return: String containing the spectrum starting with its "BEGIN IONS" line.
+        :return: A list of strings each representing one line of the spectrum.
         """
         if spec_index < 1:
             raise Exception("MGF spectrum indices are 1-based")
@@ -95,7 +106,7 @@ class MgfFile:
             while line:
                 spec_lines.append(line)
                 if line[:8] == "END IONS":
-                    return "".join(spec_lines)
+                    return spec_lines
 
                 line = reader.readline()
 
@@ -119,20 +130,37 @@ def get_spectra_per_file(cluster):
     for spectrum in cluster.get_spectra():
         mgf_file = os.path.basename(spectrum.get_filename())
 
+        spec_ref = SpectrumReference(spectrum.get_id(), spectrum.properties)
+
         if mgf_file not in spec_per_file:
-            spec_per_file[mgf_file] = [spectrum.get_id()]
+            spec_per_file[mgf_file] = [spec_ref]
         else:
-            spec_per_file[mgf_file].append(spectrum.get_id())
+            spec_per_file[mgf_file].append(spec_ref)
 
     return spec_per_file
 
 
-def append_spectra_to_file(in_file, spec_ids, out_file):
+def append_spectra_to_file(in_file, spec_refs, out_file):
     with open(out_file, "a") as writer:
         mgf_file = MgfFile(in_file)
-        for spec_id in spec_ids:
-            spec_string = mgf_file.get_spectrum_string(spec_id)
-            writer.write(spec_string + "\n")
+        for spec_ref in spec_refs:
+            spec_lines = mgf_file.get_spectrum_string(int(spec_ref.index[6:]))
+
+            last_param_line = 0
+            for line in spec_lines:
+                if line[0].isnumeric():
+                    break
+                last_param_line += 1
+
+            # write the params first
+            writer.write("".join(spec_lines[0:last_param_line]))
+
+            # write any additional params
+            for param_name in possible_mgf_params:
+                if param_name in spec_ref.params:
+                    writer.write(param_name + "=" + spec_ref.params[param_name] + "\n")
+
+            writer.write("".join(spec_lines[last_param_line:]) + "\n")
 
 
 def build_mgf_indices(mgf_files):
@@ -173,7 +201,7 @@ def write_consensus_spectrum(cluster, mgf_file):
         for i in range(0, len(cluster.consensus_mz)):
             writer.write(str(cluster.consensus_mz[i]) + " " + str(cluster.consensus_intens[i]) + "\n")
 
-        writer.write("END IONS\n")
+        writer.write("END IONS\n\n")
 
 
 def main():
@@ -235,13 +263,9 @@ def main():
                 print("Error: Failed to find " + mgf_filename)
                 sys.exit(1)
 
-            # load all spectra
-            ids = [int(index[6:]) for index in spectra_per_file[mgf_filename]]
-            ids.sort()
-
             # write the spectra
-            print("  Extracting " + str(len(ids)) + " spectra from " + mgf_filename + "...")
-            append_spectra_to_file(complete_name, ids, output_name)
+            print("  Extracting " + str(len(spectra_per_file[mgf_filename])) + " spectra from " + mgf_filename + "...")
+            append_spectra_to_file(complete_name, spectra_per_file[mgf_filename], output_name)
 
 
 if __name__ == "__main__":
