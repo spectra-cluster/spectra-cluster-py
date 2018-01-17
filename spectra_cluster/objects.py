@@ -11,7 +11,7 @@ class Cluster:
     """
     Represents a cluster in a .clustering output file.
     """
-    def __init__(self, cluster_id, precursor_mz, consensus_mz, consensus_intens, spectra):
+    def __init__(self, cluster_id, precursor_mz, consensus_mz, consensus_intens, spectra, ignore_duplicated=False):
         """ Creates a new cluster object
 
         :param cluster_id: The cluster's id
@@ -19,13 +19,19 @@ class Cluster:
         :param consensus_mz: A list of doubles holding the consensus spectrum's m/z values
         :param consensus_intens: A list of doubles holding the consensus spectrum's intensity values
         :param spectra: A set of spectra associated with the cluster
-        :return:
+        :param ignore_duplicated: The constructor automatically removes duplicated spectra from the list
+                                  of clustered spectra. If duplicated spectra are found, an Exception is
+                                  raised. Setting this parameter to true does not prevent the filtering, but
+                                  prevents the exception to be raised.
         """
         self.id = cluster_id
         self.precursor_mz = precursor_mz
         self.consensus_mz = consensus_mz
         self.consensus_intens = consensus_intens
         self._spectra = set(spectra)
+
+        if not ignore_duplicated and len(self._spectra != len(spectra)):
+            raise Exception("Duplicated spectra identified in the dataset.")
 
         self._update_properties()
 
