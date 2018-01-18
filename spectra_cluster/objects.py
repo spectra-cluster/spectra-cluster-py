@@ -30,7 +30,7 @@ class Cluster:
         self.consensus_intens = consensus_intens
         self._spectra = set(spectra)
 
-        if not ignore_duplicated and len(self._spectra != len(spectra)):
+        if not ignore_duplicated and self._spectra != len(spectra):
             raise Exception("Duplicated spectra identified in the dataset.")
 
         self._update_properties()
