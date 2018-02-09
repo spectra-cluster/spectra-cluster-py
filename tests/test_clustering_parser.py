@@ -18,6 +18,8 @@ class ClusteringParserTest(unittest.TestCase):
                          "\t\t\t0.0"
         self.testfile2 = os.path.join(os.path.dirname(__file__), "testfiles", "psi-mod.clustering")
 
+        self.testfile3 = os.path.join(os.path.dirname(__file__), "testfiles", "wrong_spec_counts.clustering")
+
     def test_parse_ptms(self):
         ptms = clustering_parser.ClusteringParser._parse_ptms(self.ptm_string)
 
@@ -126,6 +128,18 @@ class ClusteringParserTest(unittest.TestCase):
 
             for spec in cluster.get_spectra():
                 self.assertIsNone(spec.get_property("RT"))
+
+    def test_wrong_spec_counts(self):
+        parser = clustering_parser.ClusteringParser(self.testfile3)
+
+        all_clusters = list()
+
+        for c in parser:
+            all_clusters.append(c)
+
+        self.assertEqual(27, len(all_clusters))
+        self.assertEqual(17, all_clusters[26].n_spectra)
+        self.assertEqual(8, all_clusters[26].identified_spectra)
 
 if __name__ == "__main__":
     unittest.main()
