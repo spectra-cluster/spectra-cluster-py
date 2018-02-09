@@ -76,6 +76,8 @@ class ClusteringParser:
                     else:
                         consensus_intens = [float(s) for s in line[17:].split(",")]
 
+                # TODO: add support for consensus counts!
+
         # process the last cluster
         if cur_id is not None:
             cluster = objects.Cluster(cur_id, precursor_mz, consensus_mz, consensus_intens, spectra)
@@ -200,6 +202,11 @@ class ClusteringParser:
             if "CHEMMOD" in position:
                 print("Warning: Ignoring PTM (" + cur_ptm_string + ")")
                 continue
+
+            # fix some odd parsing errors
+            if "=" in position:
+                sign_index = position.find("=")
+                position = position[sign_index+1:]
 
             ptms.append(objects.PTM(int(position), accession))
 
