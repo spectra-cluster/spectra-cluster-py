@@ -46,6 +46,7 @@ import csv
 import operator
 import os
 from pyteomics import mzid
+from spectra_cluster import objects
 
 
 csv.field_size_limit(sys.maxsize)
@@ -147,6 +148,26 @@ def parse_msamanda(filename, fdr, mgf_filename=None):
         return filtered_psms
 
 
+def convert_mzid_modifications(modifications):
+    """
+    Convert the mzIdentML modification objects into
+    PTM objects
+
+    :param modifications: A list of mzIdentML modification objects (dicts)
+    :return A list of PTM objects
+    """
+    ptms = list()
+
+    for modification in modifications:
+        mass = float(modification.get("monoisotopicMassDelta"))
+        position = int(modification.get("location"))
+        ptm = objects.PTM(position=position, accession="[" + modification.get("name") + "," + str(mass) + "]")
+
+        ptms.append(ptm)
+
+    return ptms
+
+
 def parser_mzident(filename, score_field, title_field=None,
                    fdr=0.01, larger_score_is_better=False, decoy_string="DECOY",
                    include_decoy=False):
@@ -213,7 +234,11 @@ def parser_mzident(filename, score_field, title_field=None,
 
                     # get the sequence in an mzIdentML "secure" way
                     mzid_psm["sequence"] = spec_ident["PeptideSequence"]
-                    # TODO: PTMs are stored in peptide["Modification"]
+
+                    if "Modification" in spec_ident:
+                        mzid_psm["ptms"] = convert_mzid_modifications(spec_ident["Modification"])
+                    else:
+                        mzid_psm["ptms"] = list()
 
                     peptide_evidence = spec_ident["PeptideEvidenceRef"][0]
 
@@ -250,7 +275,7 @@ def parser_mzident(filename, score_field, title_field=None,
         # convert the psm
         if not mzid_psm["is_decoy"] or include_decoy:
             filtered_psms.append(Psm(mzid_psm["index"], mzid_psm["sequence"], mzid_psm["title"],
-                                     is_decoy=mzid_psm["is_decoy"]))
+                                     is_decoy=mzid_psm["is_decoy"], ptms=mzid_psm["ptms"]))
 
     return filtered_psms
 
@@ -274,6 +299,25 @@ def parse_xtandem_mzident(filename, fdr, decoy_string="REVERSED"):
         if "RTINSECONDS=" in psm.get_title():
             offset = psm.title.find("RTINSECONDS=")
             psm.title = psm.title[:offset].strip()
+
+    return psms
+
+
+def parse_msgfplus_mzident(filename, fdr, decoy_string="REVERSED"):
+    """
+    Parses MSGF+ output in the mzIdentML format.
+
+    :param filename: The path to the mzIdentML file.
+    :param fdr: The target fdr (ie. 0.01 for 1%)
+    :param decoy_string: The decoy string to use to identify decoy proteins.
+    :return: A list of PSM objects.
+    """
+
+    psms = parser_mzident(filename, score_field="MS-GF:SpecEValue",
+                          title_field="spectrumID", decoy_string=decoy_string,
+                          fdr=fdr)
+
+    # TODO: write test
 
     return psms
 
@@ -302,15 +346,17 @@ class Psm:
     :ivar sequence: The peptide sequence
     :ivar title: The spectrum's "title"
     :ivar is_decoy: Indicates whether this is a decoy hit
+    :ivar ptms: A list of PTMs
     """
     MISSING_INDEX = -1
 
-    def __init__(self, index, sequence, title=None, is_decoy=False):
+    def __init__(self, index, sequence, title=None, is_decoy=False, ptms=list()):
         # 0-based index of the spectrum
         self.index = index
         self.sequence = sequence
         self.title = title
         self.is_decoy = is_decoy
+        self.ptms = ptms
 
     def get_index(self):
         return self.index
@@ -401,15 +447,17 @@ def write_annotated_mgf(input_mgf, sequence_dictionary, output_mgf):
             current_spec_index = 0
 
             for line in mgf_file:
+                # remove any existing annotation
+                if line[0:4] == "SEQ=" or line[0:7] == "USER03=":
+                    continue
+
                 # simply copy the content
                 output_file.write(line)
                 # add the sequence information after the TITLE=
                 if (line[0:6] == "TITLE=") & (current_spec_index in sequence_dictionary.keys()):
                     output_file.write("SEQ=" + sequence_dictionary[current_spec_index] + "\n")
 
-                # remove any existing annotation
-                if line[0:4] == "SEQ=":
-                    continue
+                # TODO: Add PTM info
 
                 if line[0:8] == "END IONS":
                     current_spec_index += 1
