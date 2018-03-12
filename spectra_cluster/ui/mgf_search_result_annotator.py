@@ -161,7 +161,12 @@ def convert_mzid_modifications(modifications):
     for modification in modifications:
         mass = float(modification.get("monoisotopicMassDelta"))
         position = int(modification.get("location"))
-        ptm = objects.PTM(position=position, accession="[" + modification.get("name") + "," + str(mass) + "]")
+        name = modification.get("name")
+
+        if name is None:
+            name = "@" + str(position)
+
+        ptm = objects.PTM(position=position, accession="[" + name + "," + str(mass) + "]")
 
         ptms.append(ptm)
 
