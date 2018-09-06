@@ -138,8 +138,9 @@ class ClusteringParserTest(unittest.TestCase):
             all_clusters.append(c)
 
         self.assertEqual(27, len(all_clusters))
-        self.assertEqual(17, all_clusters[26].n_spectra)
-        self.assertEqual(8, all_clusters[26].identified_spectra)
+        self.assertEqual(13, all_clusters[26].n_spectra)
+        self.assertEqual(5, all_clusters[26].identified_spectra)
+
 
 if __name__ == "__main__":
     unittest.main()
