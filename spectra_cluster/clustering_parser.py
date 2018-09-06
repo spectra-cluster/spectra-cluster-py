@@ -208,7 +208,11 @@ class ClusteringParser:
                 sign_index = position.find("=")
                 position = position[sign_index+1:]
 
-            ptms.append(objects.PTM(int(position), accession))
+            try:
+                ptms.append(objects.PTM(int(position), accession))
+            except ValueError:
+                print("Warning: Ignoring invalid PTM definition: " + cur_ptm_string)
+                continue
 
         return ptms
 
