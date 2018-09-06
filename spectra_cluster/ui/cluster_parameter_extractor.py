@@ -57,7 +57,12 @@ def process_cluster(cluster):
     :param cluster: Cluster object to extract the parameters from
     :return: A tab-delimited string matching the output format
     """
-    result_fields = [cluster.id, str(cluster.precursor_mz), str(cluster.n_spectra),
+    # ignore empty clusters
+    if len(cluster.consensus_mz) < 1:
+        return ""
+
+    result_fields = [cluster.id, str(cluster.precursor_mz), str(cluster.charge),
+                     str(cluster.n_spectra),
                      str(cluster.identified_spectra), str(cluster.unidentified_spectra),
                      str(cluster.max_ratio), str(cluster.max_il_ratio)]
 
@@ -139,6 +144,20 @@ def process_cluster(cluster):
     else:
         result_fields.append(str(len(input_files)))
 
+    # max consensus peak tic
+    try:
+        if sum(cluster.consensus_intens) > 0:
+            rel_max_intens = max(cluster.consensus_intens) / sum(cluster.consensus_intens)
+        else:
+            rel_max_intens = 0
+        result_fields.append(str(rel_max_intens))
+        # max consensus peak m/z
+        max_peak_index = max(range(len(cluster.consensus_intens)), key=cluster.consensus_intens.__getitem__)
+        result_fields.append(str(cluster.consensus_mz[max_peak_index]))
+    except ValueError:
+        print("Error: Failed to process consensus spectrum of cluster " + cluster.id)
+        sys.exit(1)
+
     return "\t".join(result_fields)
 
 
@@ -213,10 +232,11 @@ def main():
 
     with open(output_file, "w") as OUT:
         # write the header
-        OUT.write("id\tprecursor_mz\tsize\tidentified_spec_count\tunidentified_spec_count\t"
+        OUT.write("id\tprecursor_mz\tav_charge\tsize\tidentified_spec_count\tunidentified_spec_count\t"
                   "max_ratio\tmax_il_ratio\tprecursor_mz_range\tsequences\t"
                   "max_sequence\tmax_sequence_count\tmax_sequence_mods\t"
-                  "second_max_sequence\tsecond_max_sequence_count\tsecond_max_sequence_mods\tn_input_files")
+                  "second_max_sequence\tsecond_max_sequence_count\tsecond_max_sequence_mods\tn_input_files\t"
+                  "max_consensus_peak_rel_tic\tmax_consensus_peak_mz")
 
         if process_synthetic:
             OUT.write("\tsynth_count\tsynth_ratio\tsynth_max_sequence")
