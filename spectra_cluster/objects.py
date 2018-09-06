@@ -11,7 +11,7 @@ class Cluster:
     """
     Represents a cluster in a .clustering output file.
     """
-    def __init__(self, cluster_id, precursor_mz, consensus_mz, consensus_intens, spectra, ignore_duplicated=False):
+    def __init__(self, cluster_id, precursor_mz, consensus_mz, consensus_intens, spectra, ignore_duplicated=True):
         """ Creates a new cluster object
 
         :param cluster_id: The cluster's id
