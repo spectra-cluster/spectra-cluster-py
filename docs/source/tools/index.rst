@@ -11,6 +11,7 @@ tools to process .clustering files.
    consensus_spectrum_exporter
    cluster_parameter_extractor
    cluster_spectra_extractor
+   clustering_stats
    mgf_search_result_annotator
    id_transferer_cli
    cluster_features_cli
