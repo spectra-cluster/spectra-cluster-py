@@ -52,6 +52,12 @@ transfers identification data to
 unidentified spectra. This can be used to improve
 the accuracy of **label-free** quantitation data.
 
+The :doc:`clustering_stats <tools/clustering_stats>` creates
+simply tab-delimited files with basic Q/C measurements of the
+clustering results. This is only possible if identification data
+is present in the .clustering file as these are used as gold-standard
+(see :doc:`id_transferer_cli <tools/id_transferer_cli>`).
+
 The :doc:`cluster_features_cli <tools/cluster_features_cli>`
 creates a matrix with the input MGF file names as column
 headers and the clusters as rows. Each cell contains the number
@@ -62,6 +68,12 @@ on the clusters.
 The :doc:`protein_annotator <tools/protein_annotator>` can map
 peptides in a text file to proteins from a fasta file. Additionally,
 basic protein inference can be performed.
+
+The :doc:`cluster_result_comparator <tools/cluster_result_comparator>` can be
+used to compare two clustering result (in the .clustering format). The comparison
+is performed by creating a network representation where clusters are nodes and edges
+are created based on shared spectra. If Cytoscape is running before the script
+is launched, the network is automatically displayed in Cytoscape.
 
 The complete list of tools can be found
 :doc:`here <tools/index>`.

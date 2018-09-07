@@ -5,3 +5,5 @@ numpy
 lxml
 pandas
 maspy
+networkx
+py2cytoscape

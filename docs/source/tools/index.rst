@@ -17,3 +17,4 @@ tools to process .clustering files.
    cluster_features_cli
    protein_annotator
    unique_fasta_extractor
+   cluster_result_comparator
