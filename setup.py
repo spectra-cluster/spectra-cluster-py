@@ -124,6 +124,8 @@ setup(
             'unique_fasta_extractor=spectra_cluster.ui.unique_fasta_extractor:main',
             'spectra_in_cluster=spectra_cluster.tools.spectra_in_cluster:main',
             'fasta_species_filter=spectra_cluster.ui.fasta_species_filter:main',
+            'clustering_stats=spectra_cluster.ui.clustering_stats:main',
+            'cluster_result_comparator=spectra_cluster.ui.cluster_result_comparator:main'
         ],
     },
 )
