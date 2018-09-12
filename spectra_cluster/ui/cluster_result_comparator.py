@@ -28,6 +28,7 @@ from py2cytoscape.data.style import StyleUtil
 sys.path.insert(0, os.path.abspath('..') + os.path.sep + "..")
 
 import spectra_cluster.clustering_parser as clustering_parser
+from spectra_cluster.objects import Cluster
 
 
 def load_spectra_to_cluster(result_file: str, before_cluster_id : str = None):
@@ -124,6 +125,15 @@ def add_node_properties(graph: nx.Graph, clustering_file: str, label: str):
             graph.nodes[cluster_id]["precursor"] = cluster.precursor_mz
             graph.nodes[cluster_id]["min_mz"] = min([s.precursor_mz for s in cluster.get_spectra()])
             graph.nodes[cluster_id]["max_mz"] = max([s.precursor_mz for s in cluster.get_spectra()])
+
+            # sequence ratios as string
+            sequence_count_string = list()
+            sequence_counts = Cluster.calculate_sequence_counts(cluster.get_spectra(), True)
+            for sequence in sequence_counts:
+                sequence_count_string.append(sequence + ": " + str(sequence_counts[sequence]))
+
+            graph.nodes[cluster_id]["sequences"] = ", ".join(sequence_count_string)
+
         except KeyError:
             pass
 
@@ -179,6 +189,15 @@ def display_in_cytoscape(graph, network_name: str):
         print("Please open Cytoscape to display the graph: " + str(e))
 
 
+def get_number_of_spectra(graph):
+    """
+    Get the total number of spectra (property size) of the graph
+    :param graph: The graph to process
+    :return: The total number of spectra
+    """
+    return sum([graph.node[c]["size"] for c in graph.nodes])
+
+
 def main():
     arguments = docopt(__doc__, version='cluster_result_comparator.py 0.1')
 
@@ -221,11 +240,18 @@ def main():
     add_node_properties(network, result_file_1, label1)
     add_node_properties(network, result_file_2, label2)
 
+    # count the total number of spectra
+    total_spectra = get_number_of_spectra(network)
+
     # remove all nodes that are only connected to a single other node (ie. identical clusters)
     removed_nodes = remove_identical_clusters(network)
 
     print("Removed " + str(removed_nodes) + " identical nodes from the graph. " + str(len(network.nodes)) +
           " nodes remaining.")
+
+    remaining_spectra = get_number_of_spectra(network)
+    print("  Affecting " + str(remaining_spectra) + "/" + str(total_spectra) + " (" +
+          str(round(remaining_spectra / total_spectra * 100, ndigits=2)) + "%) spectra")
 
     # save the GraphML file
     nx.write_graphml_xml(network, output_name)
