@@ -29,7 +29,8 @@ Options:
                                           spectra may go wrong.
     -o, --output=<annotated_spectra.mgf>  Path to where the annotated MGF file should be written to.
     -f, --format <MSGF+>                  The format of the search results. Possible options
-                                          are "MSGF+", "MSAmanda", "Scaffold", "XTandem".
+                                          are "MSGF+", "MSGF_ident" (MSGF+ mzIdentML files),
+                                          "MSAmanda", "Scaffold", "XTandem".
                                           [default: "MSGF+"]
     -d, --fdr=<0.01>                      Define the FDR by which the input search results are
                                           filtered. If the FDR is set to '2' for Scaffold output,
@@ -499,6 +500,8 @@ def main():
 
     if search_format.lower() == "msgf+":
         search_results = parse_msgfplus(search_file, fdr)
+    elif search_format.lower() == "msgf_ident":
+        search_results = parse_msgfplus_mzident(search_file, fdr)
     elif search_format.lower() == "msamanda":
         search_results = parse_msamanda(search_file, fdr, input_file)
     elif search_format.lower() == "scaffold":
