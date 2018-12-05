@@ -20,6 +20,8 @@ USER root
 
 RUN apt-get update && apt-get install -y python3 python3-pip python3-docopt python3-numpy python3-lxml python3-pandas python3-networkx && pip3 install setuptools
 
+RUN pip3 install git+https://github.com/hollenstein/maspy
+
 RUN wget -O /tmp/spectra_cluster_py.zip https://github.com/spectra-cluster/spectra-cluster-py/zipball/master && \
     unzip /tmp/spectra_cluster_py.zip -d /tmp/spectra_cluster_py && \
     cd /tmp/spectra_cluster_py/spec* && \
