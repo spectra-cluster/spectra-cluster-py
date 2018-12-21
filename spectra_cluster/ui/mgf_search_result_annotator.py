@@ -46,6 +46,7 @@ import sys
 import csv
 import operator
 import os
+import ntpath
 from pyteomics import mzid
 from spectra_cluster import objects
 
@@ -342,6 +343,46 @@ def parse_scaffold(filename, fdr, decoy_string="REVERSED"):
                           score_field="Scaffold:Peptide Probability",
                           fdr=fdr,
                           decoy_string=decoy_string)
+
+
+def get_scorefield_mzident(filename):
+    """
+    Get the score field type from a mzident file, if the user does not provide it.
+    :param filename: The filename of the  mzIdentML file
+    :return: score field string
+    """
+    reader = mzid.MzIdentML(filename)
+    for spec_ident in reader.iterfind('SpectrumIdentificationItem'):
+        if "Scaffold:Peptide Probability" in spec_ident.keys():
+            return "Scaffold:Peptide Probability"
+
+        elif "MS-GF:SpecEValue" in spec_ident.keys():
+            return "MS-GF:SpecEValue"
+
+        elif "X\\!Tandem:expect" in spec_ident.keys():
+            return "X\\!Tandem:expect"
+
+        else:
+            raise Exception("Failed to find supplied score field '" +
+                         "' in mzIdentML file %s. \nDetails:\n%s"%(filename, str(spec_ident)))
+
+
+def get_source_peak_file_mzident(filename):
+    """
+    Get the source peak file / spectra data which this mzident file generated from.
+    :param filename: The filename of the  mzIdentML file
+    :return: peak file name
+    """
+
+    reader = mzid.MzIdentML(filename)
+    peak_files = list()
+    for spec_data in reader.iterfind('SpectraData'):
+        location = spec_data['location']
+        peak_file_name = ntpath.basename(location)
+        peak_files.append(peak_file_name)
+    if len(peak_files)> 1:
+        raise Exception("MzIdentML file %s has multiple peak files: %s, %s..."%(filename, peak_files[0], peak_files[1]))
+    return peak_files[0]
 
 
 class Psm:
