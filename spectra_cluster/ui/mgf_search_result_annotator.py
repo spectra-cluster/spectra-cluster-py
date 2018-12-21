@@ -280,8 +280,10 @@ def parser_mzident(filename, score_field, title_field=None,
 
         # convert the psm
         if not mzid_psm["is_decoy"] or include_decoy:
-            filtered_psms.append(Psm(mzid_psm["index"], mzid_psm["sequence"], mzid_psm["title"],
-                                     is_decoy=mzid_psm["is_decoy"], ptms=mzid_psm["ptms"]))
+            conv_psm = Psm(mzid_psm["index"], mzid_psm["sequence"], mzid_psm["title"],
+                                     is_decoy=mzid_psm["is_decoy"], ptms=mzid_psm["ptms"])
+            conv_psm.score = mzid_psm["score"]
+            filtered_psms.append(conv_psm)
 
     return filtered_psms
 
@@ -319,11 +321,12 @@ def parse_msgfplus_mzident(filename, fdr, decoy_string="REVERSED"):
     :return: A list of PSM objects.
     """
 
-    psms = parser_mzident(filename, score_field="MS-GF:SpecEValue",
+    psms = parser_mzident(filename, score_field="MS-GF:QValue",
                           title_field="spectrumID", decoy_string=decoy_string,
                           fdr=fdr)
 
-    # TODO: write test
+    # filter the psms based on the
+    psms = [psm for psm in psms if psm.score < fdr]
 
     return psms
 
