@@ -49,6 +49,11 @@ import os
 import ntpath
 from pyteomics import mzid
 from spectra_cluster import objects
+try:
+    import xml.etree.cElementTree as ET
+except ImportError:
+    import xml.etree.ElementTree as ET
+import re
 
 
 csv.field_size_limit(sys.maxsize)
@@ -344,6 +349,49 @@ def parse_scaffold(filename, fdr, decoy_string="REVERSED"):
                           fdr=fdr,
                           decoy_string=decoy_string)
 
+
+def get_namespace(element):
+    m = re.match('\{.*\}', element.tag)
+    return m.group(0) if m else ''
+
+def get_scfield_peakfile(filename):
+    tree = ET.ElementTree(file=filename)
+    root = tree.getroot()
+    namespace = get_namespace(tree.getroot())
+
+    #get score field
+    score_fields=[
+        "Scaffold:Peptide Probability",
+        "MS-GF:SpecEValue",
+        "X\\!Tandem:expect",
+        "mascot:expectation value"
+    ]
+    score_field = None
+    attrib_string = ""
+    for elem in tree.iter(tag="%sSpectrumIdentificationItem" % (namespace)):
+        for subelem in list(elem):
+            attrib_string += str(subelem.attrib)
+            for temp_field in score_fields:
+                if temp_field in str(subelem.attrib):
+                    score_field = temp_field
+                    break
+
+        break #only check one SpectrumIdentificationItem
+    if not score_field:
+        raise Exception("Failed to find supplied score field '" +
+                        "' in mzIdentML file %s. \nDetails:\n%s"%(filename, str(attrib_string)))
+
+    #get peak files
+    peak_files = list()
+    for spec_data in tree.iter(tag="%sSpectraData" % (namespace)):
+        location = spec_data.attrib['location']
+        peak_file_name = ntpath.basename(location)
+        print(peak_file_name)
+        peak_files.append(peak_file_name)
+    if len(peak_files)> 1:
+        raise Exception("MzIdentML file %s has multiple peak files: %s, %s..."%(filename, peak_files[0], peak_files[1]))
+
+    return (score_field, peak_files[0])
 
 def get_scorefield_mzident(filename):
     """

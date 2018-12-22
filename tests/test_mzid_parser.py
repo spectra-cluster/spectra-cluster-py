@@ -15,7 +15,6 @@ class MzIdParserTest(unittest.TestCase):
         self.testfile = os.path.join(os.path.dirname(__file__), "testfiles", "test.mzid")
 
     def testPyteomicsParsing(self):
-        return
         reader = mzid.read(self.testfile)
 
         n_decoy = 0
@@ -55,6 +54,12 @@ class MzIdParserTest(unittest.TestCase):
     def testGetPeakFile(self):
         peakfile =mgf_search_result_annotator.get_source_peak_file_mzident(filename=self.testfile)
         self.assertEqual("R2_F53 (R2_F53_F094867).mzid_R2_F53_(R2_F53_F094867).MGF", peakfile)
+
+    def testGetScfieldPeakfile(self):
+        score_field, peakfile = mgf_search_result_annotator.get_scfield_peakfile(filename=self.testfile)
+        self.assertEqual("Scaffold:Peptide Probability", score_field)
+        self.assertEqual("R2_F53 (R2_F53_F094867).mzid_R2_F53_(R2_F53_F094867).MGF", peakfile)
+
 
 if __name__ == "__main__":
     unittest.main()
