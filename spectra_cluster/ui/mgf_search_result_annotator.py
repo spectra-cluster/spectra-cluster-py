@@ -49,12 +49,6 @@ import os
 import ntpath
 from pyteomics import mzid
 from spectra_cluster import objects
-try:
-    import xml.etree.cElementTree as ET
-except ImportError:
-    import xml.etree.ElementTree as ET
-import re
-
 
 csv.field_size_limit(sys.maxsize)
 
@@ -179,7 +173,6 @@ def convert_mzid_modifications(modifications):
 
     return ptms
 
-
 def parser_mzident(filename, score_field, title_field=None,
                    fdr=0.01, larger_score_is_better=False, decoy_string="DECOY",
                    include_decoy=False):
@@ -206,62 +199,62 @@ def parser_mzident(filename, score_field, title_field=None,
     mzid_psms = list()
 
     # load all PSMs from the file
-    with mzid.read(filename) as object_reader:
-        with mzid.read(filename) as reader:
-            for spec_ref in reader:
-                for spec_ident in spec_ref["SpectrumIdentificationItem"]:
-                    # filter based on original FDR if set right away
-                    if fdr == 2 and not spec_ident["passThreshold"]:
-                        continue
+    # with mzid.read(filename, use_index=False) as object_reader:
+    with mzid.read(filename) as reader:
+        for spec_ref in reader:
+            for spec_ident in spec_ref["SpectrumIdentificationItem"]:
+                # filter based on original FDR if set right away
+                if fdr == 2 and not spec_ident["passThreshold"]:
+                    continue
 
-                    # only use rank 1 ids
-                    if spec_ident["rank"] > 1:
-                        continue
+                # only use rank 1 ids
+                if spec_ident["rank"] > 1:
+                    continue
 
-                    if score_field not in spec_ident:
-                        raise Exception("Failed to find supplied score field '" + score_field +
-                                        "' in mzIdentML file.")
-                    if title_field is not None and title_field not in spec_ref:
-                        raise Exception("Failed to find supplied title field '" + title_field +
-                                        "' in mzIdentML file.")
+                if score_field not in spec_ident:
+                    raise Exception("Failed to find supplied score field '" + score_field +
+                                    "' in mzIdentML file.")
+                if title_field is not None and title_field not in spec_ref:
+                    raise Exception("Failed to find supplied title field '" + title_field +
+                                    "' in mzIdentML file.")
 
-                    mzid_psm = dict()
+                mzid_psm = dict()
 
-                    mzid_psm["score"] = spec_ident[score_field]
+                mzid_psm["score"] = spec_ident[score_field]
 
-                    # the index should be used as id
-                    if spec_ref["spectrumID"][:6] == "index=":
-                        mzid_psm["index"] = int(spec_ref["spectrumID"][6:])
-                    elif "scan number(s)" in spec_ref:
-                        # TODO: This has only been tested for X!Tandem
-                        mzid_psm["index"] = int(spec_ref["scan number(s)"]) - 1
-                    else:
-                        mzid_psm["index"] = Psm.MISSING_INDEX
+                # the index should be used as id
+                if spec_ref["spectrumID"][:6] == "index=":
+                    mzid_psm["index"] = int(spec_ref["spectrumID"][6:])
+                elif "scan number(s)" in spec_ref:
+                    # TODO: This has only been tested for X!Tandem
+                    mzid_psm["index"] = int(spec_ref["scan number(s)"]) - 1
+                else:
+                    mzid_psm["index"] = Psm.MISSING_INDEX
 
-                    # spectrum title is optional in mzIdentML
-                    if title_field is not None:
-                        mzid_psm["title"] = spec_ref[title_field].strip()
-                    elif "spectrum title" in spec_ref:
-                        mzid_psm["title"] = spec_ref["spectrum title"].strip()
+                # spectrum title is optional in mzIdentML
+                if title_field is not None:
+                    mzid_psm["title"] = spec_ref[title_field].strip()
+                elif "spectrum title" in spec_ref:
+                    mzid_psm["title"] = spec_ref["spectrum title"].strip()
 
-                    # get the sequence in an mzIdentML "secure" way
-                    mzid_psm["sequence"] = spec_ident["PeptideSequence"]
+                # get the sequence in an mzIdentML "secure" way
+                mzid_psm["sequence"] = spec_ident["PeptideSequence"]
 
-                    if "Modification" in spec_ident:
-                        mzid_psm["ptms"] = convert_mzid_modifications(spec_ident["Modification"])
-                    else:
-                        mzid_psm["ptms"] = list()
+                if "Modification" in spec_ident:
+                    mzid_psm["ptms"] = convert_mzid_modifications(spec_ident["Modification"])
+                else:
+                    mzid_psm["ptms"] = list()
 
-                    peptide_evidence = spec_ident["PeptideEvidenceRef"][0]
+                peptide_evidence = spec_ident["PeptideEvidenceRef"][0]
 
-                    is_decoy = False
-                    if "accession" in peptide_evidence:
-                        is_decoy = decoy_string in peptide_evidence["accession"]
-                    if "protein description" in peptide_evidence:
-                        is_decoy = is_decoy or decoy_string in peptide_evidence["protein description"]
-                    mzid_psm["is_decoy"] = is_decoy
+                is_decoy = False
+                if "accession" in peptide_evidence:
+                    is_decoy = decoy_string in peptide_evidence["accession"]
+                if "protein description" in peptide_evidence:
+                    is_decoy = is_decoy or decoy_string in peptide_evidence["protein description"]
+                mzid_psm["is_decoy"] = is_decoy
 
-                    mzid_psms.append(mzid_psm)
+                mzid_psms.append(mzid_psm)
 
     # sort the psms based on probability
     mzid_psms.sort(key=operator.itemgetter('score'), reverse=larger_score_is_better)
@@ -349,15 +342,13 @@ def parse_scaffold(filename, fdr, decoy_string="REVERSED"):
                           fdr=fdr,
                           decoy_string=decoy_string)
 
-
-def get_namespace(element):
-    m = re.match('\{.*\}', element.tag)
-    return m.group(0) if m else ''
-
 def get_scfield_peakfile(filename):
-    tree = ET.ElementTree(file=filename)
-    root = tree.getroot()
-    namespace = get_namespace(tree.getroot())
+    """
+    Get the score field type and source peak file name from an mzident file, if the user does not provide it.
+    :param filename: The filename of the  mzIdentML file
+    :return: score field string, peak file name
+    """
+    reader = mzid.MzIdentML(filename)
 
     #get score field
     score_fields=[
@@ -366,54 +357,52 @@ def get_scfield_peakfile(filename):
         "X\\!Tandem:expect",
         "mascot:expectation value"
     ]
+
     score_field = None
-    attrib_string = ""
-    for elem in tree.iter(tag="%sSpectrumIdentificationItem" % (namespace)):
-        for subelem in list(elem):
-            attrib_string += str(subelem.attrib)
-            for temp_field in score_fields:
-                if temp_field in str(subelem.attrib):
-                    score_field = temp_field
-                    break
+    for spec_ident in reader.iterfind('SpectrumIdentificationItem'):
+        for temp_field in score_fields:
+            if temp_field in spec_ident.keys():
+                score_field = temp_field
+                break
+        if not score_field:
+            raise Exception("Failed to find supplied score field '" +
+                        "' in mzIdentML file %s. \nDetails:\n%s"%(filename, str(spec_ident)))
+        #only check one SpectrumIdentificationItem
 
-        break #only check one SpectrumIdentificationItem
-    if not score_field:
-        raise Exception("Failed to find supplied score field '" +
-                        "' in mzIdentML file %s. \nDetails:\n%s"%(filename, str(attrib_string)))
-
-    #get peak files
     peak_files = list()
-    for spec_data in tree.iter(tag="%sSpectraData" % (namespace)):
-        location = spec_data.attrib['location']
+    for spec_data in reader.iterfind('SpectraData'):
+        location = spec_data['location']
         peak_file_name = ntpath.basename(location)
-        print(peak_file_name)
         peak_files.append(peak_file_name)
     if len(peak_files)> 1:
         raise Exception("MzIdentML file %s has multiple peak files: %s, %s..."%(filename, peak_files[0], peak_files[1]))
-
     return (score_field, peak_files[0])
 
 def get_scorefield_mzident(filename):
     """
-    Get the score field type from a mzident file, if the user does not provide it.
+    Get the score field type from an mzident file, if the user does not provide it.
     :param filename: The filename of the  mzIdentML file
     :return: score field string
     """
     reader = mzid.MzIdentML(filename)
+    #get score field
+    score_fields=[
+        "Scaffold:Peptide Probability",
+        "MS-GF:SpecEValue",
+        "X\\!Tandem:expect",
+        "mascot:expectation value"
+    ]
+
+    score_field = None
     for spec_ident in reader.iterfind('SpectrumIdentificationItem'):
-        if "Scaffold:Peptide Probability" in spec_ident.keys():
-            return "Scaffold:Peptide Probability"
-
-        elif "MS-GF:SpecEValue" in spec_ident.keys():
-            return "MS-GF:SpecEValue"
-
-        elif "X\\!Tandem:expect" in spec_ident.keys():
-            return "X\\!Tandem:expect"
-
-        else:
+        for temp_field in score_fields:
+            if temp_field in spec_ident.keys():
+                score_field = temp_field
+                break
+        if not score_field:
             raise Exception("Failed to find supplied score field '" +
-                         "' in mzIdentML file %s. \nDetails:\n%s"%(filename, str(spec_ident)))
-
+                        "' in mzIdentML file %s. \nDetails:\n%s"%(filename, str(spec_ident)))
+        #only check one SpectrumIdentificationItem
 
 def get_source_peak_file_mzident(filename):
     """
