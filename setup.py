@@ -116,6 +116,7 @@ setup(
     entry_points={
         'console_scripts': [
             'cluster_features_cli=spectra_cluster.ui.cluster_features_cli:main',
+            'cluster_parameter_extractor=spectra_cluster.ui.cluster_parameter_extractor:main',
             'consensus_spectrum_exporter=spectra_cluster.ui.consensus_spectrum_exporter:main',
             'id_transferer_cli=spectra_cluster.ui.id_transferer_cli:main',
             'split_moff_file=spectra_cluster.ui.split_moff_file:main',
