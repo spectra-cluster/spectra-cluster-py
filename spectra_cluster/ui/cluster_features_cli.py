@@ -8,7 +8,8 @@ from the given sample in the given cluster.
 Usage:
   cluster_features_cli.py --input=<results.clustering> --output=<features.txt>
                        [--min_size=<size>] [--min_ratio=<ratio>]
-                       [--min_identified=<spectra>] [--output_matrix]
+                       [--min_identified=<spectra>] [--max_identified=<spectra>] 
+                       [--output_matrix]
   cluster_features_cli.py (--help | --version)
 
 Options:
@@ -18,6 +19,7 @@ Options:
   --min_size=<size>                    The minimum size of a cluster to be reported.
   --min_ratio=<ratio>                  The minimum ratio a cluster must have to be reported.
   --min_identified=<spectra>           May specify the minimum number of identified spectra a cluster must have.
+  --max_identified=<spectra>           May specify the maximum number of identified spectra a cluster may have.
   --output_matrix                      If set, the resulting file will only contain a matrix, with the first column
                                        as the cluster id, the second column the sample id, and the third column the
                                        number of spectra.
@@ -47,12 +49,10 @@ def create_analyser(arguments, output_file):
     """
     analyser = ClusterAsFeatures(output_file)
 
-    if arguments["--min_size"] is not None:
-        analyser.min_size = int(arguments.get("--min_size"))
-    if arguments["--min_ratio"] is not None:
-        analyser.min_ratio = float(arguments.get("--min_ratio"))
-    if arguments["--min_identified"] is not None:
-        analyser.min_identified_spectra = int(arguments.get("--min_identified"))
+    analyser.min_size = int(arguments.get("--min_size"), 0)
+    analyser.min_ratio = float(arguments.get("--min_ratio"), 0)
+    analyser.min_identified_spectra = int(arguments.get("--min_identified"), 0)
+    analyser.max_identified_spectra = int(arguments.get("--max_identified"), 1_000_000_000)
 
     return analyser
 
