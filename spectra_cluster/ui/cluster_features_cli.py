@@ -8,7 +8,7 @@ from the given sample in the given cluster.
 Usage:
   cluster_features_cli.py --input=<results.clustering> --output=<features.txt>
                        [--min_size=<size>] [--min_ratio=<ratio>]
-                       [--min_identified=<spectra>]
+                       [--min_identified=<spectra>] [--output_matrix]
   cluster_features_cli.py (--help | --version)
 
 Options:
@@ -18,6 +18,9 @@ Options:
   --min_size=<size>                    The minimum size of a cluster to be reported.
   --min_ratio=<ratio>                  The minimum ratio a cluster must have to be reported.
   --min_identified=<spectra>           May specify the minimum number of identified spectra a cluster must have.
+  --output_matrix                      If set, the resulting file will only contain a matrix, with the first column
+                                       as the cluster id, the second column the sample id, and the third column the
+                                       number of spectra.
   -h, --help                           Print this help message.
   -v, --version                        Print the current version.
 """

@@ -21,7 +21,7 @@ class ClusterAsFeatures(common.AbstractAnalyser):
     use the function "add_resultfile_header" to add a
     header to the result file.
     """
-    def __init__(self, result_file, sample_name_extractor=None):
+    def __init__(self, result_file, sample_name_extractor=None, save_coo=False):
         """
         Initialised a new ClusterAsFeatures analyser.
 
@@ -34,6 +34,7 @@ class ClusterAsFeatures(common.AbstractAnalyser):
                                       ample name. If set to None the default
                                       function is used where everything before
                                       the first "." is being returned.
+        :param save_coo: If true, the result file will use the coordinate format (COO)
         """
         super().__init__()
 
@@ -43,6 +44,8 @@ class ClusterAsFeatures(common.AbstractAnalyser):
         self.sample_name_extractor = sample_name_extractor
         self.result_file = result_file
         self.sample_ids = list()
+        self.save_coo = save_coo
+        self.current_cluster = 0
 
     @staticmethod
     def extract_basic_sample_name(spec_ref):
@@ -97,8 +100,37 @@ class ClusterAsFeatures(common.AbstractAnalyser):
             if sample_id not in self.sample_ids:
                 self.sample_ids.append(sample_id)
 
+        if self.save_coo:
+            self._write_coo_format(spec_per_sample=spec_per_sample, cluster_id=cluster.id)
+        else:
+            self._write_table_format(spec_per_sample=spec_per_sample, cluster_id=cluster.id)
+
+    def _write_coo_format(self, spec_per_sample: dict, cluster_id: str):
+        """
+        Write the spectra per sample for one cluster to the result file
+        using the COO format.
+        :param spec_per_sample: Dict with the sample_id as key and the number of spectra
+                                as value.
+        :param cluster_id: The cluster's id
+        """
         # write the table - first column is always the cluster id
-        fields = [cluster.id]
+        self.current_cluster += 1
+
+        for sample_id in spec_per_sample:
+            # get the index for the samples
+            sample_index = self.sample_ids.index(sample_id)
+            self.result_file.write("%d\t%d\t%d\n".format(self.current_cluster, sample_index, spec_per_sample[sample_id]))
+
+    def _write_table_format(self, spec_per_sample: dict, cluster_id: str):
+        """
+        Write the spectra per sample for one cluster to the result file
+        using the classical table format.
+        :param spec_per_sample: Dict with the sample_id as key and the number of spectra
+                                as value.
+        :param cluster_id: The cluster's id
+        """
+        # write the table - first column is always the cluster id
+        fields = [cluster_id]
         for sample_id in self.sample_ids:
             fields.append(str(spec_per_sample.get(sample_id, 0)))
 

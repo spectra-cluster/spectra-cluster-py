@@ -49,6 +49,35 @@ class ClusterAsFeaturesTest(unittest.TestCase):
 
         result_file.close()
 
+    def testClusterAsCooFeatures(self):
+        result_file = tempfile.TemporaryFile(mode="w+")
+
+        parser = clustering_parser.ClusteringParser(self.testfile)
+
+        analyser = cluster_features.ClusterAsFeatures(
+            result_file=result_file,
+            sample_name_extractor=ClusterAsFeaturesTest.pride_project_extractor,
+            save_coo=True)
+
+        for cluster in parser:
+            analyser.process_cluster(cluster)
+
+        # read the result
+        features = list()
+        result_file.seek(0)
+
+        total_lines = 0
+
+        for line in result_file:
+            fields = line.split("\t")
+            self.assertEqual(3, len(fields))
+
+            total_lines += 1
+
+        result_file.close()
+
+        self.assertEqual(838, total_lines)
+
     @staticmethod
     def pride_project_extractor(spectrum):
         filename = spectrum.get_filename()

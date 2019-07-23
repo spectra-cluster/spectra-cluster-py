@@ -88,12 +88,15 @@ class MgfFile:
                     if cur_line[:10] == "BEGIN IONS":
                         cur_spec += 1
 
-                    cur_offset = reader.tell()
                     cur_line = reader.readline()
 
                     if cur_spec == spec_index:
                         offset = cur_offset
                         break
+
+                    # TODO: test if this fixes the issue that MGF files are created without the "BEGIN IONS"
+                    # line in non-indexed MGF files
+                    cur_offset = reader.tell()
 
         if not offset:
             raise Exception("Failed to find spectrum " + str(spec_index) + " in " + os.path.basename(self.filename))

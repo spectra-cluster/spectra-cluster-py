@@ -5,3 +5,4 @@ docs/build
 *.spec
 *.pyc
 *.egg-info
+.vscode
