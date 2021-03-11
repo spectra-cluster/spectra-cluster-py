@@ -16,10 +16,10 @@ Options:
   -i, --input=<clustering file>        Path to the .clustering result file to process.
   -o, --output=<features.txt>          Path to the output file that should be created. The output will
                                        be formatted as a tab-delimited text file.
-  --min_size=<size>                    The minimum size of a cluster to be reported.
-  --min_ratio=<ratio>                  The minimum ratio a cluster must have to be reported.
-  --min_identified=<spectra>           May specify the minimum number of identified spectra a cluster must have.
-  --max_identified=<spectra>           May specify the maximum number of identified spectra a cluster may have.
+  --min_size=<size>                    The minimum size of a cluster to be reported [default: 0]
+  --min_ratio=<ratio>                  The minimum ratio a cluster must have to be reported [default: 0]
+  --min_identified=<spectra>           May specify the minimum number of identified spectra a cluster must have [default: 0]
+  --max_identified=<spectra>           May specify the maximum number of identified spectra a cluster may have [default: 1000000000]
   --output_matrix                      If set, the resulting file will only contain a matrix, with the first column
                                        as the cluster id, the second column the sample id, and the third column the
                                        number of spectra.
@@ -38,7 +38,7 @@ from spectra_cluster.analyser.cluster_features import ClusterAsFeatures
 import spectra_cluster.clustering_parser as clustering_parser
 
 
-def create_analyser(arguments, output_file):
+def create_analyser(arguments: dict, output_file):
     """
     Creates an ClusterAsFeatures analyser based on the command line
     parameters.
@@ -49,10 +49,10 @@ def create_analyser(arguments, output_file):
     """
     analyser = ClusterAsFeatures(output_file)
 
-    analyser.min_size = int(arguments.get("--min_size"), 0)
-    analyser.min_ratio = float(arguments.get("--min_ratio"), 0)
-    analyser.min_identified_spectra = int(arguments.get("--min_identified"), 0)
-    analyser.max_identified_spectra = int(arguments.get("--max_identified"), 1_000_000_000)
+    analyser.min_size = int(arguments.get("--min_size", 0))
+    analyser.min_ratio = float(arguments.get("--min_ratio", 0))
+    analyser.min_identified_spectra = int(arguments.get("--min_identified", 0))
+    analyser.max_identified_spectra = int(arguments.get("--max_identified", 1000000000))
 
     return analyser
 
