@@ -30,11 +30,13 @@ Options:
     -o, --output=<annotated_spectra.mgf>  Path to where the annotated MGF file should be written to.
     -f, --format <MSGF+>                  The format of the search results. Possible options
                                           are "MSGF+", "MSGF_ident" (MSGF+ mzIdentML files),
-                                          "MSAmanda", "Scaffold", "XTandem".
+                                          "MSAmanda", "Scaffold", "XTandem", "PeptideShaker".
                                           [default: "MSGF+"]
     -d, --fdr=<0.01>                      Define the FDR by which the input search results are
                                           filtered. If the FDR is set to '2' for Scaffold output,
-                                          the original cut-off is used. [default: 0.01]
+                                          the original cut-off is used. [default: 0.01].
+                                          Note: For PeptideShaker, this parameter is ignored and
+                                          PeptideShaker's assessment is always used.
     --decoy_string=<REVERSED>             The string to use to identify decoy proteins.
                                           [default: REVERSED]
     -h, --help                            Print this help message.
@@ -200,62 +202,61 @@ def parser_mzident(filename, score_field, title_field=None,
     mzid_psms = list()
 
     # load all PSMs from the file
-    with mzid.read(filename) as object_reader:
-        with mzid.read(filename) as reader:
-            for spec_ref in reader:
-                for spec_ident in spec_ref["SpectrumIdentificationItem"]:
-                    # filter based on original FDR if set right away
-                    if fdr == 2 and not spec_ident["passThreshold"]:
-                        continue
+    with mzid.read(filename) as reader:
+        for spec_ref in reader:
+            for spec_ident in spec_ref["SpectrumIdentificationItem"]:
+                # filter based on original FDR if set right away
+                if fdr == 2 and not spec_ident["passThreshold"]:
+                    continue
 
-                    # only use rank 1 ids
-                    if spec_ident["rank"] > 1:
-                        continue
+                # only use rank 1 ids
+                if spec_ident["rank"] > 1:
+                    continue
 
-                    if score_field not in spec_ident:
-                        raise Exception("Failed to find supplied score field '" + score_field +
-                                        "' in mzIdentML file.")
-                    if title_field is not None and title_field not in spec_ref:
-                        raise Exception("Failed to find supplied title field '" + title_field +
-                                        "' in mzIdentML file.")
+                if score_field not in spec_ident:
+                    raise Exception("Failed to find supplied score field '" + score_field +
+                                    "' in mzIdentML file.")
+                if title_field is not None and title_field not in spec_ref:
+                    raise Exception("Failed to find supplied title field '" + title_field +
+                                    "' in mzIdentML file.")
 
-                    mzid_psm = dict()
+                mzid_psm = dict()
 
-                    mzid_psm["score"] = spec_ident[score_field]
+                mzid_psm["score"] = spec_ident[score_field]
 
-                    # the index should be used as id
-                    if spec_ref["spectrumID"][:6] == "index=":
-                        mzid_psm["index"] = int(spec_ref["spectrumID"][6:])
-                    elif "scan number(s)" in spec_ref:
-                        # TODO: This has only been tested for X!Tandem
-                        mzid_psm["index"] = int(spec_ref["scan number(s)"]) - 1
-                    else:
-                        mzid_psm["index"] = Psm.MISSING_INDEX
+                # the index should be used as id
+                if spec_ref["spectrumID"][:6] == "index=":
+                    mzid_psm["index"] = int(spec_ref["spectrumID"][6:])
+                elif "scan number(s)" in spec_ref:
+                    # TODO: This has only been tested for X!Tandem
+                    mzid_psm["index"] = int(spec_ref["scan number(s)"]) - 1
+                else:
+                    mzid_psm["index"] = Psm.MISSING_INDEX
 
-                    # spectrum title is optional in mzIdentML
-                    if title_field is not None:
-                        mzid_psm["title"] = spec_ref[title_field].strip()
-                    elif "spectrum title" in spec_ref:
-                        mzid_psm["title"] = spec_ref["spectrum title"].strip()
+                # spectrum title is optional in mzIdentML
+                if title_field is not None:
+                    mzid_psm["title"] = spec_ref[title_field].strip()
+                elif "spectrum title" in spec_ref:
+                    mzid_psm["title"] = spec_ref["spectrum title"].strip()
 
-                    # get the sequence in an mzIdentML "secure" way
-                    mzid_psm["sequence"] = spec_ident["PeptideSequence"]
+                # get the sequence in an mzIdentML "secure" way
+                mzid_psm["sequence"] = spec_ident["PeptideSequence"]
 
-                    if "Modification" in spec_ident:
-                        mzid_psm["ptms"] = convert_mzid_modifications(spec_ident["Modification"])
-                    else:
-                        mzid_psm["ptms"] = list()
+                if "Modification" in spec_ident:
+                    mzid_psm["ptms"] = convert_mzid_modifications(spec_ident["Modification"])
+                else:
+                    mzid_psm["ptms"] = list()
 
-                    peptide_evidence = spec_ident["PeptideEvidenceRef"][0]
+                peptide_evidence = spec_ident["PeptideEvidenceRef"][0]
 
-                    is_decoy = False
-                    if "accession" in peptide_evidence:
-                        is_decoy = decoy_string in peptide_evidence["accession"]
-                    if "protein description" in peptide_evidence:
-                        is_decoy = is_decoy or decoy_string in peptide_evidence["protein description"]
-                    mzid_psm["is_decoy"] = is_decoy
+                is_decoy = False
+                if "accession" in peptide_evidence:
+                    is_decoy = decoy_string in peptide_evidence["accession"]
+                if "protein description" in peptide_evidence:
+                    is_decoy = is_decoy or decoy_string in peptide_evidence["protein description"]
+                mzid_psm["is_decoy"] = is_decoy
 
-                    mzid_psms.append(mzid_psm)
+                mzid_psms.append(mzid_psm)
 
     # sort the psms based on probability
     mzid_psms.sort(key=operator.itemgetter('score'), reverse=larger_score_is_better)
@@ -287,6 +288,28 @@ def parser_mzident(filename, score_field, title_field=None,
 
     return filtered_psms
 
+
+def parse_peptideshaker_mzident(filename):
+    """
+    Parses PeptideShaker output in the mzIdentML format.
+
+    :param filename: The path to the mzIdentML file.
+    :param decoy_string: The decoy string to use to identify decoy proteins.
+    :return: A list of PSM objects.
+    """
+
+    # the decoy string is not used since the original validation is correctly encoded
+    psms = parser_mzident(filename, score_field="PeptideShaker PSM confidence",
+                          title_field="spectrumID", decoy_string="REVERSED",
+                          fdr=2)
+
+    # fix the incorrect titles
+    for psm in psms:
+        if "RTINSECONDS=" in psm.get_title():
+            offset = psm.title.find("RTINSECONDS=")
+            psm.title = psm.title[:offset].strip()
+
+    return psms
 
 def parse_xtandem_mzident(filename, fdr, decoy_string="REVERSED"):
     """
@@ -493,6 +516,7 @@ def main():
         sys.exit(1)
 
     # Create the title => index map
+    print("Parsing MGF titles...")
     title_to_index = create_title_to_index_dict(input_file)
 
     # Process the search result file
@@ -500,6 +524,9 @@ def main():
     search_format = arguments["--format"]
 
     fdr = float(arguments["--fdr"])
+    uses_fdr = True
+
+    print("Processing search results...")
 
     if search_format.lower() == "msgf+":
         search_results = parse_msgfplus(search_file, fdr)
@@ -513,11 +540,17 @@ def main():
     elif search_format.lower() == "xtandem":
         search_results = parse_xtandem_mzident(filename=search_file, fdr=fdr,
                                                decoy_string=arguments["--decoy_string"])
+    elif search_format.lower() == "peptideshaker":
+        uses_fdr = False
+        search_results = parse_peptideshaker_mzident(filename=search_file)
     else:
         print("Error: Unknown search engine result format set. "
-              "Allowed values are: [MSGF+, MSAmanda, Scaffold, XTandem]")
+              "Allowed values are: [MSGF+, MSAmanda, Scaffold, XTandem, PeptideShaker]")
 
-    print("Extracted " + str(len(search_results)) + " PSMs @ FDR = " + str(fdr))
+    if fdr != 2 and uses_fdr:
+        print("Extracted " + str(len(search_results)) + " PSMs @ FDR = " + str(fdr))
+    else:
+        print("Extracted " + str(len(search_results)) + " PSMs")
 
     # fix missing indices
     rel_matched = fix_missing_index(search_results, title_to_index, True)
