@@ -495,6 +495,38 @@ def write_annotated_mgf(input_mgf, sequence_dictionary, output_mgf):
                     current_spec_index += 1
 
 
+def clean_mzid(filename: str, filtered_name: str) -> None:
+    """Remove the Fragmentation information from an mzid file
+
+    :param filename: The file to parse
+    :type filename: str
+    """
+    if not os.path.isfile(filename):
+        raise Exception("Failed to find " + filename)
+
+    # make sure the filtered name does not already exist
+    if os.path.isfile(filtered_name):
+        raise Exception("Filtered file already exists")
+
+    # create the tmp file
+    in_fragmentation = False
+
+    with open(filtered_name, "w") as writer:
+        with open(filename, "r") as reader:
+            for line in reader:
+                if "<Fragmentation>" in line:
+                    in_fragmentation = True
+
+                if "</Fragmentation>" in line:
+                    in_fragmentation = False
+                    continue
+
+                if in_fragmentation:
+                    continue
+
+                writer.write(line)
+
+
 def main():
     arguments = docopt(__doc__, version='mgf_search_result_annotator.py 1.0 BETA')
 
@@ -542,7 +574,16 @@ def main():
                                                decoy_string=arguments["--decoy_string"])
     elif search_format.lower() == "peptideshaker":
         uses_fdr = False
-        search_results = parse_peptideshaker_mzident(filename=search_file)
+        # filter the mzId file first
+        print("Removing fragmentation info from mzID file...")
+        clean_mzid(search_file, search_file + ".filtered")
+
+        # parse the results
+        print("Processing PSMs...")
+        search_results = parse_peptideshaker_mzident(filename=search_file + ".filtered")
+
+        # remove the filtered file
+        os.unlink(search_file + ".filtered")
     else:
         print("Error: Unknown search engine result format set. "
               "Allowed values are: [MSGF+, MSAmanda, Scaffold, XTandem, PeptideShaker]")
