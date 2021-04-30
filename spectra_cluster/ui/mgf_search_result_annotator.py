@@ -463,7 +463,7 @@ def fix_missing_index(search_results, title_to_index, echo=False):
         return 1
 
 
-def write_annotated_mgf(input_mgf, sequence_dictionary, output_mgf):
+def write_annotated_mgf(input_mgf, sequence_dictionary, ptm_dictionary, output_mgf):
     """
     Creates an annotated MGF file based on the input MGF file and the sequence
     dictionary.
@@ -471,6 +471,8 @@ def write_annotated_mgf(input_mgf, sequence_dictionary, output_mgf):
     :param input_mgf: The source MGF file.
     :param sequence_dictionary: A dict with the 0-based spectrum index as key and
                                 the peptide sequence as value.
+    :param ptm_dictionary: A dict with the 0-based spectrum index as key and the
+                           PTM string as value
     :param output_mgf: The path to write the newly created MGF file to.
     """
     with open(output_mgf, "w") as output_file:
@@ -488,9 +490,7 @@ def write_annotated_mgf(input_mgf, sequence_dictionary, output_mgf):
                 # add the sequence information after the TITLE=
                 if (line[0:6] == "TITLE=") & (current_spec_index in sequence_dictionary.keys()):
                     output_file.write("SEQ=" + sequence_dictionary[current_spec_index] + "\n")
-
-                # TODO: Add PTM info
-
+                    output_file.write("USER03=" + ptm_dictionary[current_spec_index] + "\n")
                 if line[0:8] == "END IONS":
                     current_spec_index += 1
 
@@ -602,6 +602,7 @@ def main():
 
     # convert the search results into a dictionary
     sequence_dictionary = dict()
+    ptm_dictionary = dict()
 
     for psm in search_results:
         # if there's a duplicate, use the lexical lower version
@@ -611,9 +612,11 @@ def main():
 
         # use the spectrum's index as the key
         sequence_dictionary[psm.get_index()] = psm.get_sequence()
+        # add the PTM string
+        ptm_dictionary[psm.get_index()] = ",".join([str(ptm) for ptm in psm.ptms])
 
     # Create the annotated MGF file
-    write_annotated_mgf(input_file, sequence_dictionary, output_file)
+    write_annotated_mgf(input_file, sequence_dictionary, ptm_dictionary, output_file)
 
     print("Annotated MGF file successfully written to " + output_file)
 
